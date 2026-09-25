@@ -110,7 +110,12 @@ class Gestionnaire(BaseHTTPRequestHandler):
                 f = ASSISTANT.base.get(x["fiche_id"])
                 if f:
                     top.append({"id": f["id"], "titre": f["titre"], "n": x["n"]})
-            return self._json({"portee": "serveur", "questions": st["questions"] - par.get("conversation", 0),
+            questions = st["questions"] - par.get("conversation", 0)
+            demandes = questions + st["tickets_directs"]
+            resolues = max(0, par.get("reponse", 0) - st["tickets_apres_reponse"])
+            return self._json({"portee": "serveur", "questions": questions, "demandes": demandes, "resolues": resolues,
+                               "taux": round(resolues * 100 / demandes) if demandes else 0,
+                               "tickets_apres_reponse": st["tickets_apres_reponse"], "tickets_directs": st["tickets_directs"],
                                "reponses": par.get("reponse", 0), "inconnus": par.get("inconnu", 0), "refus": par.get("refus", 0), "vigilance": par.get("vigilance", 0),
                                "tickets": st["tickets"], "tickets_par_service": st["tickets_par_service"],
                                "par_langue": st["par_langue"], "top": top, "fiches": ASSISTANT.base.bilan()})

@@ -295,7 +295,7 @@ from as this that these those should must will
   // ---------------- « API » locale (mêmes routes que serveur.py) ----------------
   let numeroTicket = 0;
   // indicateurs de la session (hors ligne : uniquement des comptages, rien n'est envoyé)
-  const S = { questions: 0, reponses: 0, inconnus: 0, refus: 0, vigilance: 0, tickets: 0, tickets_par_service: {}, par_langue: {}, fiches: {}, cartes: [] };
+  const S = { questions: 0, reponses: 0, inconnus: 0, refus: 0, vigilance: 0, posees: {}, apresReponse: new Set(), directs: new Set(), tickets: 0, tickets_par_service: {}, par_langue: {}, fiches: {}, cartes: [] };
   function api(url, corps) {
     const u = new URL(url, "http://local");
     const q = Object.fromEntries(u.searchParams);
@@ -308,6 +308,8 @@ from as this that these those should must will
           if (r.type === "inconnu") S.inconnus++;
           if (r.type === "refus") S.refus++;
           if (r.type === "vigilance") S.vigilance++;
+          const cle = String(corps.question || "").trim().slice(0, 500);
+          if (S.posees[cle] !== "reponse") S.posees[cle] = r.type;
         }
         return r;
       }
@@ -316,6 +318,8 @@ from as this that these those should must will
         const sv = corps.service || "fisc"; S.tickets_par_service[sv] = (S.tickets_par_service[sv] || 0) + 1;
         const question = String(corps.question || "").trim().slice(0, 500);
         const langue = detectLang(question);   // langue de la question (et non de l'interface)
+        if (S.posees[question] === "reponse") S.apresReponse.add(question);   // réponse donnée mais agent demandé
+        else if (!(question in S.posees)) S.directs.add(question);            // jamais posée au bot : nouvelle demande
         const risque = niveauRisque(question);
         const rs = chercher(risque ? sansExpressionsSensibles(question) : question);
         const carte = { id: "MJ-L" + String(numeroTicket).padStart(4, "0"), numero: numeroTicket, local: true,
@@ -332,7 +336,9 @@ from as this that these those should must will
           .map(([id, n]) => ({ id, titre: (fiches.find((f) => f.id === id) || {}).titre || {}, n }));
         const bilan = { total: fiches.length, source_officielle: fiches.filter((f) => f.statut === "source_officielle").length,
           a_confirmer: fiches.filter((f) => f.statut === "a_confirmer").length };
-        return { portee: "session", questions: S.questions, reponses: S.reponses, inconnus: S.inconnus, refus: S.refus, vigilance: S.vigilance, tickets: S.tickets,
+        const demandes = S.questions + S.directs.size, resolues = Math.max(0, S.reponses - S.apresReponse.size);
+        return { portee: "session", demandes, resolues, taux: demandes ? Math.round(resolues * 100 / demandes) : 0,
+          tickets_apres_reponse: S.apresReponse.size, tickets_directs: S.directs.size, questions: S.questions, reponses: S.reponses, inconnus: S.inconnus, refus: S.refus, vigilance: S.vigilance, tickets: S.tickets,
           tickets_par_service: S.tickets_par_service, par_langue: S.par_langue, top, fiches: bilan, cartes: S.cartes };
       }
       case "/api/verification": return verifier(corps);

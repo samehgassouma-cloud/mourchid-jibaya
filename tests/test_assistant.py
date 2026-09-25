@@ -107,6 +107,18 @@ class TestAssistant(unittest.TestCase):
         self.assertTrue(r["vigilance"])
         self.assertNotIn("vigilance", self.a.repondre("Quel est le taux de TVA ?"))
 
+    def test_taux_de_resolution(self):
+        """Un transfert après une réponse ou un transfert direct fait baisser le taux de résolution sans agent."""
+        from mourchid.assistant import Assistant
+        a = Assistant(Path(__file__).resolve().parent.parent / "data", journal_path=":memory:")
+        a.repondre("قداش الأقساط الاحتياطية؟"); a.repondre("Quel est le taux de TVA ?")
+        a.journal.ticket("ar", "قداش الأقساط الاحتياطية؟")          # réponse donnée mais agent demandé
+        a.journal.ticket("fr", "Question posée directement à l'agent")  # jamais posée au bot
+        st = a.journal.stats()
+        self.assertEqual((st["tickets_apres_reponse"], st["tickets_directs"]), (1, 1))
+        resolues = st["par_resultat"]["reponse"] - st["tickets_apres_reponse"]
+        self.assertEqual((resolues, st["questions"] + st["tickets_directs"]), (1, 3))   # 1 ÷ 3 = 33 %, et non 100 %
+
     def test_langue_de_reponse(self):
         self.assertEqual(self.a.repondre("قداش الأقساط الاحتياطية؟")["langue"], "ar")
 

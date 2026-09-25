@@ -488,7 +488,7 @@ from as this that these those should must will
   // ---------------- « API » locale (mêmes routes que serveur.py) ----------------
   let numeroTicket = 0;
   // indicateurs de la session (hors ligne : uniquement des comptages, rien n'est envoyé)
-  const S = { questions: 0, reponses: 0, inconnus: 0, refus: 0, vigilance: 0, tickets: 0, tickets_par_service: {}, par_langue: {}, fiches: {}, cartes: [] };
+  const S = { questions: 0, reponses: 0, inconnus: 0, refus: 0, vigilance: 0, posees: {}, apresReponse: new Set(), directs: new Set(), tickets: 0, tickets_par_service: {}, par_langue: {}, fiches: {}, cartes: [] };
   function api(url, corps) {
     const u = new URL(url, "http://local");
     const q = Object.fromEntries(u.searchParams);
@@ -501,6 +501,8 @@ from as this that these those should must will
           if (r.type === "inconnu") S.inconnus++;
           if (r.type === "refus") S.refus++;
           if (r.type === "vigilance") S.vigilance++;
+          const cle = String(corps.question || "").trim().slice(0, 500);
+          if (S.posees[cle] !== "reponse") S.posees[cle] = r.type;
         }
         return r;
       }
@@ -509,6 +511,8 @@ from as this that these those should must will
         const sv = corps.service || "fisc"; S.tickets_par_service[sv] = (S.tickets_par_service[sv] || 0) + 1;
         const question = String(corps.question || "").trim().slice(0, 500);
         const langue = detectLang(question);   // langue de la question (et non de l'interface)
+        if (S.posees[question] === "reponse") S.apresReponse.add(question);   // réponse donnée mais agent demandé
+        else if (!(question in S.posees)) S.directs.add(question);            // jamais posée au bot : nouvelle demande
         const risque = niveauRisque(question);
         const rs = chercher(risque ? sansExpressionsSensibles(question) : question);
         const carte = { id: "MJ-L" + String(numeroTicket).padStart(4, "0"), numero: numeroTicket, local: true,
@@ -525,7 +529,9 @@ from as this that these those should must will
           .map(([id, n]) => ({ id, titre: (fiches.find((f) => f.id === id) || {}).titre || {}, n }));
         const bilan = { total: fiches.length, source_officielle: fiches.filter((f) => f.statut === "source_officielle").length,
           a_confirmer: fiches.filter((f) => f.statut === "a_confirmer").length };
-        return { portee: "session", questions: S.questions, reponses: S.reponses, inconnus: S.inconnus, refus: S.refus, vigilance: S.vigilance, tickets: S.tickets,
+        const demandes = S.questions + S.directs.size, resolues = Math.max(0, S.reponses - S.apresReponse.size);
+        return { portee: "session", demandes, resolues, taux: demandes ? Math.round(resolues * 100 / demandes) : 0,
+          tickets_apres_reponse: S.apresReponse.size, tickets_directs: S.directs.size, questions: S.questions, reponses: S.reponses, inconnus: S.inconnus, refus: S.refus, vigilance: S.vigilance, tickets: S.tickets,
           tickets_par_service: S.tickets_par_service, par_langue: S.par_langue, top, fiches: bilan, cartes: S.cartes };
       }
       case "/api/verification": return verifier(corps);
@@ -607,7 +613,7 @@ Object.assign(T.ar,{simTitre:"محاكي الربح للإدارة",simIntro:"ح
   services:{fisc:"الإرشاد الجبائي العام (مركز الإرشاد الجبائي عن بعد)",controle:"ملفي الجبائي (مكتب مراقبة الأداءات)",recouvrement:"الدفع والديون الجبائية (قباضة المالية)",rne:"السجل الوطني للمؤسسات",identite:"الهوية الرقمية (Mobile ID / DigiGO)"},
   ticketSvc:"الجهة:",introAdm:"ما تجنيه الإدارة من المساعد: كل سؤال يُجاب عنه بمصدر رسمي هو سؤال لا يصل إلى الشباك، وكل سؤال بلا جواب يكشف نصاً يحتاج توضيحاً.",
   admDirect:"مؤشرات مباشرة",admMinutes:"متوسط وقت العون للإجابة عن سؤال واحد (دقائق، فرضية قابلة للتعديل)",admPourquoi:"الفائدة للإدارة",
-  kQuestions:"أسئلة مطروحة",kReponses:"أجوبة موثّقة دون عون",kTaux:"نسبة الحلّ دون عون",kTickets:"أسئلة أُحيلت على الأعوان",kInconnus:"أسئلة دون مصدر (نصوص تحتاج توضيحاً)",kRefus:"طلبات تهرّب رُفضت أو أُعيد توجيهها",
+  kQuestions:"أسئلة مطروحة",kReponses:"أجوبة موثّقة دون عون",kTaux:"نسبة الحلّ دون عون",kFormule:(r)=>`طريقة الحساب: (الأجوبة الموثّقة ${r.reponses} − المحالة رغم الجواب ${r.tickets_apres_reponse}) ÷ (الأسئلة ${r.questions} + الإحالات المباشرة ${r.tickets_directs}) = ${r.resolues} ÷ ${r.demandes} = ${r.taux} %`,kTickets:"أسئلة أُحيلت على الأعوان",kInconnus:"أسئلة دون مصدر (نصوص تحتاج توضيحاً)",kRefus:"طلبات تهرّب رُفضت أو أُعيد توجيهها",
   kTemps:"وقت أعوان مُوفَّر (تقدير)",kMin:"دقيقة",kLangues:"اللغات",kTop:"المواضيع الأكثر طلباً",kServices:"الإحالات حسب الجهة",aucun:"لا شيء بعد: اطرح أسئلة في تبويب المساعد.",
   porteeServeur:"أرقام كل المستعملين منذ تشغيل الخادم. عدّ فقط، دون أي معطى شخصي.",porteeSession:"نسخة دون إنترنت: الأرقام تخصّ هذه الجلسة فقط. عدّ فقط، دون أي معطى شخصي.",
   benef:[["شبابيك أقل اكتظاظاً","الأسئلة المتكررة تُجاب آلياً بمرجعها، والأعوان يتفرّغون للملفات المعقدة وللمراقبة."],["جواب موحّد وموثّق","نفس الجواب ونفس المرجع لكل المطالبين بالأداء، في كل الولايات وبثلاث لغات."],["خريطة نقاط التعثّر","الأسئلة دون جواب تكشف النصوص التي تحتاج مذكرة توضيحية أو تبسيطاً."],["موارد في آجالها","الآجال والتثبّت المسبق يقلّصان التأخير والأخطاء، فتُستخلص الموارد في وقتها."]]});
@@ -630,7 +636,7 @@ Object.assign(T.fr,{simTitre:"Simulateur du gain pour l'administration",simIntro
   services:{fisc:"Information fiscale générale (Centre d'information fiscale à distance)",controle:"Mon dossier fiscal (bureau de contrôle des impôts)",recouvrement:"Paiement et dettes fiscales (recette des finances)",rne:"Registre national des entreprises",identite:"Identité numérique (Mobile ID / DigiGO)"},
   ticketSvc:"Service :",introAdm:"Ce que l'administration y gagne : chaque question résolue avec une source officielle est une question qui n'arrive pas au guichet, et chaque question sans réponse signale un texte à clarifier.",
   admDirect:"Indicateurs en direct",admMinutes:"Temps moyen d'un agent pour répondre à une question (minutes, hypothèse modifiable)",admPourquoi:"Bénéfices pour l'administration",
-  kQuestions:"Questions posées",kReponses:"Réponses sourcées sans agent",kTaux:"Taux de résolution sans agent",kTickets:"Questions transmises aux agents",kInconnus:"Questions sans source (textes à clarifier)",kRefus:"Demandes d'évasion refusées ou recadrées",
+  kQuestions:"Questions posées",kReponses:"Réponses sourcées sans agent",kTaux:"Taux de résolution sans agent",kFormule:(r)=>`Calcul : (${r.reponses} réponses sourcées − ${r.tickets_apres_reponse} transférées malgré la réponse) ÷ (${r.questions} questions + ${r.tickets_directs} transferts directs) = ${r.resolues} ÷ ${r.demandes} = ${r.taux} %`,kTickets:"Questions transmises aux agents",kInconnus:"Questions sans source (textes à clarifier)",kRefus:"Demandes d'évasion refusées ou recadrées",
   kTemps:"Temps d'agent économisé (estimation)",kMin:"min",kLangues:"Langues",kTop:"Sujets les plus demandés",kServices:"Transferts par service",aucun:"Rien pour l'instant : posez des questions dans l'onglet Assistant.",
   porteeServeur:"Chiffres de tous les usagers depuis le démarrage du serveur. Comptages uniquement, aucune donnée personnelle.",porteeSession:"Version hors ligne : chiffres de cette session uniquement. Comptages seulement, aucune donnée personnelle.",
   benef:[["Guichets désengorgés","Les questions répétitives reçoivent une réponse sourcée ; les agents se consacrent aux dossiers complexes et au contrôle."],["Réponse homogène et sourcée","La même réponse, avec la même référence, pour tous les contribuables, dans toutes les régions et en trois langues."],["Carte des points de blocage","Les questions sans réponse révèlent les textes qui appellent une note commune ou une simplification."],["Recettes à temps","Échéances et vérification avant dépôt réduisent retards et erreurs : les recettes rentrent à temps."]]});
@@ -653,7 +659,7 @@ Object.assign(T.en,{simTitre:"Gain simulator for the administration",simIntro:"M
   services:{fisc:"General tax information (remote tax information centre)",controle:"My tax file (tax audit office)",recouvrement:"Payment and tax debts (tax collection office)",rne:"National business register",identite:"Digital identity (Mobile ID / DigiGO)"},
   ticketSvc:"Service:",introAdm:"What the administration gains: every question solved with an official source is one that never reaches the counter, and every unanswered question flags a text to clarify.",
   admDirect:"Live indicators",admMinutes:"Average agent time to answer one question (minutes, adjustable assumption)",admPourquoi:"Benefits for the administration",
-  kQuestions:"Questions asked",kReponses:"Sourced answers without an agent",kTaux:"Resolution rate without an agent",kTickets:"Questions forwarded to agents",kInconnus:"Questions without a source (texts to clarify)",kRefus:"Evasion requests refused or reframed",
+  kQuestions:"Questions asked",kReponses:"Sourced answers without an agent",kTaux:"Resolution rate without an agent",kFormule:(r)=>`Calculation: (${r.reponses} sourced answers − ${r.tickets_apres_reponse} forwarded despite the answer) ÷ (${r.questions} questions + ${r.tickets_directs} direct transfers) = ${r.resolues} ÷ ${r.demandes} = ${r.taux} %`,kTickets:"Questions forwarded to agents",kInconnus:"Questions without a source (texts to clarify)",kRefus:"Evasion requests refused or reframed",
   kTemps:"Agent time saved (estimate)",kMin:"min",kLangues:"Languages",kTop:"Most requested topics",kServices:"Forwards by service",aucun:"Nothing yet: ask questions in the Assistant tab.",
   porteeServeur:"Figures for all users since the server started. Counts only, no personal data.",porteeSession:"Offline version: figures for this session only. Counts only, no personal data.",
   benef:[["Less crowded counters","Repetitive questions get a sourced answer; agents focus on complex files and audits."],["Consistent, sourced answers","The same answer and reference for every taxpayer, in every region and in three languages."],["Map of friction points","Unanswered questions reveal texts that need a clarifying note or simplification."],["Revenue on time","Deadlines and pre-filing checks reduce delays and errors, so revenue comes in on time."]]});
@@ -803,14 +809,14 @@ function simuler(){
 }
 async function chargerAdm(){
   const S=T[L];const r=await api("/api/tableau");
-  const taux=r.questions?Math.round(r.reponses/r.questions*100):0;admMesure=r.questions?taux:null;
-  $("adm-chiffres").innerHTML=[[S.kQuestions,r.questions,""],[S.kReponses,r.reponses,"",1],[S.kTaux,taux," %",1],[S.kTickets,r.tickets,""],[S.kInconnus,r.inconnus,""],[S.kRefus,(r.refus||0)+(r.vigilance||0),""]]
+  const taux=r.taux||0;admMesure=r.demandes?taux:null;
+  $("adm-chiffres").innerHTML=[[S.kQuestions,r.questions,""],[S.kReponses,r.resolues,"",1],[S.kTaux,taux," %",1],[S.kTickets,r.tickets,""],[S.kInconnus,r.inconnus,""],[S.kRefus,(r.refus||0)+(r.vigilance||0),""]]
     .map(([k,v,suf,f],i)=>`<div class="${f?"fort":""} apparait" style="animation-delay:${i*80}ms">${esc(k)}<b id="m-${i}" data-v="0">0</b></div>`).join("");
-  [[r.questions,""],[r.reponses,""],[taux," %"],[r.tickets,""],[r.inconnus,""],[(r.refus||0)+(r.vigilance||0),""]].forEach(([v,suf],i)=>compter($("m-"+i),v,suf));
+  [[r.questions,""],[r.resolues,""],[taux," %"],[r.tickets,""],[r.inconnus,""],[(r.refus||0)+(r.vigilance||0),""]].forEach(([v,suf],i)=>compter($("m-"+i),v,suf));
   const lang=Object.entries(r.par_langue||{}).map(([k,v])=>`${{ar:"العربية",fr:"Français",en:"English"}[k]||k} : ${v}`).join(" · ");
   const top=(r.top||[]).map(x=>`<li>${esc(x.titre[L]||x.titre.fr)} (${x.n})</li>`).join("");
   const sv=Object.entries(r.tickets_par_service||{}).map(([k,v])=>`<li>${esc(S.services[k]||k)} : ${v}</li>`).join("");
-  $("adm-detail").innerHTML=r.questions?`<p><b>${S.kLangues} :</b> ${lang}</p><p><b>${S.kTop} :</b></p><ol>${top}</ol>${sv?`<p><b>${S.kServices} :</b></p><ul>${sv}</ul>`:""}`:`<p class="note">${S.aucun}</p>`;
+  $("adm-detail").innerHTML=(r.demandes?`<p class="note">${esc(S.kFormule(r))}</p>`:"")+(r.questions?`<p><b>${S.kLangues} :</b> ${lang}</p><p><b>${S.kTop} :</b></p><ol>${top}</ol>${sv?`<p><b>${S.kServices} :</b></p><ul>${sv}</ul>`:""}`:`<p class="note">${S.aucun}</p>`);
   if(!$("sim-curseurs").children.length||$("sim-curseurs").dataset.l!==L){construireCurseurs();$("sim-curseurs").dataset.l=L}
   simuler();
   $("adm-benef").innerHTML=S.benef.map(([t,x])=>`<div><h4>${esc(t)}</h4>${esc(x)}</div>`).join("");

@@ -73,5 +73,13 @@ class Journal:
             ouverts = self.cx.execute("SELECT COUNT(*) FROM tickets WHERE statut='ouvert'").fetchone()[0]
             tickets = self.cx.execute("SELECT COUNT(*) FROM tickets").fetchone()[0]
             services = {r[0] or "fisc": r[1] for r in self.cx.execute("SELECT service, COUNT(*) FROM tickets GROUP BY service")}
-        return {"questions": total, "par_resultat": par, "par_langue": langues, "fiches_les_plus_demandees": top,
+            # un ticket compte contre la résolution : après une réponse (l'usager a quand même voulu un agent)
+            # ou comme nouvelle demande s'il n'a jamais été posé au bot (bouton « Parler à un agent » direct)
+            apres_reponse = self.cx.execute(
+                "SELECT COUNT(DISTINCT t.question) FROM tickets t WHERE EXISTS "
+                "(SELECT 1 FROM questions q WHERE q.question=t.question AND q.resultat='reponse')").fetchone()[0]
+            directs = self.cx.execute(
+                "SELECT COUNT(DISTINCT t.question) FROM tickets t WHERE NOT EXISTS "
+                "(SELECT 1 FROM questions q WHERE q.question=t.question AND q.resultat!='conversation')").fetchone()[0]
+        return {"tickets_apres_reponse": apres_reponse, "tickets_directs": directs, "questions": total, "par_resultat": par, "par_langue": langues, "fiches_les_plus_demandees": top,
                 "tickets_ouverts": ouverts, "tickets": tickets, "tickets_par_service": services}
