@@ -55,6 +55,10 @@ textarea{width:100%;min-height:70px;padding:10px;border:1px solid var(--ligne);b
 .chiffres div.fort{background:var(--sombre);color:#E2EBE8}.chiffres div.fort b{color:var(--or)}
 .benef{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:10px}
 .benef div{border:1px solid var(--ligne);border-radius:12px;padding:12px;background:#fff}.benef h4{margin:0 0 4px;color:var(--sombre)}
+.rappel{margin-top:14px;border:1px solid var(--or);border-radius:12px;padding:14px;background:#FFFBF2}
+.rappel h3{margin:0 0 6px;font-size:17px;color:var(--sombre)}.cases{display:flex;flex-wrap:wrap;gap:14px;margin:8px 0}
+.cases label{display:flex;align-items:center;gap:6px;margin:0;color:var(--encre);font-size:15px}.cases input{width:auto}
+#bandeau{max-width:980px;margin:12px auto 0;padding:0 16px}#bandeau div{background:#F7EBD2;border:1px solid var(--or);border-radius:12px;padding:10px 14px;margin-bottom:6px}
 .carte{background:#fff;border:1px solid var(--or);border-radius:12px;padding:12px 14px;margin-top:8px;white-space:normal;color:var(--encre)}
 .carte .ent{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-weight:700;color:var(--sombre);border-bottom:1px dashed var(--ligne);padding-bottom:6px;margin-bottom:6px}
 .carte dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 10px;font-size:14px}.carte dt{color:var(--doux)}.carte dd{margin:0}
@@ -80,6 +84,7 @@ footer{text-align:center;font-size:13px;color:var(--doux);padding:18px 16px 30px
   <button role="tab" data-onglet="src" aria-selected="false"><span data-t="ongSrc"></span></button>
 </nav>
 
+<div id="bandeau" aria-live="polite"></div>
 <main>
   <section id="p-chat" class="panneau">
     <div id="fil" aria-live="polite"></div>
@@ -99,6 +104,21 @@ footer{text-align:center;font-size:13px;color:var(--doux);padding:18px 16px 30px
 
   <section id="p-ech" class="panneau" hidden>
     <label for="profil" data-t="profil"></label><select id="profil"></select>
+    <div class="rappel">
+      <h3 data-t="rapTitre"></h3>
+      <p data-t="rapIntro" style="margin:0"></p>
+      <div class="cases">
+        <label><input type="checkbox" id="r-j7" checked><span data-t="rapJ7"></span></label>
+        <label><input type="checkbox" id="r-j2" checked><span data-t="rapJ2"></span></label>
+        <label><input type="checkbox" id="r-j0" checked><span data-t="rapJ0"></span></label>
+      </div>
+      <label for="r-mois" data-t="rapHorizon"></label>
+      <select id="r-mois" style="max-width:220px"><option value="3"></option><option value="6" selected></option><option value="12"></option></select>
+      <p><button class="bouton" id="b-ics" type="button" data-t="rapBouton"></button></p>
+      <div id="r-lien"></div>
+      <div class="cases"><label><input type="checkbox" id="r-ouverture"><span data-t="rapOuverture"></span></label></div>
+      <p class="note" data-t="rapNote"></p>
+    </div>
     <div id="liste-ech"></div>
     <p class="note" data-t="noteEch"></p>
   </section>
@@ -177,7 +197,10 @@ const T={
   noteVerif:"Demo data entered by hand. No access to any tax administration system.",introSrc:"Official texts the entries are based on:",pied:"Mourchid Jibaya · National Hackathon AI & Public Finance 2026",
   ex:["Is e-invoicing mandatory for doctors?","When is the monthly return due for a company?","Is there a tax amnesty in 2026?","What is Mobile ID?"]}};
 
-Object.assign(T.ar,{carteTitre:"بطاقة الإحالة كما تصل إلى العون",cNum:"رقم الملف",cDate:"التاريخ",cService:"الجهة",cLangue:"لغة السؤال",cQuestion:"السؤال",cContact:"الاتصال",cEssai:"ما حاوله المساعد",cProches:"أقرب البطاقات التي وجدها",cOuvert:"مفتوحة",cAucune:"لا شيء",cDemande:"لم يُذكر",
+Object.assign(T.ar,{rapTitre:"التذكير بالآجال",rapIntro:"أضف آجالك إلى رزنامة هاتفك أو حاسوبك، فتصلك التنبيهات حتى دون فتح المساعد.",rapJ7:"قبل 7 أيام",rapJ2:"قبل يومين",rapJ0:"يوم الأجل",
+  rapHorizon:"المدة",mois:{3:"3 أشهر",6:"6 أشهر",12:"12 شهراً"},rapBouton:"إضافة التذكيرات إلى رزنامتي",rapPret:"الملف جاهز: {n} أجلاً مع التنبيهات. إن لم يُفتح تلقائياً، انقر هنا:",rapFichier:"فتح ملف الرزنامة",
+  rapOuverture:"ذكّرني أيضاً عند فتح المساعد (الآجال القريبة خلال 7 أيام)",rapNote:"ملف رزنامة عادي (ics) يُفتح في رزنامة الآيفون أو أندرويد أو Outlook أو Google Agenda. لا يُرسل أي معطى، والآجال تُؤجَّل آلياً إن صادفت يوم أحد أو عطلة.",
+  bandeau:"تذكير: {l} — آخر أجل {d}",bandeauJ:" (بعد {j})",bandeauAuj:" (اليوم)",voirEch:"عرض آجالي وتفعيل التذكير",carteTitre:"بطاقة الإحالة كما تصل إلى العون",cNum:"رقم الملف",cDate:"التاريخ",cService:"الجهة",cLangue:"لغة السؤال",cQuestion:"السؤال",cContact:"الاتصال",cEssai:"ما حاوله المساعد",cProches:"أقرب البطاقات التي وجدها",cOuvert:"مفتوحة",cAucune:"لا شيء",cDemande:"لم يُذكر",
   res:{sans_source:"لم يجد مصدراً رسمياً كافياً، فلم يُجب",reponse_donnee:"أجاب بمصدر، والمستعمل طلب عوناً",refus:"طلب تحايل رُفض"},cartesSession:"بطاقات الإحالة في هذه الجلسة (كما يراها العون)",langues:{ar:"العربية",fr:"الفرنسية",en:"الإنجليزية"},ongAdm:"استفادة الإدارة",parler:"التحدث مع عون",agentTitre:"إحالة سؤالي على عون مختص",agentService:"اختر الجهة المختصة",agentQuestion:"سؤالك",
   agentContact:"هاتف أو بريد إلكتروني للرد عليك (اختياري)",agentNote:"لا تُستعمل بيانات الاتصال إلا للرد على سؤالك. لا تكتب معرّفك الجبائي ولا أرقام حساباتك.",agentEnvoyer:"إرسال إلى العون",annuler:"إلغاء",
   services:{fisc:"الإرشاد الجبائي العام (مركز الإرشاد الجبائي عن بعد)",controle:"ملفي الجبائي (مكتب مراقبة الأداءات)",recouvrement:"الدفع والديون الجبائية (قباضة المالية)",rne:"السجل الوطني للمؤسسات",identite:"الهوية الرقمية (Mobile ID / DigiGO)"},
@@ -187,7 +210,10 @@ Object.assign(T.ar,{carteTitre:"بطاقة الإحالة كما تصل إلى �
   kTemps:"وقت أعوان مُوفَّر (تقدير)",kMin:"دقيقة",kLangues:"اللغات",kTop:"المواضيع الأكثر طلباً",kServices:"الإحالات حسب الجهة",aucun:"لا شيء بعد: اطرح أسئلة في تبويب المساعد.",
   porteeServeur:"أرقام كل المستعملين منذ تشغيل الخادم. عدّ فقط، دون أي معطى شخصي.",porteeSession:"نسخة دون إنترنت: الأرقام تخصّ هذه الجلسة فقط. عدّ فقط، دون أي معطى شخصي.",
   benef:[["شبابيك أقل اكتظاظاً","الأسئلة المتكررة تُجاب آلياً بمرجعها، والأعوان يتفرّغون للملفات المعقدة وللمراقبة."],["جواب موحّد وموثّق","نفس الجواب ونفس المرجع لكل المطالبين بالأداء، في كل الولايات وبثلاث لغات."],["خريطة نقاط التعثّر","الأسئلة دون جواب تكشف النصوص التي تحتاج مذكرة توضيحية أو تبسيطاً."],["موارد في آجالها","الآجال والتثبّت المسبق يقلّصان التأخير والأخطاء، فتُستخلص الموارد في وقتها."]]});
-Object.assign(T.fr,{carteTitre:"Carte de transfert telle que l'agent la reçoit",cNum:"N° de dossier",cDate:"Date",cService:"Service",cLangue:"Langue",cQuestion:"Question",cContact:"Contact",cEssai:"Ce que l'assistant a tenté",cProches:"Fiches les plus proches trouvées",cOuvert:"ouvert",cAucune:"aucune",cDemande:"non fourni",
+Object.assign(T.fr,{rapTitre:"Rappel des échéances",rapIntro:"Ajoutez vos échéances au calendrier de votre téléphone ou ordinateur : les alertes arrivent même quand l'assistant est fermé.",rapJ7:"7 jours avant",rapJ2:"2 jours avant",rapJ0:"Le jour même",
+  rapHorizon:"Période",mois:{3:"3 mois",6:"6 mois",12:"12 mois"},rapBouton:"Ajouter les rappels à mon calendrier",rapPret:"Fichier prêt : {n} échéances avec alertes. S'il ne s'ouvre pas tout seul, touchez ici :",rapFichier:"Ouvrir le fichier de calendrier",
+  rapOuverture:"Me le rappeler aussi à l'ouverture de l'assistant (échéances dans les 7 jours)",rapNote:"Fichier de calendrier standard (.ics) : iPhone, Android, Outlook, Google Agenda. Rien n'est envoyé ; les échéances qui tombent un dimanche ou un jour férié sont déjà reportées.",
+  bandeau:"Rappel : {l} — date limite {d}",bandeauJ:" (dans {j})",bandeauAuj:" (aujourd'hui)",voirEch:"Voir mes échéances et activer le rappel",carteTitre:"Carte de transfert telle que l'agent la reçoit",cNum:"N° de dossier",cDate:"Date",cService:"Service",cLangue:"Langue",cQuestion:"Question",cContact:"Contact",cEssai:"Ce que l'assistant a tenté",cProches:"Fiches les plus proches trouvées",cOuvert:"ouvert",cAucune:"aucune",cDemande:"non fourni",
   res:{sans_source:"pas de source officielle suffisante : aucune réponse donnée",reponse_donnee:"réponse sourcée donnée ; l'usager demande malgré tout un agent",refus:"demande de fraude refusée"},cartesSession:"Cartes de transfert de cette session (vue de l'agent)",langues:{ar:"arabe",fr:"français",en:"anglais"},ongAdm:"Pour l'administration",parler:"Parler à un agent",agentTitre:"Transmettre ma question à un agent compétent",agentService:"Choisissez le service compétent",agentQuestion:"Votre question",
   agentContact:"Téléphone ou e-mail pour vous répondre (facultatif)",agentNote:"Vos coordonnées servent uniquement à vous répondre. N'indiquez ni votre matricule fiscal ni vos numéros de compte.",agentEnvoyer:"Envoyer à l'agent",annuler:"Annuler",
   services:{fisc:"Information fiscale générale (Centre d'information fiscale à distance)",controle:"Mon dossier fiscal (bureau de contrôle des impôts)",recouvrement:"Paiement et dettes fiscales (recette des finances)",rne:"Registre national des entreprises",identite:"Identité numérique (Mobile ID / DigiGO)"},
@@ -197,7 +223,10 @@ Object.assign(T.fr,{carteTitre:"Carte de transfert telle que l'agent la reçoit"
   kTemps:"Temps d'agent économisé (estimation)",kMin:"min",kLangues:"Langues",kTop:"Sujets les plus demandés",kServices:"Transferts par service",aucun:"Rien pour l'instant : posez des questions dans l'onglet Assistant.",
   porteeServeur:"Chiffres de tous les usagers depuis le démarrage du serveur. Comptages uniquement, aucune donnée personnelle.",porteeSession:"Version hors ligne : chiffres de cette session uniquement. Comptages seulement, aucune donnée personnelle.",
   benef:[["Guichets désengorgés","Les questions répétitives reçoivent une réponse sourcée ; les agents se consacrent aux dossiers complexes et au contrôle."],["Réponse homogène et sourcée","La même réponse, avec la même référence, pour tous les contribuables, dans toutes les régions et en trois langues."],["Carte des points de blocage","Les questions sans réponse révèlent les textes qui appellent une note commune ou une simplification."],["Recettes à temps","Échéances et vérification avant dépôt réduisent retards et erreurs : les recettes rentrent à temps."]]});
-Object.assign(T.en,{carteTitre:"Transfer card as the agent receives it",cNum:"Case no.",cDate:"Date",cService:"Service",cLangue:"Language",cQuestion:"Question",cContact:"Contact",cEssai:"What the assistant tried",cProches:"Closest entries found",cOuvert:"open",cAucune:"none",cDemande:"not provided",
+Object.assign(T.en,{rapTitre:"Deadline reminders",rapIntro:"Add your deadlines to your phone or computer calendar: alerts arrive even when the assistant is closed.",rapJ7:"7 days before",rapJ2:"2 days before",rapJ0:"On the day",
+  rapHorizon:"Period",mois:{3:"3 months",6:"6 months",12:"12 months"},rapBouton:"Add reminders to my calendar",rapPret:"File ready: {n} deadlines with alerts. If it does not open automatically, tap here:",rapFichier:"Open the calendar file",
+  rapOuverture:"Also remind me when I open the assistant (deadlines within 7 days)",rapNote:"Standard calendar file (.ics): iPhone, Android, Outlook, Google Calendar. Nothing is sent; deadlines falling on a Sunday or public holiday are already moved.",
+  bandeau:"Reminder: {l} — deadline {d}",bandeauJ:" (in {j})",bandeauAuj:" (today)",voirEch:"See my deadlines and turn on reminders",carteTitre:"Transfer card as the agent receives it",cNum:"Case no.",cDate:"Date",cService:"Service",cLangue:"Language",cQuestion:"Question",cContact:"Contact",cEssai:"What the assistant tried",cProches:"Closest entries found",cOuvert:"open",cAucune:"none",cDemande:"not provided",
   res:{sans_source:"no sufficient official source: no answer given",reponse_donnee:"sourced answer given; the user still asked for an agent",refus:"fraud request refused"},cartesSession:"Transfer cards in this session (agent view)",langues:{ar:"Arabic",fr:"French",en:"English"},ongAdm:"For the administration",parler:"Talk to an agent",agentTitre:"Forward my question to the right agent",agentService:"Choose the competent service",agentQuestion:"Your question",
   agentContact:"Phone or e-mail to reply to you (optional)",agentNote:"Your contact details are only used to answer you. Do not enter your tax ID or account numbers.",agentEnvoyer:"Send to the agent",annuler:"Cancel",
   services:{fisc:"General tax information (remote tax information centre)",controle:"My tax file (tax audit office)",recouvrement:"Payment and tax debts (tax collection office)",rne:"National business register",identite:"Digital identity (Mobile ID / DigiGO)"},
@@ -224,6 +253,8 @@ function appliquer(l){
   $("q").placeholder=S.ph;
   const vp=$("v-profil").options;vp[0].text=S.pp;vp[1].text=S.pm;
   $("a-service").innerHTML=Object.entries(S.services).map(([k,v])=>`<option value="${k}">${esc(v)}</option>`).join("");
+  [...$("r-mois").options].forEach(o=>o.text=S.mois[o.value]);
+  bandeau();
   if(!$("p-adm").hidden)chargerAdm();
   $("exemples").innerHTML=S.ex.map(x=>`<button class="puce">${esc(x)}</button>`).join("");
   let b=$("bienvenue");if(!b){b=bulle("bot","");b.id="bienvenue"}b.textContent=S.bienvenue;b.dir=l==="ar"?"rtl":"ltr";
@@ -242,6 +273,7 @@ async function poser(q){
     if(r.validation_experte)h+=` · ${S.valide} ${esc(r.validation_experte.par)}`;
     if(r.source.url)h+=`<span class="url"><a href="${esc(r.source.url)}" rel="noopener">${esc(r.source.url)}</a></span>`;
     h+=`</div>`;
+    if(r.action==="echeances")h+=`<p><button class="bouton second" data-voir-ech="1">${S.voirEch}</button></p>`;
     if(r.voir_aussi&&r.voir_aussi.length)h+=`<div class="puces"><small>${S.voir} :</small>${r.voir_aussi.map(v=>`<button class="puce" data-fiche="${esc(v.id)}">${esc(v.titre)}</button>`).join("")}</div>`;
   }else if(r.type==="inconnu"){
     h=esc(r.texte);
@@ -255,18 +287,33 @@ async function ouvrirFiche(id){
   const S=T[L];const d=bulle("bot",`<div class="titre">${esc(r.titre)}</div>${esc(r.texte)}<div class="ref">${S.source} : ${esc(r.source.reference||"")}${r.source.url?`<span class="url">${esc(r.source.url)}</span>`:""}</div>`);d.dir=L==="ar"?"rtl":"ltr";
 }
 async function chargerEcheances(){
-  const S=T[L];const sel=$("profil");const actuel=sel.value||"pp";
+  const S=T[L];const sel=$("profil");const actuel=sel.value||lire("mj-rappel")||"pp";
   const r=await api(`/api/echeances?profil=${actuel}&jours=150`);
   sel.innerHTML=Object.entries(r.profils).map(([k,v])=>`<option value="${k}" ${k===actuel?"selected":""}>${esc(v[L])}</option>`).join("");
   $("liste-ech").innerHTML=r.echeances.map(e=>{
     const rep=e.report.length?`<small>${S.reporte} ${e.date_legale} (${e.report.map(x=>esc(x.motif[L])).join(", ")})</small>`:"";
-    return `<div class="ech"><div><b>${esc(e.libelle[L])}</b>${e.periode?` · ${esc(e.periode)}`:""}<small>${e.date}</small>${rep}</div><div class="j">${e.jours_restants===0?S.auj:e.jours_restants+" "+S.j}</div></div>`}).join("");
+    return `<div class="ech"><div><b>${esc(e.libelle[L])}</b>${e.periode?` · ${esc(e.periode)}`:""}<small>${e.date}</small>${rep}</div><div class="j">${e.jours_restants===0?S.auj:nJours(e.jours_restants)}</div></div>`}).join("");
 }
 async function verifierDecl(){
   const S=T[L];
   const r=await api("/api/verification",{profil:$("v-profil").value,periode:$("v-periode").value,ca_ht:$("v-ca").value,taux:$("v-taux").value,
     tva_declaree:$("v-tva").value,tva_deductible:$("v-ded").value,date_depot:$("v-depot").value});
   $("res-verif").innerHTML=r.points.map(p=>`<div class="point p-${p.niveau}">${esc(fmt(S[p.code]||p.code,{a:p.attendue,d:p.declaree??p.date,e:p.ecart,m:p.montant,j:p.jours}))}</div>`).join("");
+}
+function nJours(j){if(L!=="ar")return j+" "+T[L].j;if(j===1)return "يوم واحد";if(j===2)return "يومان";return j+(j<=10?" أيام":" يوماً")}
+function lire(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function ecrire(k,v){try{v===null?localStorage.removeItem(k):localStorage.setItem(k,v)}catch(e){}}
+async function creerRappels(){
+  const S=T[L];const alertes=["j7","j2","j0"].filter(a=>$("r-"+a).checked);
+  const r=await api("/api/rappels",{profil:$("profil").value,mois:$("r-mois").value,alertes,langue:L});
+  const url="data:text/calendar;charset=utf-8,"+encodeURIComponent(r.ics);
+  const a=document.createElement("a");a.href=url;a.download="Mourchid_Jibaya_echeances.ics";document.body.appendChild(a);a.click();a.remove();
+  $("r-lien").innerHTML=`<p>${esc(fmt(S.rapPret,{n:r.nombre}))} <a href="${url}" download="Mourchid_Jibaya_echeances.ics">${esc(S.rapFichier)}</a></p>`;
+}
+async function bandeau(){
+  const profil=lire("mj-rappel");$("bandeau").innerHTML="";if(!profil)return;
+  const S=T[L];const r=await api(`/api/echeances?profil=${profil}&jours=7`);
+  $("bandeau").innerHTML=r.echeances.map(e=>`<div dir="${L==="ar"?"rtl":"ltr"}">⏰ ${esc(fmt(S.bandeau,{l:e.libelle[L]+(e.periode?" · "+e.periode:""),d:e.date}))}${e.jours_restants===0?S.bandeauAuj:fmt(S.bandeauJ,{j:nJours(e.jours_restants)})}</div>`).join("");
 }
 function masquer(c){c=String(c||"");return c.length>4?c.slice(0,3)+"•••"+c.slice(-2):c}
 function carteHTML(c){
@@ -312,6 +359,8 @@ document.addEventListener("click",e=>{
   else if(t.dataset.fiche)ouvrirFiche(t.dataset.fiche);
   else if(t.dataset.agent!==undefined)ouvrirAgent(t.dataset.agent);
   else if(t.id==="b-agent")ouvrirAgent("");
+  else if(t.id==="b-ics")creerRappels();
+  else if(t.dataset.voirEch){document.querySelector('nav button[data-onglet="ech"]').click()}
   else if(t.id==="b-envoyer-agent")envoyerAgent();
   else if(t.id==="b-annuler-agent")$("f-agent").hidden=true;
   else if(t.classList.contains("puce")&&t.parentElement.id==="exemples")poser(t.textContent);
@@ -320,6 +369,9 @@ document.addEventListener("click",e=>{
 $("f-question").addEventListener("submit",e=>{e.preventDefault();poser($("q").value)});
 $("profil").addEventListener("change",chargerEcheances);
 $("adm-min").addEventListener("input",chargerAdm);
+$("r-ouverture").checked=!!lire("mj-rappel");
+$("r-ouverture").addEventListener("change",e=>{ecrire("mj-rappel",e.target.checked?$("profil").value:null);bandeau()});
+$("profil").addEventListener("change",()=>{if($("r-ouverture").checked){ecrire("mj-rappel",$("profil").value);bandeau()}});
 const m=new Date();m.setMonth(m.getMonth()-1);$("v-periode").value=m.toISOString().slice(0,7);
 appliquer(L);
 </script>

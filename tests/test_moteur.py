@@ -65,3 +65,17 @@ class TestVerification(unittest.TestCase):
         self.assertIn("tva_ecart", codes)
         self.assertIn("retard", codes)
         self.assertEqual(r["statut"], "critique")
+
+
+class TestRappels(unittest.TestCase):
+    def test_fichier_calendrier(self):
+        from mourchid.rappels import ics
+        cal = Calendrier(DATA / "jours_feries.json")
+        ech = cal.echeances("pm", 90, date(2026, 9, 25))
+        texte = ics(ech, "ar", ("j7", "j0"))
+        self.assertTrue(texte.startswith("BEGIN:VCALENDAR"))
+        self.assertEqual(texte.count("BEGIN:VEVENT"), len(ech))
+        self.assertEqual(texte.count("BEGIN:VALARM"), 2 * len(ech))
+        self.assertIn("TRIGGER:-P6DT15H", texte)
+        self.assertNotIn("TRIGGER:-P1DT15H", texte)
+        self.assertTrue(all(len(l.encode("utf-8")) <= 75 * 4 for l in texte.split("\r\n")))

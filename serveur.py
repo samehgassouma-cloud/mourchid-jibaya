@@ -17,6 +17,7 @@ from mourchid import __version__
 from mourchid.assistant import Assistant
 from mourchid.echeances import PROFILS
 from mourchid.langue import detect_lang
+from mourchid.rappels import ics
 from mourchid.verification import verifier
 
 RACINE = Path(__file__).resolve().parent
@@ -147,6 +148,10 @@ class Gestionnaire(BaseHTTPRequestHandler):
             carte = ASSISTANT.journal.ticket(langue, question, (d.get("contact") or "")[:120], service,
                                              ASSISTANT.contexte_transfert(question, langue))
             return self._json(carte)
+        if u.path == "/api/rappels":
+            mois = max(1, min(int(d.get("mois") or 6), 12))
+            ech = ASSISTANT.calendrier.echeances(d.get("profil", "pp"), mois * 31)
+            return self._json({"nombre": len(ech), "ics": ics(ech, d.get("langue", "fr"), d.get("alertes") or ("j7", "j2", "j0"))})
         if u.path == "/api/verification":
             return self._json(verifier(d, ASSISTANT.calendrier))
         if u.path.startswith("/api/admin/"):

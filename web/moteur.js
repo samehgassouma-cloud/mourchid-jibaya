@@ -241,6 +241,38 @@ from as this that these those should must will
     return { statut: ["ok", "alerte", "critique"][pire], points, taux };
   }
 
+  // ---------------- rappels (.ics) — portage de mourchid/rappels.py ----------------
+  const ALERTES = { j7: "-P6DT15H", j2: "-P1DT15H", j0: "PT8H" };
+  const TX = {
+    nom: { fr: "Mourchid Jibaya — échéances fiscales", ar: "مرشد جباية — الآجال الجبائية", en: "Mourchid Jibaya — tax deadlines" },
+    limite: { fr: "Dernier délai", ar: "آخر أجل", en: "Deadline" }, reporte: { fr: "reporté du", ar: "مؤجَّل من", en: "moved from" },
+    source: { fr: "Source : agenda fiscal de la DGI (jibaya.tn/agenda)", ar: "المصدر: الرزنامة الجبائية للإدارة العامة للأداءات (jibaya.tn/agenda)", en: "Source: DGI tax calendar (jibaya.tn/agenda)" },
+    alerte: { j7: { fr: "Échéance fiscale dans 7 jours", ar: "أجل جبائي بعد 7 أيام", en: "Tax deadline in 7 days" },
+      j2: { fr: "Échéance fiscale dans 2 jours", ar: "أجل جبائي بعد يومين", en: "Tax deadline in 2 days" },
+      j0: { fr: "Échéance fiscale aujourd'hui", ar: "آخر أجل جبائي اليوم", en: "Tax deadline today" } },
+  };
+  const echapper = (t) => t.replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\n/g, "\\n");
+  function plier(l) { const out = [l.slice(0, 60)]; l = l.slice(60); while (l) { out.push(" " + l.slice(0, 59)); l = l.slice(59); } return out; }
+  function ics(ech, langue, alertes, horodatage) {
+    langue = ["ar", "fr", "en"].includes(langue) ? langue : "fr";
+    alertes = ["j7", "j2", "j0"].filter((a) => (alertes || ["j7", "j2", "j0"]).includes(a));
+    const stamp = horodatage || new Date().toISOString().replace(/[-:]/g, "").slice(0, 15) + "Z";
+    const L = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Mourchid Jibaya//Echeances fiscales//FR", "CALSCALE:GREGORIAN", "METHOD:PUBLISH", "X-WR-CALNAME:" + echapper(TX.nom[langue])];
+    for (const e of ech) {
+      const d = new Date(e.date + "T00:00:00Z"), f = (x) => x.toISOString().slice(0, 10).replace(/-/g, "");
+      const titre = e.libelle[langue] + (e.periode ? " · " + e.periode : "");
+      let desc = `${TX.limite[langue]} : ${e.date}`;
+      if (e.report && e.report.length) desc += ` (${TX.reporte[langue]} ${e.date_legale} : ${e.report.map((m) => m.motif[langue]).join(", ")})`;
+      desc += "\n" + TX.source[langue];
+      L.push("BEGIN:VEVENT", `UID:mj-${e.type}-${e.date}@mourchid-jibaya`, "DTSTAMP:" + stamp, "DTSTART;VALUE=DATE:" + f(d),
+        "DTEND;VALUE=DATE:" + f(plus(d, 1)), "SUMMARY:" + echapper(titre), "DESCRIPTION:" + echapper(desc), "TRANSP:TRANSPARENT");
+      for (const a of alertes) L.push("BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + echapper(TX.alerte[a][langue] + " — " + titre), "TRIGGER:" + ALERTES[a], "END:VALARM");
+      L.push("END:VEVENT");
+    }
+    L.push("END:VCALENDAR");
+    return L.flatMap(plier).join("\r\n") + "\r\n";
+  }
+
   // ---------------- « API » locale (mêmes routes que serveur.py) ----------------
   let numeroTicket = 0;
   // indicateurs de la session (hors ligne : uniquement des comptages, rien n'est envoyé)
@@ -283,6 +315,11 @@ from as this that these those should must will
           tickets_par_service: S.tickets_par_service, par_langue: S.par_langue, top, fiches: bilan, cartes: S.cartes };
       }
       case "/api/verification": return verifier(corps);
+      case "/api/rappels": {
+        const mois = Math.max(1, Math.min(+corps.mois || 6, 12));
+        const ech = echeances(corps.profil || "pp", mois * 31);
+        return { nombre: ech.length, ics: ics(ech, corps.langue || "fr", corps.alertes) };
+      }
       case "/api/echeances": return { profils: PROFILS, echeances: echeances(q.profil || "pp", +q.jours || 120) };
       case "/api/fiche": { const f = fiches.find((x) => x.id === q.id); return f ? ficheReponse(f, q.langue || "fr") : { erreur: "introuvable" }; }
       case "/api/sources": {
@@ -293,6 +330,6 @@ from as this that these those should must will
     }
     return { erreur: "introuvable" };
   }
-  return { api, repondre, chercher, echeances, verifier, normaliser, mots };
+  return { api, repondre, chercher, echeances, verifier, normaliser, mots, ics };
 })();
 if (typeof module !== "undefined") module.exports = MJ;

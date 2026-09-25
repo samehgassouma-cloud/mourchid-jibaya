@@ -22,6 +22,7 @@ convertie au nouveau format ; les questions types, le lexique et la validation e
 ## Parcours usager et administration
 
 - **Parler à un agent** : à tout moment (ou quand aucune source ne suffit), l'usager choisit le service compétent — information fiscale, bureau de contrôle, recette des finances, RNE, identité numérique — et transmet sa question ; le ticket arrive dans `/admin` avec le service.
+- **Rappel des échéances** : l'usager choisit ses alertes (7 jours avant, 2 jours avant, le jour même) et ajoute ses échéances au calendrier de son téléphone ou ordinateur (fichier .ics standard : iPhone, Android, Outlook, Google Agenda) ; les alertes arrivent même assistant fermé. Option de rappel à l'ouverture de l'assistant. Module `mourchid/rappels.py`.
 - **Pour l'administration** : onglet public d'indicateurs en direct — questions posées, réponses sourcées sans agent, taux de résolution, transferts par service, questions sans source (textes à clarifier), refus, sujets les plus demandés, temps d'agent économisé (estimation, hypothèse modifiable).
 
 ## Version hors ligne (téléphone, sans Internet)
