@@ -5,6 +5,7 @@ const fs = require("fs");
 const DEMO = process.env.DEMO_URL || "https://COMPTE-mourchid-jibaya.hf.space";
 const GH = process.env.GITHUB_URL || "https://github.com/COMPTE/mourchid-jibaya";
 const IMG = __dirname + "/img/";
+const TAILLES = JSON.parse(fs.readFileSync(IMG + "tailles.json", "utf8"));
 
 const C = { encre: "13233F", encre2: "1E3560", glace: "C9D6EE", papier: "F3F5F4", blanc: "FFFFFF", texte: "16202E", doux: "5D6878",
   ligne: "DCE2E6", olive: "3F6B1E", oliveF: "E8F0DF", ambre: "9A6212", ambreF: "FBF0DC", rouge: "A3261B", rougeF: "FBE7E4", ia: "4B45B8", iaF: "ECEBFB" };
@@ -39,8 +40,10 @@ function pastille(s, x, y, txt, fond, coul, w) {
   s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x, y, w, h: 0.42, rectRadius: 0.21, fill: { color: fond }, line: { type: "none" } });
   s.addText(txt, { x, y, w, h: 0.42, align: "center", valign: "middle", fontFace: CORPS, fontSize: 13, color: coul, bold: true, margin: 0, isTextBox: true });
 }
-function image(s, fichier, x, y, w, pxW, pxH, bord = true) {
-  const h = w * pxH / pxW;
+function image(s, fichier, x, y, w, _pxW, _pxH, bord = true, hMax = 99) { // tailles lues dans img/tailles.json
+  const [pxW, pxH] = TAILLES[fichier];
+  let h = w * pxH / pxW;
+  if (h > hMax) { h = hMax; w = h * pxW / pxH; }
   s.addImage({ path: IMG + fichier, x, y, w, h, shadow: bord ? { type: "outer", color: "13233F", opacity: 0.18, blur: 12, offset: 3, angle: 90 } : undefined });
   return h;
 }
@@ -183,8 +186,8 @@ function qr(s, x, y, d) { s.addImage({ path: IMG + "qr_demo.png", x, y, w: d, h:
   const g = [["Une source ou rien", "Réponse uniquement à partir des fiches officielles, référence affichée."], ["« Je ne sais pas »", "Sans source suffisante, il le dit et transfère à un agent."],
     ["Refus du contournement", "Demande de fraude : refus motivé et pistes légales. Question ambiguë : rappel du cadre légal."], ["Données protégées", "Rien n'est transmis sans l'accord du contribuable ; tableau de bord en comptages seulement."]];
   g.forEach(([t, c], i) => { const x = M + (i % 2) * 3.55, y = 1.6 + Math.floor(i / 2) * 2.45; carte(s, x, y, 3.35, 2.25); blocTexte(s, x + 0.28, y + 0.28, 2.8, t, c, { h: 1.8 }); });
-  const h1 = image(s, "carte_refus.png", 8.05, 1.6, 4.7, 1544, 702);
-  image(s, "carte_inconnu.png", 8.05, 1.6 + h1 + 0.35, 4.7, 1544, 436);
+  const h1 = image(s, "carte_refus.png", 8.05, 1.5, 4.7, 0, 0, true, 3.45);
+  image(s, "carte_inconnu.png", 8.05, 1.5 + h1 + 0.3, 4.7, 0, 0, true, 1.6);
   pied(s);
   s.addNotes("Deux cas réels du prototype à droite : une demande de fraude refusée avec des pistes légales, et une question hors sujet où l'assistant avoue ne pas savoir.");
 }
@@ -210,12 +213,12 @@ function qr(s, x, y, d) { s.addImage({ path: IMG + "qr_demo.png", x, y, w: d, h:
 {
   const s = pres.addSlide(); s.background = { color: C.papier };
   titre(s, "Une IA qui montre son raisonnement");
-  image(s, "carte_trace.png", M, 1.4, 4.9, 1544, 1660);
+  image(s, "carte_trace.png", M, 1.35, 4.9, 0, 0, true, 5.45);
   const pts = [["Langue comprise", "Arabe, darija, français ou anglais, détectés automatiquement."], ["Mots et concepts", "« فاتورة إلكترونية » et « facture électronique » mènent au même concept."],
     ["Fiches candidates", "Score et couverture de chaque fiche, et le seuil exigé pour répondre."], ["Texte officiel d'origine", "Quand l'IA reformule, l'usager peut toujours afficher la fiche brute."]];
-  pts.forEach(([t, c], i) => blocTexte(s, 6.1, 1.55 + i * 1.2, 6.6, t, c, { h: 1.1, fc: 15 }));
-  carte(s, 6.1, 6.2, 6.6, 0.62, C.encre);
-  s.addText("L'agent et le contribuable voient pourquoi la réponse est donnée.", { x: 6.3, y: 6.2, w: 6.3, h: 0.62, fontFace: CORPS, fontSize: 15, bold: true, color: C.blanc, valign: "middle", margin: 0, isTextBox: true });
+  pts.forEach(([t, c], i) => blocTexte(s, 5.0, 1.55 + i * 1.2, 7.7, t, c, { h: 1.1, fc: 15 }));
+  carte(s, 5.0, 6.2, 7.7, 0.62, C.encre);
+  s.addText("L'agent et le contribuable voient pourquoi la réponse est donnée.", { x: 5.2, y: 6.2, w: 6.3, h: 0.62, fontFace: CORPS, fontSize: 15, bold: true, color: C.blanc, valign: "middle", margin: 0, isTextBox: true });
   pied(s);
   s.addNotes("Transparence : on ouvre « comment j'ai trouvé cette réponse ». C'est ce qui rend l'outil acceptable pour une administration.");
 }

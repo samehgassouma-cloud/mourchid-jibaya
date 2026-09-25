@@ -74,7 +74,7 @@ flowchart LR
 | `mourchid/base.py`, `journal.py` + `data/fiches.json` | fiches officielles et validation experte, journal SQLite (comptages) |
 | `web/` | interface usager (`index.html`, `assets/app.js`) et administration (`admin.html`, `assets/admin.js`), sans framework |
 | `web/moteur.js` | moteur en JavaScript (portage du moteur Python) pour le mode hors ligne |
-| `outils/` | construction hors ligne, contrôle de parité Python/JS, déploiement Hugging Face |
+| `outils/` | construction hors ligne, parité Python/JS, recette navigateur (Playwright), déploiement Hugging Face |
 
 ## Démarrer
 
@@ -104,6 +104,8 @@ Rédaction par IA : définir `ANTHROPIC_API_KEY` (variable d'environnement ou `c
 | Parité moteur Python / moteur JavaScript hors ligne — `python outils/verifier_parite.py` | **101/101** questions identiques ; échéances, TVA et .ics identiques |
 | Temps de réponse de la recherche (sans LLM) | < 1 ms par question |
 | Base de fiches | 34 : 20 « source officielle », 13 « à confirmer », 1 interne |
+
+| Recette navigateur de bout en bout (usager desktop et mobile arabe, hors ligne, repli automatique, administration) — `python outils/recette_e2e.py` | **28/28**, aucune erreur JavaScript |
 
 Intégration continue : `.github/workflows/ci.yml` rejoue tests, évaluation, parité et construction Docker à chaque push.
 
