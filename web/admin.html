@@ -1,166 +1,123 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr" dir="ltr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Administration · Mourchid Jibaya</title>
+<meta name="theme-color" content="#13233F">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%2313233F'/%3E%3Ctext x='32' y='42' font-size='26' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='700'%3Eم%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Readex+Pro:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/app.css">
 <style>
-:root{--fond:#F3F6F4;--carte:#fff;--encre:#1C2B30;--doux:#5A6A6E;--sombre:#0E3B43;--or:#B8862B;--ligne:#D3DEDB}
-*{box-sizing:border-box}body{margin:0;background:var(--fond);color:var(--encre);font:15px/1.5 "Segoe UI",Tahoma,"Noto Sans Arabic",Arial,sans-serif}
-[hidden]{display:none!important}
-header{background:var(--sombre);color:#fff;padding:14px 16px}header b{font-size:18px}
-main{max-width:1100px;margin:16px auto 40px;padding:0 16px}
-.panneau{background:var(--carte);border:1px solid var(--ligne);border-radius:14px;padding:16px;margin-bottom:14px}
-nav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
-nav button,.b{border:1px solid var(--ligne);background:#fff;border-radius:20px;padding:7px 14px;cursor:pointer;font:inherit}
-nav button[aria-selected=true]{background:var(--sombre);color:#fff}
-.b.or{background:var(--or);border-color:var(--or);font-weight:700}
-input,select,textarea{width:100%;padding:8px;border:1px solid var(--ligne);border-radius:8px;font:inherit}
-textarea{min-height:70px}label{display:block;font-size:13px;color:var(--doux);margin:8px 0 3px}
-.bilan{display:flex;gap:10px;flex-wrap:wrap}.bilan div{background:#fff;border:1px solid var(--ligne);border-radius:12px;padding:10px 14px}.bilan b{display:block;font-size:22px;color:var(--sombre)}
-table{width:100%;border-collapse:collapse}td,th{border-bottom:1px solid var(--ligne);padding:8px;text-align:start;vertical-align:top}th{font-size:13px;color:var(--doux)}
-.st{font-size:12px;font-weight:700;border-radius:10px;padding:1px 8px;white-space:nowrap}
-.st-source_officielle{background:#D9EFE3;color:#2E7D5B}.st-a_confirmer{background:#F7EBD2;color:#8A6417}.st-interne{background:#E6E9EA}.st-brouillon{background:#F6DEDC;color:#B3261E}
-.grille{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}
-.rtl{direction:rtl}
-.carte{border:1px solid var(--or);border-radius:12px;padding:12px;margin:10px 0;background:#FFFBF2}.carte .ent{display:flex;justify-content:space-between;margin-bottom:6px}.carte th{width:150px}.petit{font-size:12.5px;color:var(--doux)}
+  body { overflow-y: auto; }
+  .haut { background: var(--encre); color: #fff; }
+  .haut .cadre { max-width: 1120px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding-top: 16px; padding-bottom: 0; }
+  .haut .marque b { color: #fff; }
+  .haut a { color: #C9D6EE; font-size: 14px; margin-inline-start: auto; text-decoration: none; }
+  .tabs { width: 100%; display: flex; gap: 2px; overflow-x: auto; margin-top: 10px; }
+  .tabs button { border: 0; background: transparent; color: #C9D6EE; padding: 12px 16px; border-radius: 10px 10px 0 0; cursor: pointer; white-space: nowrap; font-size: 15px; }
+  .tabs button[aria-selected="true"] { background: var(--papier); color: var(--texte); font-weight: 600; }
+  .contenu { max-width: 1120px; margin: 0 auto; padding: 26px 24px 60px; }
+  .kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 18px; }
+  .kpi { background: var(--surface); border: 1px solid var(--ligne); border-radius: var(--r-m); padding: 16px; }
+  .kpi b { display: block; font: 600 34px/1.05 var(--titre); color: var(--encre); }
+  @media (prefers-color-scheme: dark) { .kpi b { color: #fff; } }
+  .kpi span { color: var(--doux); font-size: 14px; }
+  .kpi.fort { background: var(--encre); border-color: var(--encre); }
+  .kpi.fort b, .kpi.fort span { color: #fff; }
+  .deux { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 800px) { .deux { grid-template-columns: 1fr; } .kpis { grid-template-columns: 1fr 1fr; } }
+  .barres { display: grid; gap: 9px; margin-top: 10px; }
+  .barre-l { display: grid; grid-template-columns: minmax(90px, 38%) 1fr 34px; gap: 10px; align-items: center; font-size: 14px; }
+  .barre-l .piste { height: 10px; background: var(--papier); border-radius: 6px; overflow: hidden; }
+  .barre-l .piste i { display: block; height: 100%; background: var(--encre-doux); border-radius: 6px; }
+  .formule { font-size: 13px; color: var(--doux); background: var(--papier); border-radius: 8px; padding: 8px 10px; margin-top: 10px; }
+  .curseur { display: grid; gap: 4px; }
+  .curseur label { display: flex; justify-content: space-between; font-size: 14px; }
+  .curseur output { font-weight: 600; }
+  input[type=range] { width: 100%; accent-color: var(--encre); }
+  .gain { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--ligne); }
+  .gain b { font: 600 24px/1 var(--titre); }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: start; padding: 10px 8px; border-bottom: 1px solid var(--ligne); vertical-align: top; }
+  th { color: var(--doux); font-weight: 500; }
+  .etiq { display: inline-block; border-radius: 999px; padding: 1px 9px; font-size: 12.5px; white-space: nowrap; }
+  .etiq.source_officielle { background: var(--olive-fond); color: var(--olive); }
+  .etiq.a_confirmer { background: var(--ambre-fond); color: var(--ambre); }
+  .etiq.interne, .etiq.brouillon { background: var(--papier); color: var(--doux); }
+  .ticket { background: var(--surface); border: 1px solid var(--ligne); border-radius: var(--r-m); padding: 16px; margin-top: 12px; }
+  .ticket textarea { width: 100%; border: 1px solid var(--ligne); border-radius: 8px; padding: 10px; background: var(--surface); margin-top: 8px; }
+  .verrou { max-width: 420px; }
+  .ok-msg { color: var(--olive); font-size: 14px; }
 </style>
 </head>
 <body>
-<header><b>Mourchid Jibaya · Administration</b> <span class="petit" style="color:#BFD8D5">validation experte des fiches, questions sans réponse, test du moteur</span></header>
-<main>
-<section class="panneau" id="connexion">
-  <label for="code">Code administrateur</label><input id="code" type="password" autocomplete="current-password">
-  <label for="expert">Nom de l'expert qui valide</label><input id="expert" value="Sameh Gassouma">
-  <p><button class="b or" id="b-entrer">Entrer</button> <span id="err" class="petit"></span></p>
-</section>
+<header class="haut">
+  <div class="cadre">
+    <div class="marque"><span class="sceau" aria-hidden="true">م</span><div><b>Mourchid Jibaya</b><small>Espace administration · DGI</small></div></div>
+    <a href="/">← Retour à l'assistant</a>
+    <div class="tabs" role="tablist">
+      <button role="tab" data-tab="pilotage" aria-selected="true">Pilotage</button>
+      <button role="tab" data-tab="tickets">Tickets agents</button>
+      <button role="tab" data-tab="fiches">Fiches et validation</button>
+      <button role="tab" data-tab="tester">Tester le moteur</button>
+    </div>
+  </div>
+</header>
 
-<div id="espace" hidden>
-  <div class="bilan" id="bilan"></div><br>
-  <nav>
-    <button data-o="fiches" aria-selected="true">Fiches</button><button data-o="tickets" aria-selected="false">Questions sans réponse</button>
-    <button data-o="editer" aria-selected="false">Nouvelle fiche</button><button data-o="tester" aria-selected="false">Tester le moteur</button>
-    <button data-o="stats" aria-selected="false">Statistiques</button>
-  </nav>
-
-  <section class="panneau" id="o-fiches">
-    <label>Filtrer</label><select id="filtre"><option value="">Toutes</option><option value="a_confirmer">À confirmer</option><option value="source_officielle">Source officielle</option><option value="interne">Interne</option><option value="brouillon">Brouillon</option></select>
-    <table><thead><tr><th>Fiche</th><th>Source</th><th>État</th><th>Validation</th><th></th></tr></thead><tbody id="t-fiches"></tbody></table>
+<main class="contenu">
+  <section id="t-pilotage">
+    <h1 style="font-size:30px">Ce que l'assistant apporte à l'administration</h1>
+    <p class="chapo">Indicateurs mesurés en direct sur toutes les conversations, sans aucune donnée personnelle : uniquement des comptages.</p>
+    <div class="kpis" id="kpis"></div>
+    <div class="formule" id="formule"></div>
+    <div class="deux" style="margin-top:16px">
+      <div class="bloc" style="margin:0"><h3>Sujets les plus demandés</h3><div class="barres" id="top"></div></div>
+      <div class="bloc" style="margin:0"><h3>Langues des questions</h3><div class="barres" id="langues"></div>
+        <h3 style="margin-top:18px">Transferts par service</h3><div class="barres" id="services"></div></div>
+    </div>
+    <div class="bloc">
+      <h2 style="font-size:22px">Simulateur du gain</h2>
+      <p class="note" style="font-size:15px">Hypothèses modifiables, à remplacer par les données du ministère pendant le pilote. Chaque résultat affiche sa formule.</p>
+      <div class="deux">
+        <div style="display:grid;gap:14px" id="curseurs"></div>
+        <div id="gains"></div>
+      </div>
+    </div>
+    <div class="bloc"><h3>Base de connaissances</h3><div id="bilan" style="margin-top:8px"></div></div>
   </section>
 
-  <section class="panneau" id="o-tickets" hidden>
-    <p class="petit">Chaque question restée sans réponse arrive ici. Répondez une fois : la réponse devient une fiche que le bot réutilise immédiatement.</p>
-    <div id="t-tickets"></div>
+  <section id="t-verrou" hidden class="verrou">
+    <h1 style="font-size:26px">Accès réservé</h1>
+    <p class="chapo">Saisissez le code administrateur pour gérer les tickets et valider les fiches.</p>
+    <form id="f-code" class="bloc" style="display:grid;gap:12px">
+      <label class="champ">Code administrateur<input id="code" type="password" autocomplete="current-password" required></label>
+      <button class="btn plein grand" type="submit">Ouvrir l'espace</button>
+      <p class="note" id="code-err" style="color:var(--rouge);margin:0"></p>
+    </form>
   </section>
 
-  <section class="panneau" id="o-editer" hidden>
-    <div class="grille">
-      <div><label>Identifiant</label><input id="e-id"></div>
-      <div><label>Domaine</label><select id="e-domaine"><option>fiscalite</option><option>rne</option><option>identite</option></select></div>
-      <div><label>État</label><select id="e-statut"><option value="a_confirmer">À confirmer</option><option value="source_officielle">Source officielle</option><option value="interne">Interne</option><option value="brouillon">Brouillon</option></select></div>
-    </div>
-    <div class="grille">
-      <div><label>Titre (FR)</label><input id="e-titre-fr"></div><div><label>Titre (AR)</label><input id="e-titre-ar" class="rtl"></div><div><label>Title (EN)</label><input id="e-titre-en"></div>
-    </div>
-    <div class="grille">
-      <div><label>Réponse (FR)</label><textarea id="e-rep-fr"></textarea></div><div><label>Réponse (AR)</label><textarea id="e-rep-ar" class="rtl"></textarea></div><div><label>Answer (EN)</label><textarea id="e-rep-en"></textarea></div>
-    </div>
-    <div class="grille">
-      <div><label>Questions types (une par ligne, toutes langues)</label><textarea id="e-questions"></textarea></div>
-      <div><label>Mots-clés (séparés par des virgules)</label><textarea id="e-mots"></textarea></div>
-      <div><label>Référence officielle</label><input id="e-ref"><label>Lien officiel</label><input id="e-url"></div>
-    </div>
-    <input type="hidden" id="e-ticket">
-    <p><button class="b or" id="b-enregistrer">Enregistrer la fiche</button> <span id="msg-e" class="petit"></span></p>
+  <section id="t-tickets" hidden>
+    <h1 style="font-size:28px">Questions transmises aux agents</h1>
+    <p class="chapo">Chaque ticket arrive avec ce que l'assistant a tenté : l'agent ne repart pas de zéro.</p>
+    <div id="liste-tickets"></div>
   </section>
 
-  <section class="panneau" id="o-tester" hidden>
-    <label>Question</label><input id="t-q" placeholder="ex. فاتني الأجل، شنوة الخطية؟"><p><button class="b or" id="b-tester">Analyser</button></p>
-    <div id="res-test"></div>
+  <section id="t-fiches" hidden>
+    <h1 style="font-size:28px">Fiches et validation experte</h1>
+    <p class="chapo">Une fiche validée devient « source officielle » et est utilisée immédiatement, sans redéploiement.</p>
+    <div id="bilan-fiches" class="note" style="margin-top:10px"></div>
+    <div class="bloc" style="overflow-x:auto"><table><thead><tr><th>Fiche</th><th>Source</th><th>État</th><th></th></tr></thead><tbody id="tab-fiches"></tbody></table></div>
   </section>
 
-  <section class="panneau" id="o-stats" hidden><div id="stats"></div></section>
-</div>
+  <section id="t-tester" hidden>
+    <h1 style="font-size:28px">Tester le moteur</h1>
+    <p class="chapo">Voir comment une formulation est comprise : termes retenus, concepts, fiches candidates et seuils.</p>
+    <form id="f-test" class="champ-question" style="margin-top:18px"><textarea id="q-test" rows="1" dir="auto" placeholder="Ex. : وقتاش نخلص الأقساط الاحتياطية؟"></textarea><button class="envoyer" type="submit" aria-label="Tester"><svg class="i" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></svg></button></form>
+    <div id="res-test" class="bloc" hidden></div>
+  </section>
 </main>
-<script>
-const $=id=>document.getElementById(id);
-const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const ETATS={source_officielle:"Source officielle",a_confirmer:"À confirmer",interne:"Interne",brouillon:"Brouillon"};
-let CODE="",FICHES=[];
-async function api(url,corps){
-  const r=await fetch(url,{method:corps?"POST":"GET",headers:{"Content-Type":"application/json","X-Code-Admin":CODE},body:corps?JSON.stringify(corps):undefined});
-  const j=await r.json();if(r.status===401)throw new Error(j.erreur);return j;
-}
-async function charger(){
-  const r=await api("/api/admin/fiches");FICHES=r.fiches;const b=r.bilan;
-  $("bilan").innerHTML=[["Fiches",b.total],["Source officielle",b.source_officielle],["À confirmer",b.a_confirmer],["Validées par l'expert",b.validees]].map(([k,v])=>`<div>${k}<b>${v}</b></div>`).join("");
-  afficherFiches();
-}
-function afficherFiches(){
-  const f=$("filtre").value;
-  $("t-fiches").innerHTML=FICHES.filter(x=>!f||x.statut===f).map(x=>`<tr><td><b>${esc(x.titre.fr)}</b><div class="petit rtl">${esc(x.titre.ar)}</div><div class="petit">${esc(x.id)}</div></td>
-   <td class="petit">${esc(x.source?.reference)}${x.source?.url?`<div style="word-break:break-all">${esc(x.source.url)}</div>`:""}${x.note?`<div>Note : ${esc(x.note)}</div>`:""}</td>
-   <td><span class="st st-${x.statut}">${ETATS[x.statut]||x.statut}</span></td>
-   <td class="petit">${x.validation_experte?`${esc(x.validation_experte.par)}<br>${esc(x.validation_experte.le)}`:"—"}</td>
-   <td><button class="b" data-valider="${esc(x.id)}">Valider</button> <button class="b" data-editer="${esc(x.id)}">Modifier</button></td></tr>`).join("");
-}
-async function tickets(){
-  const r=await api("/api/admin/tickets?statut=ouvert");
-  const SV={fisc:"Information fiscale générale",controle:"Mon dossier fiscal (bureau de contrôle)",recouvrement:"Paiement et dettes (recette des finances)",rne:"Registre national des entreprises",identite:"Identité numérique"};
-  const RES={sans_source:"Pas de source officielle suffisante : aucune réponse donnée",reponse_donnee:"Réponse sourcée donnée ; l'usager demande malgré tout un agent",refus:"Demande de fraude refusée",vigilance:"Question évoquant l'évasion : cadre légal rappelé, pistes légales proposées"};
-  const LG={ar:"arabe",fr:"français",en:"anglais"};
-  $("t-tickets").innerHTML=r.tickets.map(t=>{const x=t.contexte||{};
-    const proches=(x.fiches_proches||[]).map(f=>`<li>${esc(f.titre?.fr)} — <span class="petit">${esc(f.source)} · score ${f.score} · couverture ${Math.round(f.couverture*100)} %</span></li>`).join("");
-    return `<div class="carte"><div class="ent"><b>${esc(t.id_dossier)}</b><span class="st st-a_confirmer">ouvert</span></div>
-    <table><tr><th>Service</th><td>${esc(SV[t.service]||t.service||"")}</td></tr><tr><th>Date</th><td>${esc(String(t.horodatage).replace("T"," "))}</td></tr>
-    <tr><th>Langue</th><td>${esc(LG[t.langue]||t.langue)}</td></tr><tr><th>Question</th><td dir="auto"><b>${esc(t.question)}</b></td></tr>
-    <tr><th>Contact</th><td>${esc(t.contact)||"—"}</td></tr><tr><th>Tentative du bot</th><td>${esc(RES[x.resultat]||"—")}</td></tr>
-    <tr><th>Fiches proches</th><td>${proches?`<ol>${proches}</ol>`:"aucune"}</td></tr></table>
-    <p><button class="b or" data-repondre="${t.id}" data-q="${esc(t.question)}">Répondre → nouvelle fiche</button></p></div>`}).join("")||`<p class="petit">Aucune question en attente.</p>`;
-}
-function remplir(x){
-  $("e-id").value=x.id||"";$("e-domaine").value=x.domaine||"fiscalite";$("e-statut").value=x.statut||"a_confirmer";
-  for(const l of ["fr","ar","en"]){$("e-titre-"+l).value=x.titre?.[l]||"";$("e-rep-"+l).value=x.reponse?.[l]||""}
-  $("e-questions").value=Object.values(x.questions||{}).flat().join("\n");$("e-mots").value=(x.mots_cles||[]).join(", ");
-  $("e-ref").value=x.source?.reference||"";$("e-url").value=x.source?.url||"";
-}
-function onglet(o){document.querySelectorAll("nav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.o===o));
-  ["fiches","tickets","editer","tester","stats"].forEach(n=>$("o-"+n).hidden=n!==o);
-  if(o==="tickets")tickets();if(o==="stats")stats();}
-async function stats(){
-  const s=await api("/api/admin/stats");
-  $("stats").innerHTML=`<div class="bilan"><div>Questions<b>${s.questions}</b></div><div>Réponses citées<b>${s.par_resultat.reponse||0}</b></div><div>Transferts (sans source)<b>${s.par_resultat.inconnu||0}</b></div><div>Refus<b>${s.par_resultat.refus||0}</b></div><div>Vigilance<b>${s.par_resultat.vigilance||0}</b></div><div>Tickets ouverts<b>${s.tickets_ouverts}</b></div></div>
-   <p class="petit">Par langue : ${Object.entries(s.par_langue).map(([k,v])=>`${k} ${v}`).join(" · ")||"—"}</p>
-   <p class="petit">Fiches les plus demandées : ${s.fiches_les_plus_demandees.map(x=>`${esc(x.fiche_id)} (${x.n})`).join(", ")||"—"}</p>`;
-}
-document.addEventListener("click",async e=>{
-  const t=e.target.closest("button");if(!t)return;
-  try{
-  if(t.id==="b-entrer"){CODE=$("code").value;await charger();$("connexion").hidden=true;$("espace").hidden=false}
-  else if(t.dataset.o)onglet(t.dataset.o);
-  else if(t.dataset.valider){await api("/api/admin/valider",{id:t.dataset.valider,expert:$("expert").value});await charger()}
-  else if(t.dataset.editer){remplir(FICHES.find(x=>x.id===t.dataset.editer));$("e-ticket").value="";onglet("editer")}
-  else if(t.dataset.repondre){remplir({id:"q_"+t.dataset.repondre,questions:{fr:[t.dataset.q]}});$("e-ticket").value=t.dataset.repondre;onglet("editer")}
-  else if(t.id==="b-enregistrer"){
-    const lignes=$("e-questions").value.split("\n").map(s=>s.trim()).filter(Boolean);
-    const q={ar:lignes.filter(s=>/[؀-ۿ]/.test(s)),fr:lignes.filter(s=>!/[؀-ۿ]/.test(s))};
-    const f={id:$("e-id").value.trim(),domaine:$("e-domaine").value,statut:$("e-statut").value,
-      titre:{fr:$("e-titre-fr").value,ar:$("e-titre-ar").value,en:$("e-titre-en").value},
-      reponse:{fr:$("e-rep-fr").value,ar:$("e-rep-ar").value,en:$("e-rep-en").value},questions:q,
-      mots_cles:$("e-mots").value.split(",").map(s=>s.trim()).filter(Boolean),
-      source:{reference:$("e-ref").value,url:$("e-url").value},verifie_le:new Date().toISOString().slice(0,10)};
-    const r=await api("/api/admin/fiche",f);if(r.erreur){$("msg-e").textContent=r.erreur;return}
-    if($("e-ticket").value)await api("/api/admin/ticket",{numero:+$("e-ticket").value,reponse:f.reponse.fr,fiche_id:f.id});
-    $("msg-e").textContent="Fiche enregistrée : le bot l'utilise dès maintenant.";await charger();
-  }
-  else if(t.id==="b-tester"){
-    const r=await api("/api/admin/tester",{question:$("t-q").value});
-    $("res-test").innerHTML=`<p class="petit">Termes compris : ${r.termes.map(esc).join(" · ")}</p><table><tr><th>Fiche</th><th>Score</th><th>Couverture</th><th>Suffisant</th><th>Termes retrouvés</th></tr>${r.resultats.map(x=>`<tr><td>${esc(x.titre)}</td><td>${x.score}</td><td>${Math.round(x.couverture*100)} %</td><td>${x.suffisant?"oui":"non"}</td><td class="petit">${x.mots.map(esc).join(" · ")}</td></tr>`).join("")}</table>`;
-  }
-  }catch(err){$("err").textContent=err.message}
-});
-$("filtre").addEventListener("change",afficherFiches);
-$("code").addEventListener("keydown",e=>{if(e.key==="Enter")$("b-entrer").click()});
-</script>
+<script src="/assets/admin.js"></script>
 </body>
 </html>
