@@ -10,7 +10,7 @@ from .journal import Journal
 from .langue import detect_lang, normaliser
 from .lexique import Lexique
 from .modele import Modele
-from .recherche import Index
+from .recherche import SEUIL_COUVERTURE, SEUIL_SCORE, Index
 
 MESSAGES = {
     "bonjour": {"fr": "Bonjour ! Posez votre question fiscale : je réponds à partir des textes officiels et je cite la source.",
@@ -89,17 +89,30 @@ class Assistant:
                     "texte": MESSAGES["vigilance"][langue] + "\n" + MESSAGES["vigilance_seul"][langue],
                     "alternatives": self.alternatives(langue)}
         propositions = [{"id": r.fiche["id"], "titre": r.fiche["titre"].get(langue) or r.fiche["titre"]["fr"]} for r in resultats]
+        explication = self.expliquer(question, langue, resultats, risque)
         if not resultats or not resultats[0].suffisant:
             qid = self.journal.question(langue, question, "inconnu", None, resultats[0].score if resultats else 0)
             return {"type": "inconnu", "langue": langue, "texte": MESSAGES["inconnu"][langue], "qid": qid,
-                    "propositions": propositions}
+                    "propositions": propositions, "explication": explication}
 
         r = resultats[0]
         rep = self.reponse_fiche(r.fiche, langue, question, score=r.score, couverture=r.couverture,
                                  voir_aussi=propositions[1:])
+        rep["explication"] = explication
         if risque == "vigilance":
             rep["vigilance"] = MESSAGES["vigilance"][langue]
         return rep
+
+    def expliquer(self, question: str, langue: str, resultats: list, risque) -> dict:
+        """Trace lisible du raisonnement (explicabilité) : langue, termes compris, concepts, candidats, seuils."""
+        termes = self.index.termes(sans_expressions_sensibles(question) if risque else question)
+        return {"langue_detectee": detect_lang(question), "langue_reponse": langue,
+                "termes": [t for t in dict.fromkeys(termes) if not t.startswith("§")],
+                "concepts": [t[1:] for t in dict.fromkeys(termes) if t.startswith("§")],
+                "garde_fou": risque or None,
+                "candidats": [{"id": r.fiche["id"], "titre": r.fiche["titre"].get(langue) or r.fiche["titre"]["fr"],
+                               "score": r.score, "couverture": r.couverture, "suffisant": r.suffisant} for r in resultats],
+                "seuils": {"score": SEUIL_SCORE, "couverture": SEUIL_COUVERTURE, "termes_min": 2}}
 
     def alternatives(self, langue: str) -> list:
         """Fiches présentant les voies légales (amnistie, régime adapté, pénalités, contact)."""
@@ -112,11 +125,12 @@ class Assistant:
 
     def reponse_fiche(self, f: dict, langue: str, question: str = "", score=None, couverture=None, voir_aussi=None) -> dict:
         texte = f["reponse"].get(langue) or f["reponse"]["fr"]
-        reformule = self.modele.reformuler(question, texte, langue) if question else None
+        reformule = self.modele.reformuler(question, texte, langue, f) if question else None
         qid = self.journal.question(langue, question or f["id"], "reponse", f["id"], score or 0)
         return {"type": "reponse", "langue": langue, "qid": qid, "fiche_id": f["id"],
                 "titre": f["titre"].get(langue) or f["titre"]["fr"],
-                "texte": reformule or texte, "mode": "modele" if reformule else "fiche",
+                "texte": reformule or texte, "texte_officiel": texte, "mode": "modele" if reformule else "fiche",
+                "modele": self.modele.nom if reformule else None,
                 "source": f.get("source", {}), "statut": f.get("statut"), "verifie_le": f.get("verifie_le"),
                 "validation_experte": f.get("validation_experte"), "action": f.get("action"),
                 "score": score, "couverture": couverture, "voir_aussi": voir_aussi or []}

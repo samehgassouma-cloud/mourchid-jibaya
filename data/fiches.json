@@ -104,7 +104,10 @@
     "وقتاش",
     "اخر اجل",
     "deadline",
-    "date limite"
+    "date limite",
+    "tva",
+    "declarer la tva",
+    "الاداء على القيمة المضافة"
    ],
    "reponse": {
     "fr": "Les personnes morales déposent leur déclaration mensuelle durant les vingt-huit premiers jours du mois suivant. Le calendrier mensuel publié par la DGI précise la date exacte, notamment pour les adhérents à la déclaration et au paiement à distance.",
