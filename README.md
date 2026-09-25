@@ -66,7 +66,7 @@ question ─► garde-fous (fraude → refus)
 
 ## Résultats
 
-- `python -m unittest discover -s tests` : 14 tests (dont 53 questions de non-régression en FR, AR/darija, EN).
+- `python -m unittest discover -s tests` : 15 tests (dont 53 questions de non-régression en FR, AR/darija, EN).
 - `python tests/evaluation.py` : jeu indépendant de 25 formulations nouvelles → **24/25** bonnes fiches ; 4/4 questions hors sujet correctement transférées.
 - Temps de réponse moyen (sans modèle de langage) : < 1 ms par question.
 
