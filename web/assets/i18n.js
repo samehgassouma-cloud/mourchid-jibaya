@@ -155,3 +155,36 @@ Object.assign(T.en, {
   nouvelle: "New conversation", effacer: "Clear", langueNoms: { ar: "Arabic / darija", fr: "French", en: "English" },
   erreur: "The service is not responding. Try again in a moment.", entree: "Enter to send · Shift+Enter for a new line",
 });
+
+/* Refonte V3 : nouvelles clés (les clés existantes sont conservées pour admin.html). */
+Object.assign(T.fr, {
+  promesse: ["Une question.", "Une réponse officielle.", "Sa source."],
+  extrait: "Extrait officiel", fiche: "Fiche", cherche: "Consultation des textes officiels…",
+  tampon: { source_officielle: "Source officielle", a_confirmer: "À confirmer", interne: "Interne", refus: "Refusé" },
+  tScore: "Score", tCouv: "Couverture", tRetenue: "retenue", tDecision: "Décision",
+  tDecOk: "Seuils atteints : je réponds et je cite la source.", tDecKo: "Seuils non atteints : je ne devine pas, je propose un agent.",
+  tConfiance: "Confiance", sansSource: "Sans source",
+  verdict: { ok: "Déclaration cohérente", alerte: "Points à vérifier", critique: "Anomalie à corriger" },
+  voirTout: "Voir", lgDarija: "دارجة",
+});
+Object.assign(T.ar, {
+  promesse: ["سؤال واحد.", "جواب رسمي.", "ومصدره."],
+  extrait: "مستخرج رسمي", fiche: "بطاقة", cherche: "جارٍ البحث في النصوص الرسمية…",
+  tampon: { source_officielle: "مصدر رسمي", a_confirmer: "للتأكيد", interne: "داخلي", refus: "مرفوض" },
+  tScore: "النقاط", tCouv: "التغطية", tRetenue: "معتمدة", tDecision: "القرار",
+  tDecOk: "العتبات محقَّقة: أجيب وأذكر المصدر.", tDecKo: "العتبات غير محقَّقة: لا أخمّن، وأقترح عوناً.",
+  tConfiance: "درجة الثقة", sansSource: "دون مصدر",
+  verdict: { ok: "تصريح متناسق", alerte: "نقاط للتثبّت", critique: "خلل يجب إصلاحه" },
+  voirTout: "عرض", lgDarija: "دارجة",
+});
+Object.assign(T.en, {
+  promesse: ["One question.", "An official answer.", "Its source."],
+  extrait: "Official extract", fiche: "Entry", cherche: "Searching the official texts…",
+  tampon: { source_officielle: "Official source", a_confirmer: "To confirm", interne: "Internal", refus: "Refused" },
+  tScore: "Score", tCouv: "Coverage", tRetenue: "selected", tDecision: "Decision",
+  tDecOk: "Thresholds met: I answer and cite the source.", tDecKo: "Thresholds not met: I don't guess, I suggest an agent.",
+  tConfiance: "Confidence", sansSource: "No source",
+  verdict: { ok: "Return is consistent", alerte: "Points to check", critique: "Issue to fix" },
+  voirTout: "View", lgDarija: "دارجة",
+});
+

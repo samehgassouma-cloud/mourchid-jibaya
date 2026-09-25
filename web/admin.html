@@ -4,118 +4,231 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Administration · Mourchid Jibaya</title>
-<meta name="theme-color" content="#13233F">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%2313233F'/%3E%3Ctext x='32' y='42' font-size='26' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='700'%3Eم%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#12244A">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%2312244A'/%3E%3Ccircle cx='32' cy='32' r='24' fill='none' stroke='%23C7D3EA' stroke-width='2'/%3E%3Ctext x='32' y='42' font-size='26' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='700'%3Eم%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Readex+Pro:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/app.css">
 <style>
-  body { overflow-y: auto; }
-  .haut { background: var(--encre); color: #fff; }
-  .haut .cadre { max-width: 1120px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding-top: 16px; padding-bottom: 0; }
-  .haut .marque b { color: #fff; }
-  .haut a { color: #C9D6EE; font-size: 14px; margin-inline-start: auto; text-decoration: none; }
-  .tabs { width: 100%; display: flex; gap: 2px; overflow-x: auto; margin-top: 10px; }
-  .tabs button { border: 0; background: transparent; color: #C9D6EE; padding: 12px 16px; border-radius: 10px 10px 0 0; cursor: pointer; white-space: nowrap; font-size: 15px; }
-  .tabs button[aria-selected="true"] { background: var(--papier); color: var(--texte); font-weight: 600; }
-  .contenu { max-width: 1120px; margin: 0 auto; padding: 26px 24px 60px; }
-  .kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 18px; }
-  .kpi { background: var(--surface); border: 1px solid var(--ligne); border-radius: var(--r-m); padding: 16px; }
-  .kpi b { display: block; font: 600 34px/1.05 var(--titre); color: var(--encre); }
-  @media (prefers-color-scheme: dark) { .kpi b { color: #fff; } }
-  .kpi span { color: var(--doux); font-size: 14px; }
-  .kpi.fort { background: var(--encre); border-color: var(--encre); }
-  .kpi.fort b, .kpi.fort span { color: #fff; }
-  .deux { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  @media (max-width: 800px) { .deux { grid-template-columns: 1fr; } .kpis { grid-template-columns: 1fr 1fr; } }
-  .barres { display: grid; gap: 9px; margin-top: 10px; }
-  .barre-l { display: grid; grid-template-columns: minmax(90px, 38%) 1fr 34px; gap: 10px; align-items: center; font-size: 14px; }
-  .barre-l .piste { height: 10px; background: var(--papier); border-radius: 6px; overflow: hidden; }
-  .barre-l .piste i { display: block; height: 100%; background: var(--encre-doux); border-radius: 6px; }
-  .formule { font-size: 13px; color: var(--doux); background: var(--papier); border-radius: 8px; padding: 8px 10px; margin-top: 10px; }
-  .curseur { display: grid; gap: 4px; }
-  .curseur label { display: flex; justify-content: space-between; font-size: 14px; }
-  .curseur output { font-weight: 600; }
-  input[type=range] { width: 100%; accent-color: var(--encre); }
-  .gain { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--ligne); }
-  .gain b { font: 600 24px/1 var(--titre); }
-  table { width: 100%; border-collapse: collapse; font-size: 14px; }
-  th, td { text-align: start; padding: 10px 8px; border-bottom: 1px solid var(--ligne); vertical-align: top; }
-  th { color: var(--doux); font-weight: 500; }
-  .etiq { display: inline-block; border-radius: 999px; padding: 1px 9px; font-size: 12.5px; white-space: nowrap; }
-  .etiq.source_officielle { background: var(--olive-fond); color: var(--olive); }
-  .etiq.a_confirmer { background: var(--ambre-fond); color: var(--ambre); }
+  body { overflow-y: auto; height: auto; min-height: 100%; }
+  .num { font-family: var(--chiffres); font-variant-numeric: tabular-nums; }
+  .haut { background: var(--encre); color: #fff; position: relative; overflow: hidden; }
+  .haut::after { content: ""; position: absolute; inset: 0; background: var(--zellige); opacity: .05; pointer-events: none; }
+  .haut .cadre { position: relative; z-index: 1; max-width: 1240px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding-top: 18px; padding-bottom: 0; }
+  .haut .marque small { display: block; color: var(--encre-clair); font-size: 13px; }
+  .haut .droite { margin-inline-start: auto; display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+  .haut a { color: var(--encre-clair); font-size: 14px; text-decoration: none; display: inline-flex; gap: 6px; align-items: center; }
+  .haut a:hover { color: #fff; }
+  .direct { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--encre-clair); }
+  .direct i { width: 8px; height: 8px; border-radius: 50%; background: #8FD18A; box-shadow: 0 0 0 3px rgba(143, 209, 138, .2); }
+  .btn-salle { border: 1px solid rgba(199, 211, 234, .35); background: transparent; color: #fff; border-radius: 999px; min-height: 36px; padding: 4px 14px; font-size: 13.5px; cursor: pointer; display: inline-flex; gap: 6px; align-items: center; }
+  .btn-salle:hover { border-color: #fff; }
+  .btn-salle svg { width: 16px; height: 16px; }
+  .tabs { width: 100%; display: flex; gap: 4px; overflow-x: auto; margin-top: 8px; }
+  .tabs button { border: 0; background: transparent; color: var(--encre-clair); padding: 14px 14px 13px; cursor: pointer; white-space: nowrap; font-size: 15px; position: relative; display: inline-flex; gap: 8px; align-items: center; }
+  .tabs button:hover { color: #fff; }
+  .tabs button[aria-selected="true"] { color: #fff; font-weight: 500; }
+  .tabs button[aria-selected="true"]::after { content: ""; position: absolute; inset-inline: 12px; bottom: 0; height: 3px; border-radius: 3px 3px 0 0; background: #fff; }
+  .tabs .compte { font: 500 12px/1.5 var(--chiffres); background: rgba(255, 255, 255, .14); border-radius: 999px; padding: 0 7px; }
+  .contenu { max-width: 1240px; margin: 0 auto; padding: 28px 16px 64px; }
+  @media (min-width: 700px) { .contenu { padding-inline: 32px; } }
+  .titre-page { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 10px 24px; }
+  .titre-page h1 { font-size: clamp(26px, 3.4vw, 36px); }
+  .maj { font-size: 13px; color: var(--doux); }
+
+  /* pilotage : un chiffre héros, une ligne de chiffres secondaires */
+  .tableau { display: grid; gap: 16px; margin-top: 22px; grid-template-columns: 1fr; }
+  @media (min-width: 1000px) { .tableau { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); } }
+  .heros { background: var(--encre); color: #fff; border-radius: var(--r-m); padding: 24px 26px 22px; display: grid; gap: 14px; align-content: start; position: relative; overflow: hidden; }
+  .heros::after { content: ""; position: absolute; inset-block: 0; inset-inline-end: 0; width: 45%; background: var(--zellige); opacity: .05; -webkit-mask: linear-gradient(90deg, transparent, #000); mask: linear-gradient(90deg, transparent, #000); pointer-events: none; }
+  .heros > * { position: relative; z-index: 1; }
+  .heros .lbl { color: var(--encre-clair); font-size: 15px; }
+  .heros .grand { font: 500 clamp(72px, 9vw, 112px)/.95 var(--chiffres); letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+  .heros .grand small { font-size: .45em; letter-spacing: 0; margin-inline-start: 4px; color: var(--encre-clair); }
+  .decomp { display: flex; height: 12px; border-radius: 6px; overflow: hidden; background: rgba(255, 255, 255, .1); gap: 2px; }
+  .decomp i { display: block; height: 100%; }
+  .legende { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 13.5px; color: var(--encre-clair); list-style: none; margin: 0; padding: 0; }
+  .legende li { display: inline-flex; align-items: center; gap: 7px; }
+  .legende li::before { content: ""; width: 10px; height: 10px; border-radius: 3px; background: var(--c); }
+  .legende b { color: #fff; font: 500 14px/1 var(--chiffres); }
+  .formule { font-size: 13px; color: var(--encre-clair); border-top: 1px solid rgba(199, 211, 234, .2); padding-top: 12px; margin: 0; }
+  .secondaires { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); background: var(--feuille); border: 1px solid var(--ligne); border-radius: var(--r-m); overflow: hidden; }
+  @media (min-width: 700px) { .secondaires { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .sec { padding: 20px 22px; border-bottom: 1px solid var(--ligne-2); border-inline-end: 1px solid var(--ligne-2); display: grid; gap: 6px; align-content: start; }
+  .sec b { font: 500 clamp(40px, 4.4vw, 56px)/1 var(--chiffres); font-variant-numeric: tabular-nums; color: var(--texte); }
+  .sec span { color: var(--doux); font-size: 14.5px; line-height: 1.4; }
+  .sec.alerte b { color: var(--ambre); }
+  .sec.refus b { color: var(--rouge); }
+  .sec.olive b { color: var(--olive); }
+
+  .deux { display: grid; gap: 16px; margin-top: 16px; grid-template-columns: 1fr; }
+  @media (min-width: 900px) { .deux { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+  .deux > .bloc { margin: 0; }
+  .bloc h2 { font-size: 18px; margin-bottom: 14px; }
+  .classement { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; counter-reset: r; }
+  .classement li { display: grid; grid-template-columns: 26px minmax(0, 1fr) 40px; gap: 4px 12px; align-items: center; counter-increment: r; }
+  .classement li::before { content: counter(r); font: 500 14px/1 var(--chiffres); color: var(--doux); grid-row: span 2; }
+  .classement .l { font-size: 15px; line-height: 1.35; }
+  .classement b { font: 500 20px/1 var(--chiffres); text-align: end; grid-row: span 2; }
+  .classement .piste { height: 6px; }
+  .classement .piste i { background: var(--encre-3); }
+  .repartition { display: flex; height: 36px; border-radius: 8px; overflow: hidden; gap: 2px; }
+  .repartition span { display: grid; place-items: center; color: #fff; font: 500 14px/1 var(--chiffres); min-width: 28px; }
+  .rep-leg { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 10px; font-size: 14px; list-style: none; padding: 0; }
+  .rep-leg li { display: inline-flex; gap: 7px; align-items: center; }
+  .rep-leg li::before { content: ""; width: 10px; height: 10px; border-radius: 3px; background: var(--c); }
+  .barres { display: grid; gap: 10px; }
+  .barre-l { display: grid; grid-template-columns: minmax(100px, 40%) 1fr 32px; gap: 12px; align-items: center; font-size: 14.5px; }
+  .barre-l b { font: 500 16px/1 var(--chiffres); text-align: end; }
+  .barre-l .piste i { background: var(--encre-3); }
+
+  .simu { display: grid; gap: 28px; grid-template-columns: 1fr; }
+  @media (min-width: 900px) { .simu { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); } }
+  .curseurs { display: grid; gap: 22px; align-content: start; }
+  .curseur { display: grid; gap: 8px; }
+  .curseur label { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-size: 14.5px; }
+  .curseur output { font: 500 17px/1 var(--chiffres); white-space: nowrap; }
+  .curseur small { color: var(--doux); font-size: 12.5px; }
+  input[type=range] { width: 100%; accent-color: var(--encre-3); height: 28px; }
+  .resultat-simu { display: grid; gap: 0; align-content: start; }
+  .gain-tete { padding: 4px 0 18px; border-bottom: 1px solid var(--ligne); display: grid; gap: 4px; }
+  .gain-tete span { color: var(--doux); font-size: 14.5px; }
+  .gain-tete b { font: 500 clamp(44px, 5vw, 64px)/1 var(--chiffres); letter-spacing: -.02em; color: var(--olive); font-variant-numeric: tabular-nums; }
+  .gain-tete b small { font-size: .42em; letter-spacing: 0; color: var(--doux); margin-inline-start: 6px; }
+  .gain { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 16px; padding: 14px 0; border-bottom: 1px solid var(--ligne-2); align-items: baseline; }
+  .gain span { font-size: 15px; }
+  .gain b { font: 500 26px/1 var(--chiffres); text-align: end; font-variant-numeric: tabular-nums; }
+  .gain small { grid-column: 1 / -1; color: var(--doux); font-size: 13px; }
+  .base { display: grid; gap: 12px; }
+  .base .repartition { height: 14px; }
+
+  /* salle : lisible de loin */
+  body.salle .contenu { max-width: none; padding-inline: 48px; }
+  body.salle .heros .grand { font-size: clamp(110px, 13vw, 180px); }
+  body.salle .sec b { font-size: clamp(56px, 6vw, 84px); }
+  body.salle .sec span, body.salle .heros .lbl { font-size: 18px; }
+  body.salle .classement .l, body.salle .barre-l { font-size: 17px; }
+
+  /* tickets */
+  .filtres { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 20px; }
+  .filtres input[type=search] { min-height: 44px; border: 1px solid var(--ligne); border-radius: var(--r-s); padding: 8px 12px; background: var(--feuille); min-width: min(280px, 100%); flex: 1; max-width: 360px; }
+  .tickets { display: grid; gap: 14px; margin-top: 18px; }
+  .ticket { background: var(--feuille); border: 1px solid var(--ligne); border-radius: var(--r-m); display: grid; grid-template-columns: 1fr; }
+  @media (min-width: 900px) { .ticket { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); } }
+  .ticket .g { padding: 18px 20px; display: grid; gap: 10px; align-content: start; }
+  .ticket .d { padding: 18px 20px; border-top: 1px solid var(--ligne-2); background: color-mix(in srgb, var(--papier) 55%, var(--feuille)); display: grid; gap: 8px; align-content: start; border-radius: 0 0 var(--r-m) var(--r-m); }
+  @media (min-width: 900px) { .ticket .d { border-top: 0; border-inline-start: 1px solid var(--ligne-2); border-radius: 0 var(--r-m) var(--r-m) 0; } [dir="rtl"] .ticket .d { border-radius: var(--r-m) 0 0 var(--r-m); } }
+  .ticket .ligne1 { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; font-size: 13.5px; color: var(--doux); }
+  .ticket .ligne1 strong { font: 500 15px/1 var(--chiffres); color: var(--texte); direction: ltr; unicode-bidi: isolate; }
+  .ticket .question { font: 400 19px/1.5 var(--corps); margin: 0; }
+  .ticket .question[dir="rtl"] { font-size: 20px; }
+  .ticket textarea { width: 100%; border: 1px solid var(--ligne); border-radius: var(--r-s); padding: 10px 12px; background: var(--feuille); min-height: 84px; resize: vertical; }
+  .ticket .d h3 { font: 500 13.5px/1.4 var(--corps); color: var(--doux); }
+  .tentative { font-size: 14.5px; }
+  .tentative .etiq { white-space: normal; border-radius: 8px; line-height: 1.45; padding: 4px 10px; }
+  .proches { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .proches li { display: grid; gap: 4px; font-size: 14px; }
+  .proches .src { color: var(--doux); font-size: 12.5px; }
+  .etiq { display: inline-flex; align-items: center; gap: 5px; border-radius: 999px; padding: 1px 10px; font-size: 12.5px; white-space: nowrap; line-height: 1.7; }
+  .etiq.source_officielle, .etiq.traite { background: var(--olive-fond); color: var(--olive); }
+  .etiq.a_confirmer, .etiq.ouvert { background: var(--ambre-fond); color: var(--ambre); }
   .etiq.interne, .etiq.brouillon { background: var(--papier); color: var(--doux); }
-  .ticket { background: var(--surface); border: 1px solid var(--ligne); border-radius: var(--r-m); padding: 16px; margin-top: 12px; }
-  .ticket textarea { width: 100%; border: 1px solid var(--ligne); border-radius: 8px; padding: 10px; background: var(--surface); margin-top: 8px; }
-  .verrou { max-width: 420px; }
-  .ok-msg { color: var(--olive); font-size: 14px; }
+  .etiq.refus { background: var(--rouge-fond); color: var(--rouge); }
+
+  /* fiches */
+  .tab-fiches { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+  .tab-fiches th, .tab-fiches td { text-align: start; padding: 14px 10px; border-bottom: 1px solid var(--ligne-2); vertical-align: top; }
+  .tab-fiches th { color: var(--doux); font-weight: 500; font-size: 13px; border-bottom-color: var(--ligne); }
+  .tab-fiches td:first-child strong { font: 500 15.5px/1.4 var(--titre); display: block; }
+  .tab-fiches .ar { font-family: "IBM Plex Sans Arabic", var(--corps); font-size: 15px; color: var(--doux); display: block; }
+  .tab-fiches .note-exp { margin-top: 6px; font-size: 13px; color: var(--ambre); max-width: 48ch; }
+  .tab-fiches tr.flash td { animation: flash 1.2s ease-out; }
+  @keyframes flash { from { background: var(--olive-fond); } to { background: transparent; } }
+  .export { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; }
+
+  /* test */
+  .test-res { margin-top: 18px; display: grid; gap: 18px; }
+  .test-res h2 { font-size: 16px; margin-bottom: 8px; }
+  .verrou { max-width: 440px; margin: 6vh auto 0; }
+  .verrou .sceau-g { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; border: 1.5px solid var(--encre-3); color: var(--encre-3); box-shadow: inset 0 0 0 4px var(--papier), inset 0 0 0 5px var(--encre-3); margin-bottom: 16px; }
+  .verrou .sceau-g svg { width: 26px; height: 26px; }
 </style>
 </head>
 <body>
 <header class="haut">
   <div class="cadre">
-    <div class="marque"><span class="sceau" aria-hidden="true">م</span><div><b>Mourchid Jibaya</b><small>Espace administration · DGI</small></div></div>
-    <a href="/">← Retour à l'assistant</a>
-    <div class="tabs" role="tablist">
+    <div class="marque"><span class="sceau" aria-hidden="true">م</span><div><b>Mourchid Jibaya<span lang="ar" style="display:inline;margin-inline-start:8px">مرشد جباية</span></b><small>Espace administration · DGI</small></div></div>
+    <div class="droite">
+      <span class="direct" id="direct"><i></i><span>En direct</span></span>
+      <button type="button" class="btn-salle" id="salle" aria-pressed="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>Mode salle</button>
+      <a href="/"><svg class="i miroir" viewBox="0 0 24 24" aria-hidden="true" style="width:16px;height:16px"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>Retour à l'assistant</a>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Sections">
       <button role="tab" data-tab="pilotage" aria-selected="true">Pilotage</button>
-      <button role="tab" data-tab="tickets">Tickets agents</button>
-      <button role="tab" data-tab="fiches">Fiches et validation</button>
-      <button role="tab" data-tab="tester">Tester le moteur</button>
+      <button role="tab" data-tab="tickets" aria-selected="false">Tickets agents <span class="compte" id="n-tickets" hidden></span></button>
+      <button role="tab" data-tab="fiches" aria-selected="false">Fiches et validation <span class="compte" id="n-fiches" hidden></span></button>
+      <button role="tab" data-tab="tester" aria-selected="false">Tester le moteur</button>
     </div>
   </div>
 </header>
 
 <main class="contenu">
-  <section id="t-pilotage">
-    <h1 style="font-size:30px">Ce que l'assistant apporte à l'administration</h1>
-    <p class="chapo">Indicateurs mesurés en direct sur toutes les conversations, sans aucune donnée personnelle : uniquement des comptages.</p>
-    <div class="kpis" id="kpis"></div>
-    <div class="formule" id="formule"></div>
-    <div class="deux" style="margin-top:16px">
-      <div class="bloc" style="margin:0"><h3>Sujets les plus demandés</h3><div class="barres" id="top"></div></div>
-      <div class="bloc" style="margin:0"><h3>Langues des questions</h3><div class="barres" id="langues"></div>
-        <h3 style="margin-top:18px">Transferts par service</h3><div class="barres" id="services"></div></div>
+  <section id="t-pilotage" aria-labelledby="h-pilotage">
+    <div class="titre-page"><h1 id="h-pilotage">Ce que l'assistant apporte à l'administration</h1><span class="maj" id="maj" aria-live="polite"></span></div>
+    <p class="chapo" id="portee">Indicateurs mesurés en direct sur toutes les conversations, sans aucune donnée personnelle : uniquement des comptages.</p>
+    <div class="tableau">
+      <div class="heros" id="heros"></div>
+      <div class="secondaires" id="secondaires"></div>
     </div>
-    <div class="bloc">
-      <h2 style="font-size:22px">Simulateur du gain</h2>
-      <p class="note" style="font-size:15px">Hypothèses modifiables, à remplacer par les données du ministère pendant le pilote. Chaque résultat affiche sa formule.</p>
-      <div class="deux">
-        <div style="display:grid;gap:14px" id="curseurs"></div>
-        <div id="gains"></div>
-      </div>
+    <div class="deux">
+      <section class="bloc"><h2>Sujets les plus demandés</h2><ol class="classement" id="top"></ol></section>
+      <section class="bloc"><h2>Langues des questions</h2><div id="langues"></div>
+        <h2 style="margin-top:26px">Transferts par service</h2><div class="barres" id="services"></div></section>
     </div>
-    <div class="bloc"><h3>Base de connaissances</h3><div id="bilan" style="margin-top:8px"></div></div>
+    <section class="bloc">
+      <h2>Simulateur du gain</h2>
+      <p class="note" style="font-size:15px;margin-top:-6px">Hypothèses modifiables, à remplacer par les données du ministère pendant le pilote. Chaque résultat affiche sa formule.</p>
+      <div class="simu"><div class="curseurs" id="curseurs"></div><div class="resultat-simu" id="gains"></div></div>
+    </section>
+    <section class="bloc"><h2>Base de connaissances</h2><div class="base" id="bilan"></div></section>
   </section>
 
-  <section id="t-verrou" hidden class="verrou">
-    <h1 style="font-size:26px">Accès réservé</h1>
-    <p class="chapo">Saisissez le code administrateur pour gérer les tickets et valider les fiches.</p>
-    <form id="f-code" class="bloc" style="display:grid;gap:12px">
-      <label class="champ">Code administrateur<input id="code" type="password" autocomplete="current-password" required></label>
-      <button class="btn plein grand" type="submit">Ouvrir l'espace</button>
-      <p class="note" id="code-err" style="color:var(--rouge);margin:0"></p>
-    </form>
+  <section id="t-verrou" hidden>
+    <div class="verrou">
+      <div class="sceau-g" aria-hidden="true"><svg class="i" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div>
+      <h1 style="font-size:28px">Accès réservé</h1>
+      <p class="chapo">Saisissez le code administrateur pour gérer les tickets et valider les fiches.</p>
+      <form id="f-code" class="bloc" style="display:grid;gap:14px">
+        <label class="champ">Code administrateur<input id="code" type="password" autocomplete="current-password" required></label>
+        <button class="btn plein grand" type="submit">Ouvrir l'espace</button>
+        <p class="note" id="code-err" role="alert" style="color:var(--rouge);margin:0"></p>
+      </form>
+    </div>
   </section>
 
-  <section id="t-tickets" hidden>
-    <h1 style="font-size:28px">Questions transmises aux agents</h1>
+  <section id="t-tickets" hidden aria-labelledby="h-tickets">
+    <div class="titre-page"><h1 id="h-tickets">Questions transmises aux agents</h1></div>
     <p class="chapo">Chaque ticket arrive avec ce que l'assistant a tenté : l'agent ne repart pas de zéro.</p>
-    <div id="liste-tickets"></div>
+    <div class="filtres"><div class="segment" role="group" aria-label="Filtrer les tickets" id="filtre-tickets"></div></div>
+    <div class="tickets" id="liste-tickets"></div>
   </section>
 
-  <section id="t-fiches" hidden>
-    <h1 style="font-size:28px">Fiches et validation experte</h1>
+  <section id="t-fiches" hidden aria-labelledby="h-fiches">
+    <div class="titre-page"><h1 id="h-fiches">Fiches et validation experte</h1></div>
     <p class="chapo">Une fiche validée devient « source officielle » et est utilisée immédiatement, sans redéploiement.</p>
-    <div id="bilan-fiches" class="note" style="margin-top:10px"></div>
-    <div class="bloc" style="overflow-x:auto"><table><thead><tr><th>Fiche</th><th>Source</th><th>État</th><th></th></tr></thead><tbody id="tab-fiches"></tbody></table></div>
+    <div class="bloc base" id="bilan-fiches"></div>
+    <div class="filtres">
+      <div class="segment" role="group" aria-label="Filtrer par état" id="filtre-fiches"></div>
+      <label class="sr" for="cherche-fiche">Chercher une fiche</label><input type="search" id="cherche-fiche" placeholder="Chercher une fiche, une source…" dir="auto">
+    </div>
+    <div class="bloc" style="overflow-x:auto;padding:6px 14px"><table class="tab-fiches"><thead><tr><th>Fiche</th><th>Source</th><th>État</th><th><span class="sr">Action</span></th></tr></thead><tbody id="tab-fiches"></tbody></table></div>
   </section>
 
-  <section id="t-tester" hidden>
-    <h1 style="font-size:28px">Tester le moteur</h1>
+  <section id="t-tester" hidden aria-labelledby="h-tester">
+    <div class="titre-page"><h1 id="h-tester">Tester le moteur</h1></div>
     <p class="chapo">Voir comment une formulation est comprise : termes retenus, concepts, fiches candidates et seuils.</p>
-    <form id="f-test" class="champ-question" style="margin-top:18px"><textarea id="q-test" rows="1" dir="auto" placeholder="Ex. : وقتاش نخلص الأقساط الاحتياطية؟"></textarea><button class="envoyer" type="submit" aria-label="Tester"><svg class="i" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></svg></button></form>
-    <div id="res-test" class="bloc" hidden></div>
+    <form id="f-test" class="champ-question" style="margin-top:20px;max-width:800px"><label for="q-test" class="sr">Question à tester</label><textarea id="q-test" rows="1" dir="auto" placeholder="Ex. : وقتاش نخلص الأقساط الاحتياطية؟"></textarea><button class="envoyer" type="submit" aria-label="Tester"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></button></form>
+    <div id="res-test" class="test-res" aria-live="polite" hidden></div>
   </section>
 </main>
 <script src="/assets/admin.js"></script>

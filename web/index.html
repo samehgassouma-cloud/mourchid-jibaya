@@ -5,43 +5,57 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Mourchid Jibaya · مرشد جباية</title>
 <meta name="description" content="Assistant fiscal IA 24h/24 en arabe, darija, français et anglais, fondé sur les textes officiels tunisiens, qui cite toujours sa source.">
-<meta name="theme-color" content="#13233F">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%2313233F'/%3E%3Ccircle cx='32' cy='32' r='24' fill='none' stroke='%23C9D6EE' stroke-width='2'/%3E%3Ctext x='32' y='42' font-size='26' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='700'%3Eم%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#12244A">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%2312244A'/%3E%3Ccircle cx='32' cy='32' r='24' fill='none' stroke='%23C7D3EA' stroke-width='2'/%3E%3Ctext x='32' y='42' font-size='26' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='700'%3Eم%3C/text%3E%3C/svg%3E">
 <!--FONTS--><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Readex+Pro:wght@500;600&display=swap" rel="stylesheet"><!--/FONTS-->
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@400;500;600&display=swap" rel="stylesheet"><!--/FONTS-->
 <link rel="stylesheet" href="/assets/app.css">
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <filter id="mj-encre" x="-8%" y="-8%" width="116%" height="116%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="4" result="bruit"/>
+    <feDisplacementMap in="SourceGraphic" in2="bruit" scale="2.6" xChannelSelector="R" yChannelSelector="G" result="bord"/>
+    <feTurbulence type="fractalNoise" baseFrequency="1.4" numOctaves="1" seed="11" result="grain"/>
+    <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -2.2 0 0 0 1.9" result="masque"/>
+    <feComposite in="bord" in2="masque" operator="in"/>
+  </filter>
+</svg>
+
 <div class="app">
   <aside class="barre" aria-label="Navigation">
-    <div class="marque"><span class="sceau" aria-hidden="true">م</span><div><b data-t="nom">Mourchid Jibaya</b><small data-t="sousTitre"></small></div></div>
+    <div class="marque"><span class="sceau" aria-hidden="true">م</span><b>Mourchid Jibaya<span lang="ar">مرشد جباية</span></b></div>
     <nav class="nav" id="nav"></nav>
-    <div class="prochaine" id="prochaine" hidden></div>
+    <button type="button" class="prochaine" id="prochaine" data-vue-lien="ech" hidden></button>
     <div class="pied-barre">
-      <div class="langues" role="group" aria-label="Langue"><button type="button" data-l="ar">عربي</button><button type="button" data-l="fr">FR</button><button type="button" data-l="en">EN</button></div>
+      <div class="langues" role="group" aria-label="Langue / اللغة"><button type="button" data-l="ar" lang="ar">عربي</button><button type="button" data-l="fr" lang="fr">FR</button><button type="button" data-l="en" lang="en">EN</button></div>
       <a class="lien-admin" href="/admin"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M5 21V10M19 21V10M9 21v-6h6v6M12 3l9 5H3z"/></svg><span data-t="admin"></span></a>
-      <span class="etat"></span>
+      <span class="etat" role="status"></span>
     </div>
   </aside>
 
-  <div class="principal">
-    <header class="entete-mobile">
-      <span class="sceau" aria-hidden="true">م</span><div><b data-t="nom"></b><br><span class="etat"></span></div>
-      <div class="langues" role="group" aria-label="Langue"><button type="button" data-l="ar">عربي</button><button type="button" data-l="fr">FR</button><button type="button" data-l="en">EN</button></div>
-    </header>
+  <header class="entete-mobile">
+    <span class="sceau" aria-hidden="true">م</span>
+    <div><div class="nom" data-t="nom"></div><span class="etat" role="status"></span></div>
+    <div class="langues" role="group" aria-label="Langue / اللغة"><button type="button" data-l="ar" lang="ar">عربي</button><button type="button" data-l="fr" lang="fr">FR</button><button type="button" data-l="en" lang="en">EN</button></div>
+  </header>
 
+  <div class="principal">
     <main class="vue" id="v-chat" style="overflow:hidden">
       <div class="discussion">
-        <div class="fil" id="fil" aria-live="polite"><div class="cadre" id="fil-cadre"><section class="accueil" id="accueil"></section></div></div>
+        <div class="fil" id="fil"><div class="cadre" id="fil-cadre" aria-live="polite"><section class="accueil" id="accueil"></section></div></div>
         <div class="saisie">
           <div class="cadre">
             <form class="champ-question" id="f-q">
               <label for="q" class="sr" data-t="ecrire"></label>
               <textarea id="q" rows="1" dir="auto" maxlength="500" autocomplete="off"></textarea>
-              <button class="envoyer" id="envoyer" type="submit" aria-label="Envoyer"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></button>
+              <button class="envoyer" id="envoyer" type="submit" data-t-label="envoyer"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></button>
             </form>
             <div class="sous-saisie">
-              <button type="button" class="lien" id="parler"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span data-t="parler"></span></button>
+              <div class="g">
+                <button type="button" class="lien" id="parler"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span data-t="parler"></span></button>
+                <button type="button" class="lien" id="nouvelle" hidden><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span data-t="nouvelle"></span></button>
+              </div>
               <span class="note" data-t="entree"></span>
             </div>
           </div>
@@ -51,14 +65,14 @@
     <main class="vue" id="v-ech" hidden><div class="cadre"></div></main>
     <main class="vue" id="v-verif" hidden><div class="cadre"></div></main>
     <main class="vue" id="v-src" hidden><div class="cadre"></div></main>
-
-    <nav class="onglets" id="onglets" aria-label="Navigation"></nav>
   </div>
+
+  <nav class="onglets" id="onglets" aria-label="Navigation"></nav>
 </div>
 
 <dialog id="agent" aria-labelledby="agent-titre">
   <form id="f-agent">
-    <h2 id="agent-titre" data-t="agentTitre" style="font-size:21px"></h2>
+    <h2 id="agent-titre" data-t="agentTitre"></h2>
     <label class="champ"><span data-t="agentService"></span><select id="a-service"></select></label>
     <label class="champ"><span data-t="agentQuestion"></span><textarea id="a-question" rows="3" dir="auto" maxlength="500" required></textarea></label>
     <label class="champ"><span data-t="agentContact"></span><input id="a-contact" maxlength="120" autocomplete="email"></label>
@@ -66,6 +80,7 @@
     <div class="pied"><button type="button" class="btn" id="a-annuler" data-t="annuler"></button><button type="submit" class="btn plein" data-t="agentEnvoyer"></button></div>
   </form>
 </dialog>
+
 <!--MOTEUR-->
 <script src="/assets/i18n.js"></script>
 <script src="/assets/app.js"></script>
