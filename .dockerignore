@@ -1,0 +1,11 @@
+.git
+.github
+__pycache__
+*.pyc
+data/journal.db
+data/sauvegardes
+config.env
+docs
+tests
+outils
+dist

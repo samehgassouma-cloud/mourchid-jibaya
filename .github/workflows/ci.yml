@@ -1,0 +1,20 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - uses: actions/setup-node@v4
+        with: { node-version: "20" }
+      - run: pip install -r requirements-dev.txt
+      - name: Tests unitaires et API
+        run: python -m unittest discover -s tests -v
+      - name: Évaluation indépendante (25 formulations nouvelles)
+        run: python tests/evaluation.py
+      - name: Parité moteur Python / moteur JavaScript hors ligne
+        run: python outils/verifier_parite.py
+      - name: Image Docker
+        run: docker build -t mourchid-jibaya .
