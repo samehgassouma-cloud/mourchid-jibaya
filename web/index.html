@@ -108,7 +108,7 @@ const T={
   envoyer:"إرسال",ph:"اكتب سؤالك بالعربية أو بالدارجة أو بالفرنسية…",avert:"نموذج أولي للهاكاثون: الأجوبة مستخرجة من نصوص رسمية، وبعض البطاقات في انتظار مصادقة الخبير. لا يعوّض رأياً رسمياً.",
   bienvenue:"مرحباً! أنا مرشد جباية. اطرح سؤالك الجبائي، وسأجيبك انطلاقاً من النصوص الرسمية مع ذكر المصدر.",
   source:"المصدر",officiel:"مصدر رسمي",confirmer:"للتأكيد",interne:"داخلي",verifie:"تاريخ التحقق",valide:"صادق عليه",voir:"انظر أيضاً",
-  agent:"إحالة السؤال على عون",ticket:"تمّت الإحالة. رقم الملف:",vouliez:"هل تقصد:",profil:"وضعيتي",j:"يوم",auj:"اليوم",reporte:"مؤجَّل من",
+  agent:"إحالة السؤال على عون",ticket:"تمّت الإحالة. رقم الملف:",ticketLocal:"نسخة دون إنترنت: لا يمكن إرسال السؤال من هنا. يمكنك طرحه على مركز الإرشاد الجبائي عن بعد (81 100 400). مرجع السؤال:",vouliez:"هل تقصد:",profil:"وضعيتي",j:"يوم",auj:"اليوم",reporte:"مؤجَّل من",
   noteEch:"إذا صادف آخر أجل يوم أحد أو عطلة رسمية، يمتدّ إلى أول يوم عمل. تواريخ الأعياد الدينية تقديرية.",
   introVerif:"أدخل مبالغ تصريحك الشهري: نعيد احتساب الأداء على القيمة المضافة ونتثبّت من الأجل. المبالغ لا تغادر جهازك ولا تُحال على الإدارة.",
   vProfil:"الوضعية",vPeriode:"الشهر المصرّح به",vCa:"رقم المعاملات دون احتساب الأداء (د)",vTaux:"نسبة الأداء على القيمة المضافة (%)",vTva:"الأداء المستوجب المصرّح به (د)",vDed:"الأداء القابل للطرح (د)",vDepot:"تاريخ الإيداع (اختياري)",
@@ -120,7 +120,7 @@ const T={
   envoyer:"Envoyer",ph:"Posez votre question en français, en arabe ou en darija…",avert:"Prototype de hackathon : les réponses sont tirées de textes officiels ; certaines fiches attendent la validation de l'expert. Ne remplace pas un avis officiel.",
   bienvenue:"Bonjour ! Je suis Mourchid Jibaya. Posez votre question fiscale : je réponds à partir des textes officiels et je cite la source.",
   source:"Source",officiel:"Source officielle",confirmer:"À confirmer",interne:"Interne",verifie:"Vérifié le",valide:"Validé par",voir:"Voir aussi",
-  agent:"Transmettre la question à un agent",ticket:"Question transmise. Numéro de dossier :",vouliez:"Vouliez-vous dire :",profil:"Mon profil",j:"j",auj:"aujourd'hui",reporte:"reporté du",
+  agent:"Transmettre la question à un agent",ticket:"Question transmise. Numéro de dossier :",ticketLocal:"Version hors ligne : la question ne peut pas être envoyée d'ici. Vous pouvez la poser au Centre d'information fiscale à distance (81 100 400). Référence :",vouliez:"Vouliez-vous dire :",profil:"Mon profil",j:"j",auj:"aujourd'hui",reporte:"reporté du",
   noteEch:"Si le dernier jour tombe un dimanche ou un jour férié, le délai est prolongé au premier jour ouvrable. Les dates des fêtes religieuses sont estimées.",
   introVerif:"Saisissez les montants de votre déclaration mensuelle : nous recalculons la TVA et vérifions le délai. Les montants restent sur votre appareil ; rien n'est transmis à l'administration.",
   vProfil:"Profil",vPeriode:"Mois déclaré",vCa:"Chiffre d'affaires HT (DT)",vTaux:"Taux de TVA (%)",vTva:"TVA collectée déclarée (DT)",vDed:"TVA déductible (DT)",vDepot:"Date de dépôt (facultatif)",
@@ -132,7 +132,7 @@ const T={
   envoyer:"Send",ph:"Ask your question in English, French or Arabic…",avert:"Hackathon prototype: answers come from official texts; some entries await expert validation. Not official advice.",
   bienvenue:"Hello! I am Mourchid Jibaya. Ask your tax question: I answer from official texts and cite the source.",
   source:"Source",officiel:"Official source",confirmer:"To be confirmed",interne:"Internal",verifie:"Checked on",valide:"Validated by",voir:"See also",
-  agent:"Forward the question to an agent",ticket:"Question forwarded. Case number:",vouliez:"Did you mean:",profil:"My profile",j:"d",auj:"today",reporte:"moved from",
+  agent:"Forward the question to an agent",ticket:"Question forwarded. Case number:",ticketLocal:"Offline version: the question cannot be sent from here. You can ask the remote tax information centre (81 100 400). Reference:",vouliez:"Did you mean:",profil:"My profile",j:"d",auj:"today",reporte:"moved from",
   noteEch:"If the last day falls on a Sunday or public holiday, the deadline moves to the next working day. Religious holiday dates are estimated.",
   introVerif:"Enter your monthly return amounts: we recompute the VAT and check the deadline. The amounts stay on your device; nothing is sent to the tax office.",
   vProfil:"Profile",vPeriode:"Month declared",vCa:"Turnover excl. VAT (TND)",vTaux:"VAT rate (%)",vTva:"Output VAT declared (TND)",vDed:"Deductible VAT (TND)",vDepot:"Filing date (optional)",
@@ -208,7 +208,7 @@ document.addEventListener("click",e=>{
   else if(t.dataset.onglet){document.querySelectorAll("nav button").forEach(b=>b.setAttribute("aria-selected",b===t));
     ["chat","ech","verif","src"].forEach(o=>$("p-"+o).hidden=o!==t.dataset.onglet);if(t.dataset.onglet==="src")chargerSources()}
   else if(t.dataset.fiche)ouvrirFiche(t.dataset.fiche);
-  else if(t.dataset.agent!==undefined){api("/api/ticket",{question:t.dataset.agent,langue:L}).then(r=>{t.disabled=true;bulle("bot",esc(T[L].ticket+" "+r.id))})}
+  else if(t.dataset.agent!==undefined){api("/api/ticket",{question:t.dataset.agent,langue:L}).then(r=>{t.disabled=true;bulle("bot",esc((r.local?T[L].ticketLocal:T[L].ticket)+" "+r.id))})}
   else if(t.classList.contains("puce")&&t.parentElement.id==="exemples")poser(t.textContent);
   else if(t.id==="b-verif")verifierDecl();
 });

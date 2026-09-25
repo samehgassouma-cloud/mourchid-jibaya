@@ -19,6 +19,14 @@ convertie au nouveau format ; les questions types, le lexique et la validation e
 2. Windows : double-cliquer sur `lancer_windows.bat` · macOS / Linux : `./lancer_mac_linux.sh` (ou `python3 serveur.py`).
 3. Le navigateur s'ouvre sur **http://localhost:8000**. Administration : **http://localhost:8000/admin** (code `2026`, modifiable dans `config.env`).
 
+## Version hors ligne (téléphone, sans Internet)
+
+`dist/Mourchid_Jibaya_hors_ligne.html` s'ouvre d'un clic dans n'importe quel navigateur, y compris sur téléphone et sans connexion.
+Elle reprend l'interface et embarque le moteur en JavaScript (`web/moteur.js`), portage fidèle du moteur Python.
+Reconstruire : `python outils/construire_hors_ligne.py` · vérifier que les deux moteurs répondent pareil (Node.js requis) :
+`python outils/verifier_parite.py` (89/89 questions identiques, échéances et vérification identiques).
+Sans serveur, pas d'administration ni d'envoi de ticket : l'usager est orienté vers le Centre d'information fiscale à distance.
+
 ## Architecture
 
 ```
@@ -46,6 +54,8 @@ question ─► garde-fous (fraude → refus)
 | `mourchid/modele.py` | reformulation optionnelle (API Claude ou Ollama local), désactivée par défaut |
 | `serveur.py` | serveur web et API REST |
 | `web/index.html`, `web/admin.html` | interface usager trilingue et page d'administration |
+| `web/moteur.js`, `outils/construire_hors_ligne.py` | moteur JavaScript et construction de la version hors ligne |
+| `outils/verifier_parite.py` | contrôle que les moteurs Python et JavaScript donnent les mêmes réponses |
 | `tests/` | tests unitaires et évaluation indépendante |
 
 ## Résultats
