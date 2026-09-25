@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mourchid Jibaya · مرشد جباية</title>
+<style>
+:root{--fond:#F3F6F4;--carte:#FFFFFF;--encre:#1C2B30;--doux:#5A6A6E;--sombre:#0E3B43;--or:#B8862B;--menthe:#E2EBE8;--ligne:#D3DEDB;
+--ok:#2E7D5B;--alerte:#B8862B;--crit:#B3261E;--r:14px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fond);color:var(--encre);font:16px/1.55 "Segoe UI",Tahoma,"Noto Sans Arabic",Arial,sans-serif}
+[hidden]{display:none!important}
+header{background:var(--sombre);color:#F3F6F4;padding:14px 16px}
+.barre{max-width:980px;margin:auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font-weight:700;font-size:20px}.logo small{display:block;font-weight:400;font-size:13px;color:#BFD8D5}
+.langues{margin-inline-start:auto;display:flex;gap:6px}
+.langues button{background:transparent;color:#F3F6F4;border:1px solid #6F9A96;border-radius:20px;padding:4px 12px;cursor:pointer;font:inherit;font-size:14px}
+.langues button[aria-pressed=true]{background:var(--or);border-color:var(--or);color:var(--sombre);font-weight:700}
+nav{max-width:980px;margin:14px auto 0;padding:0 16px;display:flex;gap:6px;flex-wrap:wrap}
+nav button{border:1px solid var(--ligne);background:var(--carte);border-radius:22px;padding:8px 16px;cursor:pointer;font:inherit;font-size:15px;color:var(--sombre)}
+nav button[aria-selected=true]{background:var(--sombre);color:#fff;border-color:var(--sombre)}
+nav .etiquette{font-size:11px;color:var(--or);font-weight:700;margin-inline-start:6px}
+main{max-width:980px;margin:14px auto 40px;padding:0 16px}
+.panneau{background:var(--carte);border:1px solid var(--ligne);border-radius:var(--r);padding:18px}
+#fil{min-height:320px;max-height:60vh;overflow-y:auto;display:flex;flex-direction:column;gap:12px;padding:4px}
+.msg{max-width:88%;padding:12px 14px;border-radius:var(--r);white-space:pre-wrap;word-wrap:break-word}
+.msg.moi{align-self:flex-end;background:var(--sombre);color:#fff}
+.msg.bot{align-self:flex-start;background:var(--menthe)}
+.msg .titre{font-weight:700;margin-bottom:4px}
+.ref{margin-top:10px;padding-top:8px;border-top:1px dashed #A9BEBA;font-size:13.5px;color:var(--doux);white-space:normal}
+.badge{display:inline-block;border-radius:10px;padding:1px 8px;font-size:12px;font-weight:700;margin-inline-end:6px}
+.b-officiel{background:#D9EFE3;color:var(--ok)}.b-confirmer{background:#F7EBD2;color:#8A6417}.b-interne{background:#E6E9EA;color:#51606A}
+.url{display:block;direction:ltr;text-align:left;user-select:all;font-family:Consolas,monospace;font-size:12px;color:var(--sombre);margin-top:4px;word-break:break-all}
+.url a{color:var(--sombre)}
+.puces{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.puce{border:1px solid var(--ligne);background:#fff;border-radius:18px;padding:5px 12px;font:inherit;font-size:14px;cursor:pointer;color:var(--sombre)}
+.puce:hover{border-color:var(--or)}
+.bouton{background:var(--or);color:var(--sombre);border:0;border-radius:10px;padding:9px 16px;font:inherit;font-weight:700;cursor:pointer}
+.bouton.second{background:#fff;border:1px solid var(--sombre)}
+form.saisie{display:flex;gap:8px;margin-top:12px}
+form.saisie input{flex:1;padding:12px;border:1px solid var(--ligne);border-radius:10px;font:inherit}
+label{display:block;font-size:14px;color:var(--doux);margin:10px 0 4px}
+input,select{width:100%;padding:10px;border:1px solid var(--ligne);border-radius:10px;font:inherit;background:#fff}
+.grille{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.ech{display:flex;justify-content:space-between;gap:10px;padding:12px;border:1px solid var(--ligne);border-radius:12px;margin-top:8px;background:#fff}
+.ech b{color:var(--sombre)}.ech .j{font-weight:700;color:var(--or);white-space:nowrap}.ech small{color:var(--doux);display:block}
+.point{padding:10px 12px;border-radius:10px;margin-top:8px}
+.p-ok{background:#E3F2EA}.p-info{background:var(--menthe)}.p-alerte{background:#F7EBD2}.p-critique{background:#F6DEDC}
+.note{font-size:13px;color:var(--doux);margin-top:12px}
+footer{text-align:center;font-size:13px;color:var(--doux);padding:18px 16px 30px}
+@media (max-width:600px){.msg{max-width:96%}header .logo{font-size:18px}}
+</style>
+</head>
+<body>
+<header><div class="barre">
+  <div class="logo" id="nom">مرشد جباية<small id="devise"></small></div>
+  <div class="langues" role="group" aria-label="Langue">
+    <button data-l="ar">عربي</button><button data-l="fr">Français</button><button data-l="en">English</button>
+  </div>
+</div></header>
+
+<nav role="tablist">
+  <button role="tab" data-onglet="chat" aria-selected="true"><span data-t="ongChat"></span><span class="etiquette">T9</span></button>
+  <button role="tab" data-onglet="ech" aria-selected="false"><span data-t="ongEch"></span><span class="etiquette">T4</span></button>
+  <button role="tab" data-onglet="verif" aria-selected="false"><span data-t="ongVerif"></span><span class="etiquette">T4</span></button>
+  <button role="tab" data-onglet="src" aria-selected="false"><span data-t="ongSrc"></span></button>
+</nav>
+
+<main>
+  <section id="p-chat" class="panneau">
+    <div id="fil" aria-live="polite"></div>
+    <div class="puces" id="exemples"></div>
+    <form class="saisie" id="f-question"><input id="q" autocomplete="off" maxlength="500"><button class="bouton" data-t="envoyer"></button></form>
+    <p class="note" data-t="avert"></p>
+  </section>
+
+  <section id="p-ech" class="panneau" hidden>
+    <label for="profil" data-t="profil"></label><select id="profil"></select>
+    <div id="liste-ech"></div>
+    <p class="note" data-t="noteEch"></p>
+  </section>
+
+  <section id="p-verif" class="panneau" hidden>
+    <p data-t="introVerif"></p>
+    <div class="grille">
+      <div><label data-t="vProfil"></label><select id="v-profil"><option value="pp"></option><option value="pm"></option></select></div>
+      <div><label data-t="vPeriode"></label><input id="v-periode" type="month"></div>
+      <div><label data-t="vCa"></label><input id="v-ca" inputmode="decimal" value="20000"></div>
+      <div><label data-t="vTaux"></label><select id="v-taux"><option>19</option><option>13</option><option>7</option></select></div>
+      <div><label data-t="vTva"></label><input id="v-tva" inputmode="decimal" value="3500"></div>
+      <div><label data-t="vDed"></label><input id="v-ded" inputmode="decimal" value="1200"></div>
+      <div><label data-t="vDepot"></label><input id="v-depot" type="date"></div>
+    </div>
+    <p><button class="bouton" id="b-verif" data-t="verifier"></button></p>
+    <div id="res-verif"></div>
+    <p class="note" data-t="noteVerif"></p>
+  </section>
+
+  <section id="p-src" class="panneau" hidden>
+    <p data-t="introSrc"></p><ol id="liste-src"></ol>
+  </section>
+</main>
+<footer><span data-t="pied"></span> · الأستاذة سماح قسومة — مدرّبة دولية</footer>
+
+<script>
+const T={
+ ar:{nom:"مرشد جباية",devise:"مساعد جبائي ذكي على مدار الساعة — يجيب من النصوص الرسمية ويذكر المصدر",ongChat:"المساعد",ongEch:"آجالي",ongVerif:"التثبّت من تصريحي",ongSrc:"المصادر",
+  envoyer:"إرسال",ph:"اكتب سؤالك بالعربية أو بالدارجة أو بالفرنسية…",avert:"نموذج أولي للهاكاثون: الأجوبة مستخرجة من نصوص رسمية، وبعض البطاقات في انتظار مصادقة الخبير. لا يعوّض رأياً رسمياً.",
+  bienvenue:"مرحباً! أنا مرشد جباية. اطرح سؤالك الجبائي، وسأجيبك انطلاقاً من النصوص الرسمية مع ذكر المصدر.",
+  source:"المصدر",officiel:"مصدر رسمي",confirmer:"للتأكيد",interne:"داخلي",verifie:"تاريخ التحقق",valide:"صادق عليه",voir:"انظر أيضاً",
+  agent:"إحالة السؤال على عون",ticket:"تمّت الإحالة. رقم الملف:",vouliez:"هل تقصد:",profil:"وضعيتي",j:"يوم",auj:"اليوم",reporte:"مؤجَّل من",
+  noteEch:"إذا صادف آخر أجل يوم أحد أو عطلة رسمية، يمتدّ إلى أول يوم عمل. تواريخ الأعياد الدينية تقديرية.",
+  introVerif:"أدخل مبالغ تصريحك الشهري: نعيد احتساب الأداء على القيمة المضافة ونتثبّت من الأجل. المبالغ لا تغادر جهازك ولا تُحال على الإدارة.",
+  vProfil:"الوضعية",vPeriode:"الشهر المصرّح به",vCa:"رقم المعاملات دون احتساب الأداء (د)",vTaux:"نسبة الأداء على القيمة المضافة (%)",vTva:"الأداء المستوجب المصرّح به (د)",vDed:"الأداء القابل للطرح (د)",vDepot:"تاريخ الإيداع (اختياري)",
+  verifier:"تثبّت",pp:"شخص طبيعي",pm:"شركة",tva_ok:"الأداء المصرّح به مطابق للمبلغ المنتظر ({a} د).",tva_ecart:"فارق بين الأداء المصرّح به ({d} د) والمبلغ المنتظر ({a} د): {e} د.",
+  a_payer:"المبلغ الصافي الواجب دفعه: {m} د.",credit:"فائض أداء قابل للترحيل: {m} د.",date_limite:"آخر أجل: {d}",retard:"إيداع متأخر بـ{j} يوم: تُستوجب خطايا تأخير، ويمكن لعون مساعدتك في احتسابها.",dans_les_delais:"الإيداع في الآجال.",periode_invalide:"الشهر غير صالح.",
+  noteVerif:"معطيات تجريبية يُدخلها المستعمل يدوياً. لا نفاذ إلى أي منظومة إدارية.",introSrc:"النصوص الرسمية التي بُنيت عليها البطاقات:",pied:"مرشد جباية · الهاكاثون الوطني للذكاء الاصطناعي والمالية العمومية 2026",
+  ex:["أنا محامي، لازمني فاتورة إلكترونية؟","وقتاش آخر أجل للتصريح الشهري لشركتي؟","العفو الجبائي وقتاش يوفى؟","كيفاش نعمل الهوية الرقمية؟"]},
+ fr:{nom:"Mourchid Jibaya",devise:"Assistant fiscal IA 24h/24 — répond à partir des textes officiels et cite la source",ongChat:"Assistant",ongEch:"Mes échéances",ongVerif:"Vérifier ma déclaration",ongSrc:"Sources",
+  envoyer:"Envoyer",ph:"Posez votre question en français, en arabe ou en darija…",avert:"Prototype de hackathon : les réponses sont tirées de textes officiels ; certaines fiches attendent la validation de l'expert. Ne remplace pas un avis officiel.",
+  bienvenue:"Bonjour ! Je suis Mourchid Jibaya. Posez votre question fiscale : je réponds à partir des textes officiels et je cite la source.",
+  source:"Source",officiel:"Source officielle",confirmer:"À confirmer",interne:"Interne",verifie:"Vérifié le",valide:"Validé par",voir:"Voir aussi",
+  agent:"Transmettre la question à un agent",ticket:"Question transmise. Numéro de dossier :",vouliez:"Vouliez-vous dire :",profil:"Mon profil",j:"j",auj:"aujourd'hui",reporte:"reporté du",
+  noteEch:"Si le dernier jour tombe un dimanche ou un jour férié, le délai est prolongé au premier jour ouvrable. Les dates des fêtes religieuses sont estimées.",
+  introVerif:"Saisissez les montants de votre déclaration mensuelle : nous recalculons la TVA et vérifions le délai. Les montants restent sur votre appareil ; rien n'est transmis à l'administration.",
+  vProfil:"Profil",vPeriode:"Mois déclaré",vCa:"Chiffre d'affaires HT (DT)",vTaux:"Taux de TVA (%)",vTva:"TVA collectée déclarée (DT)",vDed:"TVA déductible (DT)",vDepot:"Date de dépôt (facultatif)",
+  verifier:"Vérifier",pp:"Personne physique",pm:"Société",tva_ok:"La TVA déclarée correspond au montant attendu ({a} DT).",tva_ecart:"Écart entre la TVA déclarée ({d} DT) et le montant attendu ({a} DT) : {e} DT.",
+  a_payer:"Montant net à payer : {m} DT.",credit:"Crédit de TVA reportable : {m} DT.",date_limite:"Date limite : {d}",retard:"Dépôt en retard de {j} jours : des pénalités de retard s'appliquent ; un agent peut vous aider à les calculer.",dans_les_delais:"Dépôt dans les délais.",periode_invalide:"Mois invalide.",
+  noteVerif:"Données de démonstration saisies à la main. Aucun accès à un système de l'administration.",introSrc:"Textes officiels sur lesquels reposent les fiches :",pied:"Mourchid Jibaya · Hackathon national IA & Finances publiques 2026",
+  ex:["Je suis avocat : la facture électronique est-elle obligatoire ?","Quand déposer la déclaration mensuelle d'une SARL ?","Amnistie fiscale 2026 : jusqu'à quand ?","Comment obtenir DigiGO ?"]},
+ en:{nom:"Mourchid Jibaya",devise:"24/7 AI tax assistant — answers from official texts and cites the source",ongChat:"Assistant",ongEch:"My deadlines",ongVerif:"Check my return",ongSrc:"Sources",
+  envoyer:"Send",ph:"Ask your question in English, French or Arabic…",avert:"Hackathon prototype: answers come from official texts; some entries await expert validation. Not official advice.",
+  bienvenue:"Hello! I am Mourchid Jibaya. Ask your tax question: I answer from official texts and cite the source.",
+  source:"Source",officiel:"Official source",confirmer:"To be confirmed",interne:"Internal",verifie:"Checked on",valide:"Validated by",voir:"See also",
+  agent:"Forward the question to an agent",ticket:"Question forwarded. Case number:",vouliez:"Did you mean:",profil:"My profile",j:"d",auj:"today",reporte:"moved from",
+  noteEch:"If the last day falls on a Sunday or public holiday, the deadline moves to the next working day. Religious holiday dates are estimated.",
+  introVerif:"Enter your monthly return amounts: we recompute the VAT and check the deadline. The amounts stay on your device; nothing is sent to the tax office.",
+  vProfil:"Profile",vPeriode:"Month declared",vCa:"Turnover excl. VAT (TND)",vTaux:"VAT rate (%)",vTva:"Output VAT declared (TND)",vDed:"Deductible VAT (TND)",vDepot:"Filing date (optional)",
+  verifier:"Check",pp:"Individual",pm:"Company",tva_ok:"Declared VAT matches the expected amount ({a} TND).",tva_ecart:"Gap between declared VAT ({d} TND) and the expected amount ({a} TND): {e} TND.",
+  a_payer:"Net amount payable: {m} TND.",credit:"VAT credit carried forward: {m} TND.",date_limite:"Deadline: {d}",retard:"Filed {j} days late: late-payment penalties apply; an agent can help you compute them.",dans_les_delais:"Filed on time.",periode_invalide:"Invalid month.",
+  noteVerif:"Demo data entered by hand. No access to any tax administration system.",introSrc:"Official texts the entries are based on:",pied:"Mourchid Jibaya · National Hackathon AI & Public Finance 2026",
+  ex:["Is e-invoicing mandatory for doctors?","When is the monthly return due for a company?","Is there a tax amnesty in 2026?","What is Mobile ID?"]}};
+let L=localStorageGet()||"ar";
+function localStorageGet(){try{return localStorage.getItem("mj-langue")}catch(e){return null}}
+function localStorageSet(v){try{localStorage.setItem("mj-langue",v)}catch(e){}}
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fmt=(s,o)=>s.replace(/\{(\w)\}/g,(_,k)=>o[k]);
+
+function appliquer(l){
+  L=l;localStorageSet(l);const S=T[l];
+  document.documentElement.lang=l;document.documentElement.dir=l==="ar"?"rtl":"ltr";
+  $("nom").firstChild.nodeValue=S.nom;$("devise").textContent=S.devise;
+  document.querySelectorAll("[data-t]").forEach(e=>e.textContent=S[e.dataset.t]);
+  document.querySelectorAll(".langues button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.l===l));
+  $("q").placeholder=S.ph;
+  const vp=$("v-profil").options;vp[0].text=S.pp;vp[1].text=S.pm;
+  $("exemples").innerHTML=S.ex.map(x=>`<button class="puce">${esc(x)}</button>`).join("");
+  let b=$("bienvenue");if(!b){b=bulle("bot","");b.id="bienvenue"}b.textContent=S.bienvenue;b.dir=l==="ar"?"rtl":"ltr";
+  chargerEcheances();
+}
+function bulle(cl,html){const d=document.createElement("div");d.className="msg "+cl;d.innerHTML=html;$("fil").appendChild(d);$("fil").scrollTop=1e9;return d}
+async function api(url,corps){const r=await fetch(url,corps?{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(corps)}:{});return r.json()}
+
+async function poser(q){
+  q=q.trim();if(!q)return;bulle("moi",esc(q));$("q").value="";
+  const r=await api("/api/question",{question:q});const S=T[r.langue]||T[L];let h="";
+  if(r.type==="reponse"){
+    const b=r.statut==="source_officielle"?["b-officiel",S.officiel]:r.statut==="interne"?["b-interne",S.interne]:["b-confirmer",S.confirmer];
+    h=`<div class="titre">${esc(r.titre)}</div>${esc(r.texte)}<div class="ref"><span class="badge ${b[0]}">${b[1]}</span>${S.source} : ${esc(r.source.reference||"")}`;
+    if(r.verifie_le)h+=` · ${S.verifie} ${esc(r.verifie_le)}`;
+    if(r.validation_experte)h+=` · ${S.valide} ${esc(r.validation_experte.par)}`;
+    if(r.source.url)h+=`<span class="url"><a href="${esc(r.source.url)}" rel="noopener">${esc(r.source.url)}</a></span>`;
+    h+=`</div>`;
+    if(r.voir_aussi&&r.voir_aussi.length)h+=`<div class="puces"><small>${S.voir} :</small>${r.voir_aussi.map(v=>`<button class="puce" data-fiche="${esc(v.id)}">${esc(v.titre)}</button>`).join("")}</div>`;
+  }else if(r.type==="inconnu"){
+    h=esc(r.texte);
+    if(r.propositions&&r.propositions.length)h+=`<div class="puces"><small>${S.vouliez}</small>${r.propositions.map(v=>`<button class="puce" data-fiche="${esc(v.id)}">${esc(v.titre)}</button>`).join("")}</div>`;
+    h+=`<p><button class="bouton second" data-agent="${esc(q)}">${S.agent}</button></p>`;
+  }else h=esc(r.texte||"");
+  const d=bulle("bot",h);d.dir=r.langue==="ar"?"rtl":"ltr";
+}
+async function ouvrirFiche(id){
+  const r=await api(`/api/fiche?id=${encodeURIComponent(id)}&langue=${L}`);if(r.erreur)return;
+  const S=T[L];const d=bulle("bot",`<div class="titre">${esc(r.titre)}</div>${esc(r.texte)}<div class="ref">${S.source} : ${esc(r.source.reference||"")}${r.source.url?`<span class="url">${esc(r.source.url)}</span>`:""}</div>`);d.dir=L==="ar"?"rtl":"ltr";
+}
+async function chargerEcheances(){
+  const S=T[L];const sel=$("profil");const actuel=sel.value||"pp";
+  const r=await api(`/api/echeances?profil=${actuel}&jours=150`);
+  sel.innerHTML=Object.entries(r.profils).map(([k,v])=>`<option value="${k}" ${k===actuel?"selected":""}>${esc(v[L])}</option>`).join("");
+  $("liste-ech").innerHTML=r.echeances.map(e=>{
+    const rep=e.report.length?`<small>${S.reporte} ${e.date_legale} (${e.report.map(x=>esc(x.motif[L])).join(", ")})</small>`:"";
+    return `<div class="ech"><div><b>${esc(e.libelle[L])}</b>${e.periode?` · ${esc(e.periode)}`:""}<small>${e.date}</small>${rep}</div><div class="j">${e.jours_restants===0?S.auj:e.jours_restants+" "+S.j}</div></div>`}).join("");
+}
+async function verifierDecl(){
+  const S=T[L];
+  const r=await api("/api/verification",{profil:$("v-profil").value,periode:$("v-periode").value,ca_ht:$("v-ca").value,taux:$("v-taux").value,
+    tva_declaree:$("v-tva").value,tva_deductible:$("v-ded").value,date_depot:$("v-depot").value});
+  $("res-verif").innerHTML=r.points.map(p=>`<div class="point p-${p.niveau}">${esc(fmt(S[p.code]||p.code,{a:p.attendue,d:p.declaree??p.date,e:p.ecart,m:p.montant,j:p.jours}))}</div>`).join("");
+}
+async function chargerSources(){
+  const r=await api("/api/sources");
+  $("liste-src").innerHTML=r.sources.map(s=>`<li>${esc(s.reference)}${s.url?`<span class="url">${esc(s.url)}</span>`:""}</li>`).join("");
+}
+document.addEventListener("click",e=>{
+  const t=e.target.closest("button");if(!t)return;
+  if(t.dataset.l)appliquer(t.dataset.l);
+  else if(t.dataset.onglet){document.querySelectorAll("nav button").forEach(b=>b.setAttribute("aria-selected",b===t));
+    ["chat","ech","verif","src"].forEach(o=>$("p-"+o).hidden=o!==t.dataset.onglet);if(t.dataset.onglet==="src")chargerSources()}
+  else if(t.dataset.fiche)ouvrirFiche(t.dataset.fiche);
+  else if(t.dataset.agent!==undefined){api("/api/ticket",{question:t.dataset.agent,langue:L}).then(r=>{t.disabled=true;bulle("bot",esc(T[L].ticket+" "+r.id))})}
+  else if(t.classList.contains("puce")&&t.parentElement.id==="exemples")poser(t.textContent);
+  else if(t.id==="b-verif")verifierDecl();
+});
+$("f-question").addEventListener("submit",e=>{e.preventDefault();poser($("q").value)});
+$("profil").addEventListener("change",chargerEcheances);
+const m=new Date();m.setMonth(m.getMonth()-1);$("v-periode").value=m.toISOString().slice(0,7);
+appliquer(L);
+</script>
+</body>
+</html>

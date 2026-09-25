@@ -53,3 +53,15 @@ class TestCalendrier(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestVerification(unittest.TestCase):
+    def test_ecart_et_retard(self):
+        from mourchid.verification import verifier
+        cal = Calendrier(DATA / "jours_feries.json")
+        r = verifier({"profil": "pm", "periode": "2026-08", "ca_ht": "10000", "taux": "19", "tva_declaree": "1500",
+                      "tva_deductible": "200", "date_depot": "2026-10-05"}, cal)
+        codes = [p["code"] for p in r["points"]]
+        self.assertIn("tva_ecart", codes)
+        self.assertIn("retard", codes)
+        self.assertEqual(r["statut"], "critique")
