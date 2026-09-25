@@ -124,14 +124,23 @@ from as this that these those should must will
   const suffisant = (r) => r.score >= SEUIL_SCORE && r.couverture >= SEUIL_COUVERTURE && r.mots.length >= 2;
 
   // ---------------- garde-fous ----------------
-  const FRAUDE = ["frauder", "fraude fiscale", "echapper a l impot", "eviter de payer l impot", "ne pas declarer", "cacher mes ventes",
-    "cacher mon chiffre", "dissimuler", "fausse facture", "fausses factures", "sans facture pour ne pas", "blanchir",
-    "evade tax", "tax evasion", "avoid paying tax", "hide my income", "hide income", "fake invoice", "not declare",
-    "تهرب", "نتهرب", "التهرب الجبائي", "نخبي", "نخبّي المداخيل", "نهرب من الاداء", "ما نصرحش", "فاتوره مزوره", "فواتير مزوره",
-    "ما نخلصش الاداء", "نغش"].map(normaliser);
-  function frauduleuse(q) {
+  // deux niveaux : « fraude » (refus) et « vigilance » (rappel du cadre légal) — listes déjà normalisées
+  const FRAUDE = ["frauder", "fraude fiscale", "echapper a l impot", "eviter de payer l impot", "ne pas declarer", "cacher mes ventes", "cacher mon chiffre", "cacher mes revenus", "dissimuler", "fausse facture", "fausses factures", "facture fictive", "factures fictives", "fausse declaration", "sous declarer", "minorer mon chiffre", "sans facture pour ne pas", "blanchir", "evade tax", "tax evasion", "avoid paying tax", "hide my income", "hide income", "fake invoice", "false invoice", "not declare", "underreport", "launder", "تهرب", "نتهرب", "التهرب الجبايي", "نخبي", "نخبي المداخيل", "نهرب من الاداء", "ما نصرحش", "فاتوره مزوره", "فواتير مزوره", "فاتوره وهميه", "فواتير وهميه", "تزوير", "نزور", "ما نخلصش الاداء", "نغش", "غش جبايي"];
+  const VIGILANCE = ["payer moins d impot", "payer moins d impots", "payer moins de taxe", "payer moins de tva", "reduire mes impots", "reduire mon impot", "sans facture", "sans facturer", "ne pas facturer", "au noir", "en espece sans", "eviter le controle", "echapper au controle", "sans que le fisc", "le fisc ne", "ne pas payer la tva", "pay less tax", "reduce my tax", "without invoice", "without an invoice", "off the books", "under the table", "avoid an audit", "avoid audit", "cash only", "ننقص من الاداء", "ننقص الاداء", "نقص من الاداء", "نخلص اقل", "ندفع اقل", "بلاش فاتوره", "بلا فاتوره", "دون فاتوره", "بدون فاتوره", "ما نعملش فاتوره", "بالنوار", "في النوار", "نتفادي المراقبه", "نهرب من المراقبه", "ما يعرفوش"];
+  const INFORMATION = ["sanction", "sanctions", "penalite", "penalites", "amende", "qu est ce que", "definition", "risque", "risques", "penalty", "penalties", "what is", "punishment", "risk", "عقوبه", "عقوبات", "خطيه", "خطايا", "ما هو", "ما هي", "شنوه", "شنيه", "جزاء"];
+  const ALTERNATIVES = ["amnistie_2026", "forfait", "penal", "contact_dgi"];
+  const contient = (t, liste) => liste.some((f) => (f[0] >= "؀" ? t.includes(f) : t.includes(" " + f + " ")));
+  function niveauRisque(q) {
     const t = " " + normaliser(q) + " ";
-    return FRAUDE.some((f) => (f[0] >= "؀" ? t.includes(f) : t.includes(" " + f + " ")));
+    if (contient(t, FRAUDE)) return contient(t, INFORMATION) ? "vigilance" : "fraude";
+    if (contient(t, VIGILANCE)) return "vigilance";
+    return null;
+  }
+  const frauduleuse = (q) => niveauRisque(q) === "fraude";
+  function sansExpressionsSensibles(q) {
+    let t = " " + normaliser(q) + " ";
+    for (const f of [...FRAUDE, ...VIGILANCE].sort((a, b) => b.length - a.length)) t = t.split(f[0] >= "؀" ? f : " " + f + " ").join(" ");
+    return t.split(" ").filter(Boolean).join(" ");
   }
 
   // ---------------- assistant ----------------
@@ -139,7 +148,9 @@ from as this that these those should must will
     bonjour: { fr: "Bonjour ! Posez votre question fiscale : je réponds à partir des textes officiels et je cite la source.", ar: "مرحباً! اطرح سؤالك الجبائي: أجيب انطلاقاً من النصوص الرسمية وأذكر المصدر.", en: "Hello! Ask your tax question: I answer from official texts and cite the source." },
     merci: { fr: "Avec plaisir. Autre question ?", ar: "بكل سرور. هل من سؤال آخر؟", en: "You're welcome. Anything else?" },
     inconnu: { fr: "Je n'ai pas trouvé de source officielle suffisante pour répondre avec certitude. Je préfère ne pas deviner : vous pouvez transmettre la question à un agent.", ar: "لم أجد مصدراً رسمياً كافياً للإجابة بيقين. أفضّل ألّا أخمّن: يمكنك إحالة السؤال على عون.", en: "I could not find a sufficient official source to answer with certainty. I prefer not to guess: you can forward the question to an agent." },
-    refus: { fr: "Je ne peux pas aider à éviter l'impôt de manière illégale. En revanche, je peux vous indiquer les dispositifs légaux : régularisation, échelonnement, régime adapté à votre activité.", ar: "لا يمكنني المساعدة على التهرّب من الأداء. في المقابل، يمكنني توجيهك إلى الحلول القانونية: تسوية الوضعية، الدفع بالتقسيط، أو النظام الجبائي الملائم لنشاطك.", en: "I cannot help avoid tax illegally. I can, however, point you to legal options: regularisation, payment plans, or the regime suited to your activity." },
+    refus: {"fr": "Je ne peux pas vous aider à dissimuler des revenus ou à éviter l'impôt de manière illégale : c'est une infraction fiscale, exposée à des pénalités et à des poursuites. En revanche, si vous êtes en difficulté, il existe des voies légales : régulariser votre situation, bénéficier de l'amnistie fiscale 2026 si vous êtes concerné, choisir le régime adapté à votre activité ou demander des facilités de paiement à la recette des finances. Choisissez une piste ci-dessous ou parlez à un agent.", "ar": "لا يمكنني مساعدتك على إخفاء المداخيل أو التهرّب من الأداء بطريقة غير قانونية: فذلك مخالفة جبائية تعرّض صاحبها للخطايا والتتبّعات. في المقابل، إن كنت تواجه صعوبة، توجد حلول قانونية: تسوية وضعيتك، الانتفاع بالعفو الجبائي لسنة 2026 إن كنت معنياً، اختيار النظام الجبائي الملائم لنشاطك، أو طلب تسهيلات في الدفع لدى القباضة المالية. اختر أحد المسالك أدناه أو تحدّث مع عون.", "en": "I cannot help you hide income or avoid tax illegally: it is a tax offence, exposed to penalties and prosecution. If you are in difficulty, there are legal options: regularise your situation, use the 2026 tax amnesty if it applies to you, choose the regime suited to your activity or ask the tax collection office for payment facilities. Pick an option below or talk to an agent."},
+    vigilance: {"fr": "Rappel du cadre légal : toute vente doit être facturée et déclarée ; payer moins d'impôt n'est possible que par les dispositifs prévus par les textes (régime adapté, déductions, avantages et amnisties votés). Je réponds uniquement dans ce cadre.", "ar": "تذكير بالإطار القانوني: كل بيع يجب أن تصدر به فاتورة وأن يُصرَّح به؛ ولا يمكن التخفيف من الأداء إلا بالآليات التي تنصّ عليها النصوص (النظام الملائم، الطرح، الامتيازات والعفو المصادق عليه). أجيب في هذا الإطار فقط.", "en": "Legal reminder: every sale must be invoiced and declared; paying less tax is only possible through the schemes provided by law (suitable regime, deductions, voted incentives and amnesties). I answer only within this framework."},
+    vigilance_seul: {"fr": "Voici les pistes légales qui pourraient vous concerner :", "ar": "إليك المسالك القانونية التي قد تهمّك:", "en": "Here are the legal options that may concern you:"},
   };
   const SALUT = new Set(["bonjour", "salut", "bonsoir", "hello", "hi", "مرحبا", "عسلامه", "السلام", "سلام", "اهلا", "صباح"]);
   const MERCI = new Set(["merci", "thanks", "thank", "شكرا", "يعيشك", "بارك"]);
@@ -153,16 +164,24 @@ from as this that these those should must will
     question = String(question || "").trim().slice(0, 500);
     const l = ["ar", "fr", "en"].includes(langue) ? langue : detectLang(question);
     if (!question) return { type: "vide", langue: l };
-    if (frauduleuse(question)) return { type: "refus", langue: l, texte: MESSAGES.refus[l] };
+    const risque = niveauRisque(question);
+    if (risque === "fraude") return { type: "refus", langue: l, texte: MESSAGES.refus[l], alternatives: alternatives(l) };
     const ms = normaliser(question).split(" ").filter(Boolean);
     if (ms.length && ms.length <= 4) {
       if (ms.some((m) => SALUT.has(m))) return { type: "conversation", langue: l, texte: MESSAGES.bonjour[l] };
       if (ms.some((m) => MERCI.has(m))) return { type: "conversation", langue: l, texte: MESSAGES.merci[l] };
     }
-    const rs = chercher(question);
+    const rs = chercher(risque ? sansExpressionsSensibles(question) : question);
+    if (risque === "vigilance" && !(rs.length && suffisant(rs[0])))
+      return { type: "vigilance", langue: l, texte: MESSAGES.vigilance[l] + "\n" + MESSAGES.vigilance_seul[l], alternatives: alternatives(l) };
     const props = rs.map((r) => ({ id: r.fiche.id, titre: titreDe(r.fiche, l) }));
     if (!rs.length || !suffisant(rs[0])) return { type: "inconnu", langue: l, texte: MESSAGES.inconnu[l], propositions: props };
-    return ficheReponse(rs[0].fiche, l, rs[0].score, rs[0].couverture, props.slice(1));
+    const rep = ficheReponse(rs[0].fiche, l, rs[0].score, rs[0].couverture, props.slice(1));
+    if (risque === "vigilance") rep.vigilance = MESSAGES.vigilance[l];
+    return rep;
+  }
+  function alternatives(l) {
+    return ALTERNATIVES.map((i) => fiches.find((f) => f.id === i)).filter(Boolean).map((f) => ({ id: f.id, titre: titreDe(f, l) }));
   }
 
   // ---------------- échéances ----------------
@@ -276,7 +295,7 @@ from as this that these those should must will
   // ---------------- « API » locale (mêmes routes que serveur.py) ----------------
   let numeroTicket = 0;
   // indicateurs de la session (hors ligne : uniquement des comptages, rien n'est envoyé)
-  const S = { questions: 0, reponses: 0, inconnus: 0, refus: 0, tickets: 0, tickets_par_service: {}, par_langue: {}, fiches: {}, cartes: [] };
+  const S = { questions: 0, reponses: 0, inconnus: 0, refus: 0, vigilance: 0, tickets: 0, tickets_par_service: {}, par_langue: {}, fiches: {}, cartes: [] };
   function api(url, corps) {
     const u = new URL(url, "http://local");
     const q = Object.fromEntries(u.searchParams);
@@ -288,6 +307,7 @@ from as this that these those should must will
           if (r.type === "reponse") { S.reponses++; S.fiches[r.fiche_id] = (S.fiches[r.fiche_id] || 0) + 1; }
           if (r.type === "inconnu") S.inconnus++;
           if (r.type === "refus") S.refus++;
+          if (r.type === "vigilance") S.vigilance++;
         }
         return r;
       }
@@ -296,11 +316,12 @@ from as this that these those should must will
         const sv = corps.service || "fisc"; S.tickets_par_service[sv] = (S.tickets_par_service[sv] || 0) + 1;
         const question = String(corps.question || "").trim().slice(0, 500);
         const langue = detectLang(question);   // langue de la question (et non de l'interface)
-        const rs = chercher(question);
+        const risque = niveauRisque(question);
+        const rs = chercher(risque ? sansExpressionsSensibles(question) : question);
         const carte = { id: "MJ-L" + String(numeroTicket).padStart(4, "0"), numero: numeroTicket, local: true,
           horodatage: (() => { const n = new Date(); return new Date(n.getTime() - n.getTimezoneOffset() * 60000).toISOString().slice(0, 19); })(), langue, question, contact: String(corps.contact || "").slice(0, 120),
           service: sv, statut: "ouvert",
-          contexte: { resultat: frauduleuse(question) ? "refus" : rs.length && suffisant(rs[0]) ? "reponse_donnee" : "sans_source",
+          contexte: { resultat: risque === "fraude" ? "refus" : rs.length && suffisant(rs[0]) ? "reponse_donnee" : risque === "vigilance" ? "vigilance" : "sans_source",
             langue_detectee: detectLang(question),
             fiches_proches: rs.map((r) => ({ id: r.fiche.id, titre: r.fiche.titre, score: r.score, couverture: r.couverture, source: (r.fiche.source || {}).reference || "" })) } };
         S.cartes.unshift(carte);
@@ -311,7 +332,7 @@ from as this that these those should must will
           .map(([id, n]) => ({ id, titre: (fiches.find((f) => f.id === id) || {}).titre || {}, n }));
         const bilan = { total: fiches.length, source_officielle: fiches.filter((f) => f.statut === "source_officielle").length,
           a_confirmer: fiches.filter((f) => f.statut === "a_confirmer").length };
-        return { portee: "session", questions: S.questions, reponses: S.reponses, inconnus: S.inconnus, refus: S.refus, tickets: S.tickets,
+        return { portee: "session", questions: S.questions, reponses: S.reponses, inconnus: S.inconnus, refus: S.refus, vigilance: S.vigilance, tickets: S.tickets,
           tickets_par_service: S.tickets_par_service, par_langue: S.par_langue, top, fiches: bilan, cartes: S.cartes };
       }
       case "/api/verification": return verifier(corps);

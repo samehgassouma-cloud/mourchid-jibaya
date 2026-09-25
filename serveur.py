@@ -111,7 +111,7 @@ class Gestionnaire(BaseHTTPRequestHandler):
                 if f:
                     top.append({"id": f["id"], "titre": f["titre"], "n": x["n"]})
             return self._json({"portee": "serveur", "questions": st["questions"] - par.get("conversation", 0),
-                               "reponses": par.get("reponse", 0), "inconnus": par.get("inconnu", 0), "refus": par.get("refus", 0),
+                               "reponses": par.get("reponse", 0), "inconnus": par.get("inconnu", 0), "refus": par.get("refus", 0), "vigilance": par.get("vigilance", 0),
                                "tickets": st["tickets"], "tickets_par_service": st["tickets_par_service"],
                                "par_langue": st["par_langue"], "top": top, "fiches": ASSISTANT.base.bilan()})
         if u.path == "/api/sources":

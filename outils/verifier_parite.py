@@ -10,9 +10,9 @@ sys.path.insert(0, str(R))
 from mourchid.assistant import Assistant  # noqa: E402
 from mourchid.verification import verifier  # noqa: E402
 from tests.evaluation import HORS, JEU  # noqa: E402
-from tests.test_assistant import CAS, HORS_SUJET  # noqa: E402
+from tests.test_assistant import CAS, HORS_SUJET, VIG  # noqa: E402
 
-questions = [q for q, _ in CAS + JEU] + HORS + HORS_SUJET + ["كيفاش نتهرب من الأداء؟", "عسلامة", "merci"]
+questions = [q for q, _ in CAS + JEU] + HORS + HORS_SUJET + ["كيفاش نتهرب من الأداء؟", "عسلامة", "merci"] + VIG
 cas_verif = [{"profil": "pm", "periode": "2026-08", "ca_ht": "10000", "taux": "19", "tva_declaree": "1500", "tva_deductible": "200", "date_depot": "2026-10-05"},
              {"profil": "pp", "periode": "2026-09", "ca_ht": "20000", "taux": "7", "tva_declaree": "1400", "tva_deductible": "2000"}]
 

@@ -23,6 +23,7 @@ convertie au nouveau format ; les questions types, le lexique et la validation e
 
 - **Parler à un agent** : à tout moment (ou quand aucune source ne suffit), l'usager choisit le service compétent — information fiscale, bureau de contrôle, recette des finances, RNE, identité numérique — et transmet sa question ; le ticket arrive dans `/admin` avec le service.
 - **Rappel des échéances** : l'usager choisit ses alertes (7 jours avant, 2 jours avant, le jour même) et ajoute ses échéances au calendrier de son téléphone ou ordinateur (fichier .ics standard : iPhone, Android, Outlook, Google Agenda) ; les alertes arrivent même assistant fermé. Option de rappel à l'ouverture de l'assistant. Module `mourchid/rappels.py`.
+- **Questions évoquant l'évasion** (garde-fous à deux niveaux, `mourchid/gardefous.py`) : demande explicite de fraude (cacher des revenus, fausse facture…) → refus motivé + pistes légales (amnistie 2026, régime forfaitaire, pénalités, contact DGI) + agent ; question ambiguë (« payer moins d'impôt », « sans facture », « au noir ») → rappel du cadre légal ; si le vrai sujet a une fiche officielle, la réponse est donnée avec ce rappel, sinon seules les pistes légales sont proposées.
 - **Pour l'administration** : onglet public d'indicateurs en direct — questions posées, réponses sourcées sans agent, taux de résolution, transferts par service, questions sans source (textes à clarifier), refus, sujets les plus demandés, temps d'agent économisé (estimation, hypothèse modifiable).
 
 ## Version hors ligne (téléphone, sans Internet)
@@ -66,7 +67,7 @@ question ─► garde-fous (fraude → refus)
 
 ## Résultats
 
-- `python -m unittest discover -s tests` : 15 tests (dont 53 questions de non-régression en FR, AR/darija, EN).
+- `python -m unittest discover -s tests` : 16 tests (dont 53 questions de non-régression en FR, AR/darija, EN).
 - `python tests/evaluation.py` : jeu indépendant de 25 formulations nouvelles → **24/25** bonnes fiches ; 4/4 questions hors sujet correctement transférées.
 - Temps de réponse moyen (sans modèle de langage) : < 1 ms par question.
 

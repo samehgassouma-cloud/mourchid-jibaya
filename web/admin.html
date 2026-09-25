@@ -107,7 +107,7 @@ function afficherFiches(){
 async function tickets(){
   const r=await api("/api/admin/tickets?statut=ouvert");
   const SV={fisc:"Information fiscale générale",controle:"Mon dossier fiscal (bureau de contrôle)",recouvrement:"Paiement et dettes (recette des finances)",rne:"Registre national des entreprises",identite:"Identité numérique"};
-  const RES={sans_source:"Pas de source officielle suffisante : aucune réponse donnée",reponse_donnee:"Réponse sourcée donnée ; l'usager demande malgré tout un agent",refus:"Demande de fraude refusée"};
+  const RES={sans_source:"Pas de source officielle suffisante : aucune réponse donnée",reponse_donnee:"Réponse sourcée donnée ; l'usager demande malgré tout un agent",refus:"Demande de fraude refusée",vigilance:"Question évoquant l'évasion : cadre légal rappelé, pistes légales proposées"};
   const LG={ar:"arabe",fr:"français",en:"anglais"};
   $("t-tickets").innerHTML=r.tickets.map(t=>{const x=t.contexte||{};
     const proches=(x.fiches_proches||[]).map(f=>`<li>${esc(f.titre?.fr)} — <span class="petit">${esc(f.source)} · score ${f.score} · couverture ${Math.round(f.couverture*100)} %</span></li>`).join("");
@@ -129,7 +129,7 @@ function onglet(o){document.querySelectorAll("nav button").forEach(b=>b.setAttri
   if(o==="tickets")tickets();if(o==="stats")stats();}
 async function stats(){
   const s=await api("/api/admin/stats");
-  $("stats").innerHTML=`<div class="bilan"><div>Questions<b>${s.questions}</b></div><div>Réponses citées<b>${s.par_resultat.reponse||0}</b></div><div>Transferts (sans source)<b>${s.par_resultat.inconnu||0}</b></div><div>Refus<b>${s.par_resultat.refus||0}</b></div><div>Tickets ouverts<b>${s.tickets_ouverts}</b></div></div>
+  $("stats").innerHTML=`<div class="bilan"><div>Questions<b>${s.questions}</b></div><div>Réponses citées<b>${s.par_resultat.reponse||0}</b></div><div>Transferts (sans source)<b>${s.par_resultat.inconnu||0}</b></div><div>Refus<b>${s.par_resultat.refus||0}</b></div><div>Vigilance<b>${s.par_resultat.vigilance||0}</b></div><div>Tickets ouverts<b>${s.tickets_ouverts}</b></div></div>
    <p class="petit">Par langue : ${Object.entries(s.par_langue).map(([k,v])=>`${k} ${v}`).join(" · ")||"—"}</p>
    <p class="petit">Fiches les plus demandées : ${s.fiches_les_plus_demandees.map(x=>`${esc(x.fiche_id)} (${x.n})`).join(", ")||"—"}</p>`;
 }

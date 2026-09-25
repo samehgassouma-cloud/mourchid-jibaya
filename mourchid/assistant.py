@@ -5,7 +5,7 @@ from pathlib import Path
 
 from .base import Base
 from .echeances import Calendrier
-from .gardefous import demande_frauduleuse
+from .gardefous import ALTERNATIVES, niveau_risque, sans_expressions_sensibles
 from .journal import Journal
 from .langue import detect_lang, normaliser
 from .lexique import Lexique
@@ -20,9 +20,23 @@ MESSAGES = {
     "inconnu": {"fr": "Je n'ai pas trouvé de source officielle suffisante pour répondre avec certitude. Je préfère ne pas deviner : vous pouvez transmettre la question à un agent.",
                 "ar": "لم أجد مصدراً رسمياً كافياً للإجابة بيقين. أفضّل ألّا أخمّن: يمكنك إحالة السؤال على عون.",
                 "en": "I could not find a sufficient official source to answer with certainty. I prefer not to guess: you can forward the question to an agent."},
-    "refus": {"fr": "Je ne peux pas aider à éviter l'impôt de manière illégale. En revanche, je peux vous indiquer les dispositifs légaux : régularisation, échelonnement, régime adapté à votre activité.",
-              "ar": "لا يمكنني المساعدة على التهرّب من الأداء. في المقابل، يمكنني توجيهك إلى الحلول القانونية: تسوية الوضعية، الدفع بالتقسيط، أو النظام الجبائي الملائم لنشاطك.",
-              "en": "I cannot help avoid tax illegally. I can, however, point you to legal options: regularisation, payment plans, or the regime suited to your activity."},
+    "refus": {"fr": "Je ne peux pas vous aider à dissimuler des revenus ou à éviter l'impôt de manière illégale : c'est une infraction fiscale, exposée à des pénalités et à des poursuites. "
+                    "En revanche, si vous êtes en difficulté, il existe des voies légales : régulariser votre situation, bénéficier de l'amnistie fiscale 2026 si vous êtes concerné, "
+                    "choisir le régime adapté à votre activité ou demander des facilités de paiement à la recette des finances. Choisissez une piste ci-dessous ou parlez à un agent.",
+              "ar": "لا يمكنني مساعدتك على إخفاء المداخيل أو التهرّب من الأداء بطريقة غير قانونية: فذلك مخالفة جبائية تعرّض صاحبها للخطايا والتتبّعات. "
+                    "في المقابل، إن كنت تواجه صعوبة، توجد حلول قانونية: تسوية وضعيتك، الانتفاع بالعفو الجبائي لسنة 2026 إن كنت معنياً، "
+                    "اختيار النظام الجبائي الملائم لنشاطك، أو طلب تسهيلات في الدفع لدى القباضة المالية. اختر أحد المسالك أدناه أو تحدّث مع عون.",
+              "en": "I cannot help you hide income or avoid tax illegally: it is a tax offence, exposed to penalties and prosecution. "
+                    "If you are in difficulty, there are legal options: regularise your situation, use the 2026 tax amnesty if it applies to you, "
+                    "choose the regime suited to your activity or ask the tax collection office for payment facilities. Pick an option below or talk to an agent."},
+    "vigilance": {"fr": "Rappel du cadre légal : toute vente doit être facturée et déclarée ; payer moins d'impôt n'est possible que par les dispositifs prévus par les textes "
+                        "(régime adapté, déductions, avantages et amnisties votés). Je réponds uniquement dans ce cadre.",
+                  "ar": "تذكير بالإطار القانوني: كل بيع يجب أن تصدر به فاتورة وأن يُصرَّح به؛ ولا يمكن التخفيف من الأداء إلا بالآليات التي تنصّ عليها النصوص "
+                        "(النظام الملائم، الطرح، الامتيازات والعفو المصادق عليه). أجيب في هذا الإطار فقط.",
+                  "en": "Legal reminder: every sale must be invoiced and declared; paying less tax is only possible through the schemes provided by law "
+                        "(suitable regime, deductions, voted incentives and amnesties). I answer only within this framework."},
+    "vigilance_seul": {"fr": "Voici les pistes légales qui pourraient vous concerner :", "ar": "إليك المسالك القانونية التي قد تهمّك:",
+                       "en": "Here are the legal options that may concern you:"},
 }
 SALUTATIONS = {"bonjour", "salut", "bonsoir", "hello", "hi", "مرحبا", "عسلامه", "السلام", "سلام", "اهلا", "صباح"}
 REMERCIEMENTS = {"merci", "thanks", "thank", "شكرا", "يعيشك", "بارك"}
@@ -56,16 +70,24 @@ class Assistant:
         if not question:
             return {"type": "vide", "langue": langue}
 
-        if demande_frauduleuse(question):
+        risque = niveau_risque(question)
+        if risque == "fraude":
             qid = self.journal.question(langue, question, "refus")
-            return {"type": "refus", "langue": langue, "texte": MESSAGES["refus"][langue], "qid": qid}
+            return {"type": "refus", "langue": langue, "texte": MESSAGES["refus"][langue], "qid": qid,
+                    "alternatives": self.alternatives(langue)}
 
         conv = self._conversation(question)
         if conv:
             self.journal.question(langue, question, "conversation")
             return {"type": "conversation", "langue": langue, "texte": MESSAGES[conv][langue]}
 
-        resultats = self.index.chercher(question)
+        # question sensible : on ne cherche que sur le vrai sujet, sans les mots « payer moins », « sans facture »…
+        resultats = self.index.chercher(sans_expressions_sensibles(question) if risque else question)
+        if risque == "vigilance" and not (resultats and resultats[0].suffisant):
+            qid = self.journal.question(langue, question, "vigilance")
+            return {"type": "vigilance", "langue": langue, "qid": qid,
+                    "texte": MESSAGES["vigilance"][langue] + "\n" + MESSAGES["vigilance_seul"][langue],
+                    "alternatives": self.alternatives(langue)}
         propositions = [{"id": r.fiche["id"], "titre": r.fiche["titre"].get(langue) or r.fiche["titre"]["fr"]} for r in resultats]
         if not resultats or not resultats[0].suffisant:
             qid = self.journal.question(langue, question, "inconnu", None, resultats[0].score if resultats else 0)
@@ -73,8 +95,20 @@ class Assistant:
                     "propositions": propositions}
 
         r = resultats[0]
-        return self.reponse_fiche(r.fiche, langue, question, score=r.score, couverture=r.couverture,
-                                  voir_aussi=propositions[1:])
+        rep = self.reponse_fiche(r.fiche, langue, question, score=r.score, couverture=r.couverture,
+                                 voir_aussi=propositions[1:])
+        if risque == "vigilance":
+            rep["vigilance"] = MESSAGES["vigilance"][langue]
+        return rep
+
+    def alternatives(self, langue: str) -> list:
+        """Fiches présentant les voies légales (amnistie, régime adapté, pénalités, contact)."""
+        out = []
+        for i in ALTERNATIVES:
+            f = self.base.get(i)
+            if f and f.get("statut") != "brouillon":
+                out.append({"id": f["id"], "titre": f["titre"].get(langue) or f["titre"]["fr"]})
+        return out
 
     def reponse_fiche(self, f: dict, langue: str, question: str = "", score=None, couverture=None, voir_aussi=None) -> dict:
         texte = f["reponse"].get(langue) or f["reponse"]["fr"]
@@ -89,9 +123,12 @@ class Assistant:
 
     def contexte_transfert(self, question: str, langue: str) -> dict:
         """Ce que le bot a tenté avant le transfert : résultat et fiches les plus proches (pour l'agent)."""
-        rs = self.index.chercher(question)
-        if demande_frauduleuse(question):
+        risque = niveau_risque(question)
+        rs = self.index.chercher(sans_expressions_sensibles(question) if risque else question)
+        if risque == "fraude":
             resultat = "refus"
+        elif risque == "vigilance" and not (rs and rs[0].suffisant):
+            resultat = "vigilance"
         elif rs and rs[0].suffisant:
             resultat = "reponse_donnee"
         else:
