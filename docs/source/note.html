@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Note de synthèse — Mourchid Jibaya</title>
+<style>
+  @page { size: A4; margin: 13mm 15mm 13mm; }
+  * { box-sizing: border-box; }
+  body { font: 9.6pt/1.42 Carlito, Calibri, "Noto Sans Arabic", sans-serif; color: #16202E; margin: 0; }
+  .page { height: 271mm; position: relative; page-break-after: always; overflow: hidden; }
+  .page:last-child { page-break-after: auto; }
+  header.bandeau { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1.5pt solid #13233F; padding-bottom: 5pt; margin-bottom: 8pt; }
+  header.bandeau .t { font: 700 19pt/1.1 Caladea, Cambria, serif; color: #13233F; }
+  header.bandeau .t span { font: 600 15pt "Noto Sans Arabic", sans-serif; margin-inline-start: 6pt; }
+  header.bandeau .m { text-align: right; font-size: 8.3pt; color: #5D6878; line-height: 1.35; }
+  .meta { display: grid; grid-template-columns: auto 1fr; gap: 1.5pt 10pt; font-size: 9pt; background: #F3F5F4; border-radius: 5pt; padding: 7pt 10pt; margin-bottom: 7pt; }
+  .meta b { color: #13233F; }
+  h2 { font: 700 11.5pt/1.2 Caladea, Cambria, serif; color: #13233F; margin: 9pt 0 3pt; }
+  p { margin: 0 0 4pt; text-align: justify; }
+  ul { margin: 0 0 4pt; padding-left: 13pt; }
+  li { margin: 0 0 2.2pt; text-align: justify; }
+  table { width: 100%; border-collapse: collapse; font-size: 9pt; margin: 3pt 0 4pt; }
+  th, td { border-bottom: 0.6pt solid #DCE2E6; padding: 3pt 5pt; text-align: left; vertical-align: top; }
+  th { background: #13233F; color: #fff; font-weight: 700; }
+  td.v { font-weight: 700; color: #3F6B1E; white-space: nowrap; }
+  .flux { display: flex; gap: 3pt; margin: 4pt 0 5pt; font-size: 8.4pt; }
+  .flux div { flex: 1; border: 0.7pt solid #DCE2E6; border-radius: 4pt; padding: 4pt 5pt; background: #fff; }
+  .flux div b { display: block; color: #13233F; font-size: 9pt; }
+  .flux div.ia { background: #ECEBFB; border-color: #C9C6F3; }
+  .flux div.ia b { color: #4B45B8; }
+  .encadre { background: #13233F; color: #fff; border-radius: 5pt; padding: 7pt 10pt; margin: 6pt 0; }
+  .encadre a { color: #C9D6EE; }
+  .lien { font-family: Carlito, Calibri, sans-serif; color: #1E3560; }
+  footer { position: absolute; bottom: 0; left: 0; right: 0; font-size: 7.8pt; color: #5D6878; display: flex; justify-content: space-between; border-top: 0.6pt solid #DCE2E6; padding-top: 3pt; }
+  .ar { font-family: "Noto Sans Arabic", sans-serif; direction: rtl; unicode-bidi: isolate; }
+</style>
+</head>
+<body>
+<section class="page">
+  <header class="bandeau">
+    <div class="t">Mourchid Jibaya <span class="ar">مرشد جباية</span></div>
+    <div class="m">Hackathon national IA &amp; Finances publiques<br>25-26 septembre 2026 · Note de synthèse</div>
+  </header>
+  <div class="meta">
+    <b>Défi principal</b><span>T9 — Chatbot / agent virtuel IA 24h/24 (axe 2). Défi complémentaire : T4 — Facilitation pour les contribuables.</span>
+    <b>Équipe</b><span>Sameh Gassouma (conseillère fiscale depuis 2007, profil métier) · Cyrine Gassouma (ingénieure logiciel, profil technique).</span>
+    <b>Prototype</b><span>Démo : <span class="lien">{{DEMO}}</span> · Code : <span class="lien">{{GH}}</span></span>
+    <b>Art. 6.1</b><span>Recherche documentaire et maquette réalisées avant le hackathon (déclarées) ; tout le code déposé a été écrit pendant le hackathon, l'historique Git horodaté en fait foi.</span>
+  </div>
+
+  <h2>1. Défi choisi et problème</h2>
+  <p>Les contribuables — TPE, professions libérales, personnes physiques — doivent suivre des textes dispersés (codes, lois de finances, notes communes, calendrier fiscal) et plusieurs plateformes (Jibayti, El Fatoora, RNE). Les mêmes questions saturent les guichets ; erreurs et retards génèrent pénalités et encaissements tardifs. La loi de finances 2026 (art. 53) étend la facture électronique à toutes les prestations de services, ce qui multiplie les questions, souvent posées en darija.</p>
+  <p><b>Mourchid Jibaya</b> répond à toute heure, en arabe, darija, français et anglais, <b>uniquement à partir des textes officiels</b>, cite chaque référence et, faute de source suffisante, transmet la question à l'agent du service compétent (T9). Il donne à chaque contribuable ses échéances et vérifie sa TVA avant dépôt (T4).</p>
+
+  <h2>2. Approche technique : rechercher d'abord, rédiger sous contrainte</h2>
+  <div class="flux">
+    <div><b>Comprendre</b>Détection de langue, normalisation de l'arabe, racinisation, darija, fautes de frappe</div>
+    <div><b>Relier</b>Lexique de concepts : <span class="ar">الأداء على القيمة المضافة</span> = TVA = VAT</div>
+    <div><b>Retrouver</b>Index BM25 pondéré par champ sur les fiches officielles</div>
+    <div><b>Décider</b>Seuil de confiance : score, couverture, au moins 2 termes</div>
+    <div class="ia"><b>Rédiger</b>LLM limité à la fiche retrouvée ; « NO_SOURCE » sinon</div>
+  </div>
+  <ul>
+    <li><b>Génération contrainte (RAG strict)</b> : le modèle de langage (Claude Haiku 4.5) ne reçoit que la fiche retrouvée et doit répondre dans la langue de l'usager sans ajouter de chiffre, de date ni de condition ; s'il ne peut pas répondre, il écrit « NO_SOURCE ». Sans clé ou en cas de panne, la fiche officielle est affichée telle quelle ; l'usager peut toujours consulter le texte d'origine.</li>
+    <li><b>Explicabilité</b> : chaque réponse affiche son raisonnement — langue détectée, mots retenus, concepts reconnus, fiches candidates avec score et couverture, seuils exigés.</li>
+    <li><b>Garde-fous</b> : sous le seuil, « je ne sais pas », fiches proches et ticket vers le service choisi (information fiscale, contrôle, recette, RNE, identité numérique) avec le contexte de la tentative. Demande explicite de fraude : refus motivé et pistes légales (amnistie 2026, régime forfaitaire, pénalités, contact DGI) ; question ambiguë : rappel du cadre légal.</li>
+    <li><b>Humain dans la boucle</b> : espace d'administration (validation experte des fiches, réponse aux tickets, test du moteur) ; une fiche validée est utilisée immédiatement. Indicateurs agrégés en direct (taux de résolution sans agent avec sa formule, questions sans source = textes à clarifier) et simulateur de gain.</li>
+    <li><b>Facilitation (T4)</b> : calendrier fiscal par profil avec report des dimanches et jours fériés, rappels J-7 / J-2 / jour J ajoutés à l'agenda du téléphone (.ics), pré-contrôle de la TVA mensuelle et du délai.</li>
+    <li><b>Architecture</b> : API FastAPI documentée (OpenAPI), moteur Python, interface web responsive AR/FR/EN sans framework, conteneur Docker hébergé sur Hugging Face Spaces, intégration continue. Le même moteur tourne aussi dans le navigateur : si le serveur ne répond plus, l'interface bascule automatiquement hors ligne (version sur téléphone sans Internet).</li>
+  </ul>
+
+  <h2>3. Données et modèles utilisés</h2>
+  <ul>
+    <li><b>Corpus public</b> : 34 fiches trilingues tirées de la loi de finances 2026, du Code IRPP/IS, du Code de la TVA, du CDPF, du Code de la fiscalité locale, de notes communes DGI (02/2026, 04/2026, 03/2025, 07/2025, 08/2023), de la loi n° 2018-52 (RNE) et du décret n° 2019-54 ; portails jibaya.tn, RNE et TunTrust. Chaque fiche porte sa référence, son lien, sa date de vérification et son état.</li>
+    <li><b>Données simulées</b> : montants saisis par l'usager dans « Vérifier ma déclaration ». Aucune donnée personnelle ou confidentielle ; aucun accès aux systèmes de l'administration ; tableau de bord en comptages uniquement.</li>
+    <li><b>Modèles et outils tiers (art. 4.1)</b> : Claude Haiku 4.5 (API Anthropic), pré-entraîné, pour la seule reformulation ; alternative souveraine via Ollama (modèle local, ex. Qwen 2.5). Aucun modèle entraîné par l'équipe. Python 3, FastAPI, Uvicorn ; HTML/CSS/JavaScript ; polices IBM Plex Sans Arabic et Readex Pro. Hébergement : Hugging Face Spaces. Développement assisté par IA : Claude (Anthropic).</li>
+  </ul>
+  <footer><span>Mourchid Jibaya · Note de synthèse</span><span>page 1 / 2</span></footer>
+</section>
+
+<section class="page">
+  <h2 style="margin-top:0">4. Résultats obtenus</h2>
+  <table>
+    <tr><th>Mesure (rejouable : commandes du dépôt, intégration continue)</th><th>Résultat</th></tr>
+    <tr><td>Jeu indépendant de 25 formulations nouvelles (FR, AR, darija, EN), non utilisé pour construire les fiches</td><td class="v">25/25 bonnes fiches, source citée</td></tr>
+    <tr><td>Questions hors sujet</td><td class="v">4/4 transférées, aucune invention</td></tr>
+    <tr><td>Tests automatisés : moteur, API, garde-fous, échéances, TVA, sécurité de l'administration</td><td class="v">24/24</td></tr>
+    <tr><td>Parité moteur serveur / moteur hors ligne (questions, échéances, TVA, fichiers .ics)</td><td class="v">101/101</td></tr>
+    <tr><td>Temps de recherche par question (hors rédaction par le LLM)</td><td class="v">&lt; 1 ms</td></tr>
+    <tr><td>Base de fiches</td><td class="v">34 : 20 officielles, 13 à confirmer, 1 interne</td></tr>
+  </table>
+  <p>Démonstration : question en darija d'un avocat sur la facture électronique → réponse en arabe citant la LF 2026 art. 53 avec lien et raisonnement affiché ; question hors sujet → « je ne sais pas » et ticket ; demande de fraude → refus et pistes légales ; ticket reçu dans l'espace d'administration avec le contexte.</p>
+
+  <h2>5. Limites identifiées</h2>
+  <ul>
+    <li>13 fiches restent à relire sur le texte officiel ; l'ensemble de la base doit être validé par la DGI avant tout usage public.</li>
+    <li>Couverture limitée aux 34 fiches : les formulations éloignées ou les sujets absents sont transférés à un agent. Le jeu d'évaluation (25 questions) reste de petite taille.</li>
+    <li>Dates des fêtes religieuses estimées ; montant exact des pénalités de retard non calculé ; vérification limitée à la TVA mensuelle, sur montants saisis.</li>
+    <li>Prototype : journal des tickets et des compteurs réinitialisé au redémarrage ; la reformulation dépend d'une API externe (repli automatique sur la fiche).</li>
+  </ul>
+
+  <h2>6. Recommandations pour une mise en production</h2>
+  <ul>
+    <li><b>Gouvernance du contenu</b> : cellule DGI chargée de valider chaque fiche et d'intégrer chaque nouveau texte (loi de finances, note commune) ; les questions sans source servent de feuille de route éditoriale.</li>
+    <li><b>Souveraineté et conformité</b> : hébergement en Tunisie, modèle de langage local, journalisation, conformité à la loi organique n° 2004-63 et déclaration à l'INPDP.</li>
+    <li><b>Pilote de 3 mois</b> dans un centre des impôts avec groupe témoin ; indicateurs : dépôts dans les délais, passages au guichet, déclarations corrigées, pénalités, questions résolues sans agent, satisfaction.</li>
+    <li><b>Intégration</b> : connexion aux API Jibayti et El Fatoora (TTN) avec l'autorisation des administrations ; canaux WhatsApp et voix ; extension au RNE et à la douane ; base persistante (PostgreSQL) et authentification des agents.</li>
+  </ul>
+  <div class="encadre"><b>Pourquoi c'est différent.</b> Un chatbot généraliste peut inventer un taux ou une date. Mourchid Jibaya ne répond qu'avec un texte officiel cité, montre son raisonnement, dit « je ne sais pas » quand la source manque et remet un humain dans la boucle : une IA acceptable pour une administration fiscale.</div>
+  <footer><span>Mourchid Jibaya · Note de synthèse</span><span>page 2 / 2</span></footer>
+</section>
+</body>
+</html>
