@@ -63,6 +63,22 @@ textarea{width:100%;min-height:70px;padding:10px;border:1px solid var(--ligne);b
 .carte .ent{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-weight:700;color:var(--sombre);border-bottom:1px dashed var(--ligne);padding-bottom:6px;margin-bottom:6px}
 .carte dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 10px;font-size:14px}.carte dt{color:var(--doux)}.carte dd{margin:0}
 .carte ol{margin:4px 0 0;padding-inline-start:20px;font-size:13.5px}.statut{background:#F7EBD2;color:#8A6417;border-radius:10px;padding:1px 8px;font-size:12px}
+.curseurs{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}
+.curseur{border:1px solid var(--ligne);border-radius:12px;padding:10px 12px;background:#fff}
+.curseur .haut{display:flex;justify-content:space-between;gap:8px;align-items:baseline}.curseur .val{font-weight:700;color:var(--sombre);font-size:18px;white-space:nowrap}
+.curseur input[type=range]{width:100%;accent-color:var(--or);padding:0;border:0;margin:6px 0 2px}.curseur small{color:var(--doux);display:block;font-size:12.5px}
+.titres-gain{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:14px}
+.titres-gain div{background:var(--sombre);color:#E2EBE8;border-radius:14px;padding:14px}.titres-gain b{display:block;font-size:28px;color:var(--or);line-height:1.2}
+.calcul{list-style:none;padding:0;margin:0;counter-reset:etape}
+.calcul li{counter-increment:etape;position:relative;background:#fff;border:1px solid var(--ligne);border-radius:12px;padding:10px 14px;margin-bottom:8px;padding-inline-start:52px}
+.calcul li::before{content:counter(etape);position:absolute;inset-inline-start:12px;top:10px;width:28px;height:28px;border-radius:50%;background:var(--or);color:var(--sombre);font-weight:700;display:grid;place-items:center}
+.calcul .lib{font-weight:700;color:var(--sombre)}.calcul .formule{direction:ltr;unicode-bidi:isolate;font-family:Consolas,monospace;font-size:14px;color:var(--encre);margin:4px 0}
+.calcul .res{font-weight:700;color:var(--ok)}.calcul .base{font-size:12.5px;color:var(--doux)}
+.apparait{animation:apparait .5s ease both}@keyframes apparait{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.barres{display:grid;gap:10px}.barre .lib{font-size:14px;margin-bottom:4px}.barre .piste{background:var(--menthe);border-radius:8px;height:30px;overflow:hidden}
+.barre .rempli{height:100%;border-radius:8px;display:flex;align-items:center;padding:0 10px;color:#fff;font-weight:700;font-size:14px;white-space:nowrap;transition:width .9s cubic-bezier(.2,.8,.2,1);width:0}
+.barre .sans{background:#8C9A9E}.barre .avec{background:var(--sombre)}
+@media (prefers-reduced-motion:reduce){.apparait{animation:none}.barre .rempli{transition:none}}
 h3.sous{margin:18px 0 6px;color:var(--sombre);font-size:17px}
 footer{text-align:center;font-size:13px;color:var(--doux);padding:18px 16px 30px}
 @media (max-width:600px){.msg{max-width:96%}header .logo{font-size:18px}}
@@ -141,11 +157,24 @@ footer{text-align:center;font-size:13px;color:var(--doux);padding:18px 16px 30px
 
   <section id="p-adm" class="panneau" hidden>
     <p data-t="introAdm"></p>
+
     <h3 class="sous" data-t="admDirect"></h3>
     <div class="chiffres" id="adm-chiffres"></div>
-    <label for="adm-min" data-t="admMinutes"></label><input id="adm-min" type="number" min="1" max="60" value="6" style="max-width:120px">
-    <div class="chiffres" id="adm-gain"></div>
     <div id="adm-detail"></div>
+
+    <h3 class="sous" data-t="simTitre"></h3>
+    <p class="note" data-t="simIntro"></p>
+    <div class="curseurs" id="sim-curseurs"></div>
+
+    <div class="titres-gain" id="sim-titres"></div>
+
+    <h3 class="sous" data-t="calcTitre"></h3>
+    <ol class="calcul" id="sim-calcul"></ol>
+
+    <h3 class="sous" data-t="guichetTitre"></h3>
+    <div class="barres" id="sim-barres"></div>
+    <p class="note" data-t="simNote"></p>
+
     <h3 class="sous" data-t="admPourquoi"></h3>
     <div class="benef" id="adm-benef"></div>
     <div id="adm-cartes"></div>
@@ -197,7 +226,17 @@ const T={
   noteVerif:"Demo data entered by hand. No access to any tax administration system.",introSrc:"Official texts the entries are based on:",pied:"Mourchid Jibaya · National Hackathon AI & Public Finance 2026",
   ex:["Is e-invoicing mandatory for doctors?","When is the monthly return due for a company?","Is there a tax amnesty in 2026?","What is Mobile ID?"]}};
 
-Object.assign(T.ar,{rapTitre:"التذكير بالآجال",rapIntro:"أضف آجالك إلى رزنامة هاتفك أو حاسوبك، فتصلك التنبيهات حتى دون فتح المساعد.",rapJ7:"قبل 7 أيام",rapJ2:"قبل يومين",rapJ0:"يوم الأجل",
+Object.assign(T.ar,{simTitre:"محاكي الربح للإدارة",simIntro:"حرّك المؤشرات: كل رقم أسفله يُعاد احتسابه مباشرة، مع ذكر المعادلة والأساس. الفرضيات قابلة للتعديل وتُعوَّض بمعطيات الوزارة في التجربة النموذجية.",
+  calcTitre:"كيف نحسب الربح، خطوة بخطوة",guichetTitre:"الأسئلة التي تصل إلى الشباك كل شهر",sans:"دون المساعد",avec:"مع المساعد",
+  simNote:"أرقام تقديرية مبنية على فرضيات معلنة، وليست نتائج مقاسة. الأرقام المقاسة هي «المؤشرات المباشرة» أعلاه.",
+  cur:{q:["الأسئلة الواردة شهرياً","فرضية: حجم الأسئلة التي تصل اليوم إلى الشبابيك والهاتف"],taux:["نسبة الأسئلة المحلولة دون عون","المقاس في هذه الجلسة: {m}؛ في الاختبار المستقل: 96 %"],
+   min:["دقائق العون لكل سؤال","فرضية: متوسط وقت استقبال السؤال والإجابة عنه"],cout:["كلفة ساعة عمل العون (د)","فرضية: الأجر والأعباء لساعة واحدة"],
+   contrib:["المطالبون بالأداء الذين يفعّلون التذكير","فرضية: عدد مستعملي التذكير بالآجال"],retard:["نسبة الإيداع المتأخر حالياً","فرضية: تُعوَّض بإحصائيات الإدارة"],
+   baisse:["انخفاض التأخير بفضل التذكير","فرضية حذرة لتأثير التنبيهات"]},
+  u:{q:"سؤال",h:"ساعة",j:"يوم عمل",dt:"د",decl:"تصريح",mois:"/ شهر",an:"/ سنة"},
+  gH:"ساعات أعوان محرَّرة شهرياً",gC:"كلفة متفاداة سنوياً",gD:"تصاريح إضافية في آجالها شهرياً",
+  e:[["الأسئلة المحلولة دون عون","الأسئلة الواردة × نسبة الحلّ دون عون"],["ساعات الأعوان المحرَّرة","الأسئلة المحلولة × دقائق العون ÷ 60"],["ما يعادلها من أيام عمل","الساعات ÷ 7 ساعات في اليوم"],
+     ["الكلفة المتفاداة","الساعات × كلفة الساعة، ثم × 12 شهراً"],["التصاريح الإضافية المودعة في آجالها","مستعملو التذكير × نسبة التأخير × نسبة الانخفاض"]],rapTitre:"التذكير بالآجال",rapIntro:"أضف آجالك إلى رزنامة هاتفك أو حاسوبك، فتصلك التنبيهات حتى دون فتح المساعد.",rapJ7:"قبل 7 أيام",rapJ2:"قبل يومين",rapJ0:"يوم الأجل",
   rapHorizon:"المدة",mois:{3:"3 أشهر",6:"6 أشهر",12:"12 شهراً"},rapBouton:"إضافة التذكيرات إلى رزنامتي",rapPret:"الملف جاهز: {n} أجلاً مع التنبيهات. إن لم يُفتح تلقائياً، انقر هنا:",rapFichier:"فتح ملف الرزنامة",
   rapOuverture:"ذكّرني أيضاً عند فتح المساعد (الآجال القريبة خلال 7 أيام)",rapNote:"ملف رزنامة عادي (ics) يُفتح في رزنامة الآيفون أو أندرويد أو Outlook أو Google Agenda. لا يُرسل أي معطى، والآجال تُؤجَّل آلياً إن صادفت يوم أحد أو عطلة.",
   bandeau:"تذكير: {l} — آخر أجل {d}",bandeauJ:" (بعد {j})",bandeauAuj:" (اليوم)",voirEch:"عرض آجالي وتفعيل التذكير",carteTitre:"بطاقة الإحالة كما تصل إلى العون",cNum:"رقم الملف",cDate:"التاريخ",cService:"الجهة",cLangue:"لغة السؤال",cQuestion:"السؤال",cContact:"الاتصال",cEssai:"ما حاوله المساعد",cProches:"أقرب البطاقات التي وجدها",cOuvert:"مفتوحة",cAucune:"لا شيء",cDemande:"لم يُذكر",
@@ -210,7 +249,17 @@ Object.assign(T.ar,{rapTitre:"التذكير بالآجال",rapIntro:"أضف آ
   kTemps:"وقت أعوان مُوفَّر (تقدير)",kMin:"دقيقة",kLangues:"اللغات",kTop:"المواضيع الأكثر طلباً",kServices:"الإحالات حسب الجهة",aucun:"لا شيء بعد: اطرح أسئلة في تبويب المساعد.",
   porteeServeur:"أرقام كل المستعملين منذ تشغيل الخادم. عدّ فقط، دون أي معطى شخصي.",porteeSession:"نسخة دون إنترنت: الأرقام تخصّ هذه الجلسة فقط. عدّ فقط، دون أي معطى شخصي.",
   benef:[["شبابيك أقل اكتظاظاً","الأسئلة المتكررة تُجاب آلياً بمرجعها، والأعوان يتفرّغون للملفات المعقدة وللمراقبة."],["جواب موحّد وموثّق","نفس الجواب ونفس المرجع لكل المطالبين بالأداء، في كل الولايات وبثلاث لغات."],["خريطة نقاط التعثّر","الأسئلة دون جواب تكشف النصوص التي تحتاج مذكرة توضيحية أو تبسيطاً."],["موارد في آجالها","الآجال والتثبّت المسبق يقلّصان التأخير والأخطاء، فتُستخلص الموارد في وقتها."]]});
-Object.assign(T.fr,{rapTitre:"Rappel des échéances",rapIntro:"Ajoutez vos échéances au calendrier de votre téléphone ou ordinateur : les alertes arrivent même quand l'assistant est fermé.",rapJ7:"7 jours avant",rapJ2:"2 jours avant",rapJ0:"Le jour même",
+Object.assign(T.fr,{simTitre:"Simulateur du gain pour l'administration",simIntro:"Déplacez les curseurs : chaque chiffre ci-dessous est recalculé en direct, avec sa formule et sa base. Les hypothèses sont modifiables et seront remplacées par les données du ministère pendant le pilote.",
+  calcTitre:"Comment le gain est calculé, étape par étape",guichetTitre:"Questions qui arrivent au guichet chaque mois",sans:"Sans l'assistant",avec:"Avec l'assistant",
+  simNote:"Estimations fondées sur des hypothèses affichées, pas des résultats mesurés. Les chiffres mesurés sont les « indicateurs en direct » ci-dessus.",
+  cur:{q:["Questions reçues par mois","Hypothèse : volume actuel de questions aux guichets et au téléphone"],taux:["Part résolue sans agent","Mesuré dans cette session : {m} ; au test indépendant : 96 %"],
+   min:["Minutes d'agent par question","Hypothèse : temps moyen d'accueil et de réponse"],cout:["Coût d'une heure d'agent (DT)","Hypothèse : salaire et charges pour une heure"],
+   contrib:["Contribuables qui activent les rappels","Hypothèse : nombre d'utilisateurs des rappels d'échéances"],retard:["Taux de dépôts en retard aujourd'hui","Hypothèse : à remplacer par les statistiques de la DGI"],
+   baisse:["Baisse du retard grâce aux rappels","Hypothèse prudente sur l'effet des alertes"]},
+  u:{q:"questions",h:"heures",j:"jours de travail",dt:"DT",decl:"déclarations",mois:"/ mois",an:"/ an"},
+  gH:"Heures d'agent libérées par mois",gC:"Coût évité par an",gD:"Déclarations en plus déposées à temps par mois",
+  e:[["Questions résolues sans agent","questions reçues × part résolue sans agent"],["Heures d'agent libérées","questions résolues × minutes par question ÷ 60"],["Équivalent en jours de travail","heures ÷ 7 heures par jour"],
+     ["Coût évité","heures × coût horaire, puis × 12 mois"],["Déclarations en plus déposées à temps","contribuables avec rappels × taux de retard × baisse du retard"]],rapTitre:"Rappel des échéances",rapIntro:"Ajoutez vos échéances au calendrier de votre téléphone ou ordinateur : les alertes arrivent même quand l'assistant est fermé.",rapJ7:"7 jours avant",rapJ2:"2 jours avant",rapJ0:"Le jour même",
   rapHorizon:"Période",mois:{3:"3 mois",6:"6 mois",12:"12 mois"},rapBouton:"Ajouter les rappels à mon calendrier",rapPret:"Fichier prêt : {n} échéances avec alertes. S'il ne s'ouvre pas tout seul, touchez ici :",rapFichier:"Ouvrir le fichier de calendrier",
   rapOuverture:"Me le rappeler aussi à l'ouverture de l'assistant (échéances dans les 7 jours)",rapNote:"Fichier de calendrier standard (.ics) : iPhone, Android, Outlook, Google Agenda. Rien n'est envoyé ; les échéances qui tombent un dimanche ou un jour férié sont déjà reportées.",
   bandeau:"Rappel : {l} — date limite {d}",bandeauJ:" (dans {j})",bandeauAuj:" (aujourd'hui)",voirEch:"Voir mes échéances et activer le rappel",carteTitre:"Carte de transfert telle que l'agent la reçoit",cNum:"N° de dossier",cDate:"Date",cService:"Service",cLangue:"Langue",cQuestion:"Question",cContact:"Contact",cEssai:"Ce que l'assistant a tenté",cProches:"Fiches les plus proches trouvées",cOuvert:"ouvert",cAucune:"aucune",cDemande:"non fourni",
@@ -223,7 +272,17 @@ Object.assign(T.fr,{rapTitre:"Rappel des échéances",rapIntro:"Ajoutez vos éch
   kTemps:"Temps d'agent économisé (estimation)",kMin:"min",kLangues:"Langues",kTop:"Sujets les plus demandés",kServices:"Transferts par service",aucun:"Rien pour l'instant : posez des questions dans l'onglet Assistant.",
   porteeServeur:"Chiffres de tous les usagers depuis le démarrage du serveur. Comptages uniquement, aucune donnée personnelle.",porteeSession:"Version hors ligne : chiffres de cette session uniquement. Comptages seulement, aucune donnée personnelle.",
   benef:[["Guichets désengorgés","Les questions répétitives reçoivent une réponse sourcée ; les agents se consacrent aux dossiers complexes et au contrôle."],["Réponse homogène et sourcée","La même réponse, avec la même référence, pour tous les contribuables, dans toutes les régions et en trois langues."],["Carte des points de blocage","Les questions sans réponse révèlent les textes qui appellent une note commune ou une simplification."],["Recettes à temps","Échéances et vérification avant dépôt réduisent retards et erreurs : les recettes rentrent à temps."]]});
-Object.assign(T.en,{rapTitre:"Deadline reminders",rapIntro:"Add your deadlines to your phone or computer calendar: alerts arrive even when the assistant is closed.",rapJ7:"7 days before",rapJ2:"2 days before",rapJ0:"On the day",
+Object.assign(T.en,{simTitre:"Gain simulator for the administration",simIntro:"Move the sliders: every figure below is recomputed live, with its formula and basis. Assumptions are adjustable and will be replaced with ministry data during the pilot.",
+  calcTitre:"How the gain is computed, step by step",guichetTitre:"Questions reaching the counter each month",sans:"Without the assistant",avec:"With the assistant",
+  simNote:"Estimates based on stated assumptions, not measured results. Measured figures are the “live indicators” above.",
+  cur:{q:["Questions received per month","Assumption: current volume at counters and by phone"],taux:["Share solved without an agent","Measured in this session: {m}; independent test: 96%"],
+   min:["Agent minutes per question","Assumption: average time to receive and answer"],cout:["Cost of one agent hour (TND)","Assumption: salary and charges for one hour"],
+   contrib:["Taxpayers using reminders","Assumption: number of deadline-reminder users"],retard:["Current late-filing rate","Assumption: to be replaced by DGI statistics"],
+   baisse:["Drop in late filing thanks to reminders","Cautious assumption on the effect of alerts"]},
+  u:{q:"questions",h:"hours",j:"working days",dt:"TND",decl:"returns",mois:"/ month",an:"/ year"},
+  gH:"Agent hours freed per month",gC:"Cost avoided per year",gD:"Extra returns filed on time per month",
+  e:[["Questions solved without an agent","questions received × share solved without an agent"],["Agent hours freed","questions solved × minutes per question ÷ 60"],["Equivalent in working days","hours ÷ 7 hours per day"],
+     ["Cost avoided","hours × hourly cost, then × 12 months"],["Extra returns filed on time","taxpayers with reminders × late rate × drop in late filing"]],rapTitre:"Deadline reminders",rapIntro:"Add your deadlines to your phone or computer calendar: alerts arrive even when the assistant is closed.",rapJ7:"7 days before",rapJ2:"2 days before",rapJ0:"On the day",
   rapHorizon:"Period",mois:{3:"3 months",6:"6 months",12:"12 months"},rapBouton:"Add reminders to my calendar",rapPret:"File ready: {n} deadlines with alerts. If it does not open automatically, tap here:",rapFichier:"Open the calendar file",
   rapOuverture:"Also remind me when I open the assistant (deadlines within 7 days)",rapNote:"Standard calendar file (.ics): iPhone, Android, Outlook, Google Calendar. Nothing is sent; deadlines falling on a Sunday or public holiday are already moved.",
   bandeau:"Reminder: {l} — deadline {d}",bandeauJ:" (in {j})",bandeauAuj:" (today)",voirEch:"See my deadlines and turn on reminders",carteTitre:"Transfer card as the agent receives it",cNum:"Case no.",cDate:"Date",cService:"Service",cLangue:"Language",cQuestion:"Question",cContact:"Contact",cEssai:"What the assistant tried",cProches:"Closest entries found",cOuvert:"open",cAucune:"none",cDemande:"not provided",
@@ -333,16 +392,62 @@ async function envoyerAgent(){
   $("f-agent").hidden=true;$("a-contact").value="";
   const b=bulle("bot",esc((r.local?T[L].ticketLocal:T[L].ticket)+" "+r.id+" · "+T[L].ticketSvc+" "+T[L].services[sv])+carteHTML(r));b.dir=L==="ar"?"rtl":"ltr";
 }
+const SIM={q:[1000,100000,1000,20000],taux:[30,95,1,70],min:[2,20,1,6],cout:[5,40,1,15],contrib:[500,50000,500,5000],retard:[5,50,1,20],baisse:[5,60,1,25]};
+const PCT=new Set(["taux","retard","baisse"]);
+let admMesure=null,admAnime=false;
+const nb=n=>Math.round(n).toLocaleString("fr-FR");
+function compter(el,cible,suffixe){
+  const reduit=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const depart=+(el.dataset.v||0);el.dataset.v=cible;
+  if(reduit||depart===cible){el.textContent=nb(cible)+suffixe;return}
+  const t0=performance.now(),d=700;
+  (function pas(t){const k=Math.min(1,(t-t0)/d),e=1-Math.pow(1-k,3);el.textContent=nb(depart+(cible-depart)*e)+suffixe;if(k<1)requestAnimationFrame(pas)})(t0);
+}
+function construireCurseurs(){
+  const S=T[L];
+  $("sim-curseurs").innerHTML=Object.entries(SIM).map(([k,[mn,mx,st,df]])=>{const v=$("s-"+k)?+$("s-"+k).value:df;
+    return `<div class="curseur"><div class="haut"><label for="s-${k}">${esc(S.cur[k][0])}</label><span class="val" id="v-${k}"></span></div>
+    <input type="range" id="s-${k}" min="${mn}" max="${mx}" step="${st}" value="${v}"><small id="b-${k}"></small></div>`}).join("");
+  document.querySelectorAll("#sim-curseurs input").forEach(x=>x.addEventListener("input",simuler));
+}
+function simuler(){
+  const S=T[L],u=S.u,g=k=>+$("s-"+k).value;
+  for(const k in SIM){$("v-"+k).textContent=nb(g(k))+(PCT.has(k)?" %":"");$("b-"+k).textContent=S.cur[k][1].replace("{m}",admMesure===null?"—":admMesure+" %")}
+  const Q=g("q"),taux=g("taux")/100,min=g("min"),cout=g("cout"),C=g("contrib"),ret=g("retard")/100,bai=g("baisse")/100;
+  const res=Q*taux,h=res*min/60,j=h/7,cm=h*cout,ca=cm*12,decl=C*ret*bai;
+  const E=S.e;
+  const lignes=[
+    [E[0],`${nb(Q)} × ${Math.round(taux*100)} %`,res,` ${u.q} ${u.mois}`],
+    [E[1],`${nb(res)} × ${min} ÷ 60`,h,` ${u.h} ${u.mois}`],
+    [E[2],`${nb(h)} ÷ 7`,j,` ${u.j} ${u.mois}`],
+    [E[3],`${nb(h)} × ${cout} = ${nb(cm)} ${u.dt} ${u.mois} → × 12`,ca,` ${u.dt} ${u.an}`],
+    [E[4],`${nb(C)} × ${Math.round(ret*100)} % × ${Math.round(bai*100)} %`,decl,` ${u.decl} ${u.mois}`]];
+  const ol=$("sim-calcul");
+  if(ol.children.length!==lignes.length||ol.dataset.l!==L){
+    ol.dataset.l=L;
+    ol.innerHTML=lignes.map((x,i)=>`<li class="apparait" style="animation-delay:${i*120}ms"><div class="lib">${esc(x[0][0])}</div><div class="base">${esc(x[0][1])}</div><div class="formule" id="f-${i}"></div><div class="res" id="r-${i}"></div></li>`).join("");
+  }
+  lignes.forEach((x,i)=>{$("f-"+i).textContent=x[1]+" =";compter($("r-"+i),x[2],x[3])});
+  const tg=$("sim-titres");
+  if(!tg.children.length||tg.dataset.l!==L){tg.dataset.l=L;tg.innerHTML=[["gH","t-h"],["gC","t-c"],["gD","t-d"]].map(([k,id])=>`<div class="apparait">${esc(S[k])}<b id="${id}">0</b></div>`).join("")}
+  compter($("t-h"),h," "+u.h);compter($("t-c"),ca," "+u.dt);compter($("t-d"),decl,"");
+  const max=Math.max(Q,1);
+  $("sim-barres").innerHTML||( $("sim-barres").innerHTML=`<div class="barre"><div class="lib" id="bl-s"></div><div class="piste"><div class="rempli sans" id="bb-s"></div></div></div><div class="barre"><div class="lib" id="bl-a"></div><div class="piste"><div class="rempli avec" id="bb-a"></div></div></div>`);
+  $("bl-s").textContent=S.sans;$("bl-a").textContent=S.avec;
+  requestAnimationFrame(()=>{$("bb-s").style.width="100%";$("bb-s").textContent=nb(Q);const w=Math.max(4,(Q-res)/max*100);$("bb-a").style.width=w+"%";$("bb-a").textContent=nb(Q-res)});
+}
 async function chargerAdm(){
-  const S=T[L];const r=await api("/api/tableau");const min=Math.max(1,+$("adm-min").value||6);
-  const taux=r.questions?Math.round(r.reponses/r.questions*100):0;
-  $("adm-chiffres").innerHTML=[[S.kQuestions,r.questions],[S.kReponses,r.reponses,1],[S.kTaux,taux+" %",1],[S.kTickets,r.tickets],[S.kInconnus,r.inconnus],[S.kRefus,r.refus]]
-    .map(([k,v,f])=>`<div class="${f?"fort":""}">${esc(k)}<b>${esc(v)}</b></div>`).join("");
-  const m=r.reponses*min;$("adm-gain").innerHTML=`<div class="fort">${esc(S.kTemps)}<b>${m>=60?Math.floor(m/60)+" h "+(m%60)+" "+S.kMin:m+" "+S.kMin}</b></div>`;
+  const S=T[L];const r=await api("/api/tableau");
+  const taux=r.questions?Math.round(r.reponses/r.questions*100):0;admMesure=r.questions?taux:null;
+  $("adm-chiffres").innerHTML=[[S.kQuestions,r.questions,""],[S.kReponses,r.reponses,"",1],[S.kTaux,taux," %",1],[S.kTickets,r.tickets,""],[S.kInconnus,r.inconnus,""],[S.kRefus,r.refus,""]]
+    .map(([k,v,suf,f],i)=>`<div class="${f?"fort":""} apparait" style="animation-delay:${i*80}ms">${esc(k)}<b id="m-${i}" data-v="0">0</b></div>`).join("");
+  [[r.questions,""],[r.reponses,""],[taux," %"],[r.tickets,""],[r.inconnus,""],[r.refus,""]].forEach(([v,suf],i)=>compter($("m-"+i),v,suf));
   const lang=Object.entries(r.par_langue||{}).map(([k,v])=>`${{ar:"العربية",fr:"Français",en:"English"}[k]||k} : ${v}`).join(" · ");
   const top=(r.top||[]).map(x=>`<li>${esc(x.titre[L]||x.titre.fr)} (${x.n})</li>`).join("");
   const sv=Object.entries(r.tickets_par_service||{}).map(([k,v])=>`<li>${esc(S.services[k]||k)} : ${v}</li>`).join("");
   $("adm-detail").innerHTML=r.questions?`<p><b>${S.kLangues} :</b> ${lang}</p><p><b>${S.kTop} :</b></p><ol>${top}</ol>${sv?`<p><b>${S.kServices} :</b></p><ul>${sv}</ul>`:""}`:`<p class="note">${S.aucun}</p>`;
+  if(!$("sim-curseurs").children.length||$("sim-curseurs").dataset.l!==L){construireCurseurs();$("sim-curseurs").dataset.l=L}
+  simuler();
   $("adm-benef").innerHTML=S.benef.map(([t,x])=>`<div><h4>${esc(t)}</h4>${esc(x)}</div>`).join("");
   $("adm-portee").textContent=r.portee==="session"?S.porteeSession:S.porteeServeur;
   $("adm-cartes").innerHTML=(r.cartes&&r.cartes.length)?`<h3 class="sous">${S.cartesSession}</h3>`+r.cartes.map(carteHTML).join(""):"";
@@ -368,7 +473,6 @@ document.addEventListener("click",e=>{
 });
 $("f-question").addEventListener("submit",e=>{e.preventDefault();poser($("q").value)});
 $("profil").addEventListener("change",chargerEcheances);
-$("adm-min").addEventListener("input",chargerAdm);
 $("r-ouverture").checked=!!lire("mj-rappel");
 $("r-ouverture").addEventListener("change",e=>{ecrire("mj-rappel",e.target.checked?$("profil").value:null);bandeau()});
 $("profil").addEventListener("change",()=>{if($("r-ouverture").checked){ecrire("mj-rappel",$("profil").value);bandeau()}});
