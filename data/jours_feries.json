@@ -1,0 +1,25 @@
+{
+ "_note": "Jours fériés chômés en Tunisie. Fêtes civiles à date fixe ; fêtes religieuses à date estimée (calendrier lunaire), à confirmer chaque année selon l'annonce officielle.",
+ "fixes": {
+  "01-01": {"fr": "Jour de l'an", "ar": "رأس السنة الإدارية", "en": "New Year's Day"},
+  "03-20": {"fr": "Fête de l'indépendance", "ar": "عيد الاستقلال", "en": "Independence Day"},
+  "04-09": {"fr": "Journée des martyrs", "ar": "عيد الشهداء", "en": "Martyrs' Day"},
+  "05-01": {"fr": "Fête du travail", "ar": "عيد الشغل", "en": "Labour Day"},
+  "07-25": {"fr": "Fête de la République", "ar": "عيد الجمهورية", "en": "Republic Day"},
+  "08-13": {"fr": "Fête de la femme", "ar": "عيد المرأة", "en": "Women's Day"},
+  "10-15": {"fr": "Fête de l'évacuation", "ar": "عيد الجلاء", "en": "Evacuation Day"},
+  "12-17": {"fr": "Fête de la révolution", "ar": "عيد الثورة", "en": "Revolution Day"}
+ },
+ "estimes": {
+  "2026-03-20": {"fr": "Aïd el-Fitr (estimé)", "ar": "عيد الفطر (تقديري)", "en": "Eid al-Fitr (estimated)"},
+  "2026-03-21": {"fr": "Aïd el-Fitr (estimé)", "ar": "عيد الفطر (تقديري)", "en": "Eid al-Fitr (estimated)"},
+  "2026-05-27": {"fr": "Aïd el-Idha (estimé)", "ar": "عيد الأضحى (تقديري)", "en": "Eid al-Adha (estimated)"},
+  "2026-05-28": {"fr": "Aïd el-Idha (estimé)", "ar": "عيد الأضحى (تقديري)", "en": "Eid al-Adha (estimated)"},
+  "2026-06-16": {"fr": "Ras el Am el Hijri (estimé)", "ar": "رأس السنة الهجرية (تقديري)", "en": "Islamic New Year (estimated)"},
+  "2026-08-25": {"fr": "Mouled (estimé)", "ar": "المولد النبوي (تقديري)", "en": "Mawlid (estimated)"},
+  "2027-03-09": {"fr": "Aïd el-Fitr (estimé)", "ar": "عيد الفطر (تقديري)", "en": "Eid al-Fitr (estimated)"},
+  "2027-03-10": {"fr": "Aïd el-Fitr (estimé)", "ar": "عيد الفطر (تقديري)", "en": "Eid al-Fitr (estimated)"},
+  "2027-05-16": {"fr": "Aïd el-Idha (estimé)", "ar": "عيد الأضحى (تقديري)", "en": "Eid al-Adha (estimated)"},
+  "2027-05-17": {"fr": "Aïd el-Idha (estimé)", "ar": "عيد الأضحى (تقديري)", "en": "Eid al-Adha (estimated)"}
+ }
+}
