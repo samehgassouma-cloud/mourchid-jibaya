@@ -19,7 +19,7 @@ short_description: Assistant fiscal IA 24h/24 (AR, darija, FR, EN), sourcé
 | Défi principal | **T9** — Chatbot / agent virtuel IA 24h/24 (axe 2) |
 | Défi complémentaire | **T4** — Facilitation pour les contribuables |
 | Équipe | Sameh Gassouma (conseillère fiscale depuis 2007, profil métier) · Cyrine Gassouma (ingénieure logiciel, profil technique) |
-| Démo en ligne | `https://<compte>-mourchid-jibaya.hf.space` · administration : `/admin` · API documentée : `/docs` |
+| Démo en ligne | https://cyrineg-mourchid-jibaya.hf.space · administration : `/admin` · API documentée : `/docs` |
 | Démo hors ligne | [`dist/Mourchid_Jibaya_hors_ligne.html`](dist/Mourchid_Jibaya_hors_ligne.html) : un fichier, s'ouvre sur téléphone sans Internet |
 
 ## Travaux préparatoires (déclaration, art. 6.1 du cahier des charges)

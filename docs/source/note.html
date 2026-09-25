@@ -6,12 +6,12 @@
 <style>
   @page { size: A4; margin: 13mm 15mm 13mm; }
   * { box-sizing: border-box; }
-  body { font: 9.6pt/1.42 Carlito, Calibri, "Noto Sans Arabic", sans-serif; color: #16202E; margin: 0; }
+  body { font: 9.6pt/1.42 Carlito, Calibri, "IBM Plex Sans Arabic", "Noto Sans Arabic", sans-serif; color: #16202E; margin: 0; }
   .page { height: 271mm; position: relative; page-break-after: always; overflow: hidden; }
   .page:last-child { page-break-after: auto; }
   header.bandeau { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1.5pt solid #13233F; padding-bottom: 5pt; margin-bottom: 8pt; }
   header.bandeau .t { font: 700 19pt/1.1 Caladea, Cambria, serif; color: #13233F; }
-  header.bandeau .t span { font: 600 15pt "Noto Sans Arabic", sans-serif; margin-inline-start: 6pt; }
+  header.bandeau .t span { font: 600 15pt "IBM Plex Sans Arabic", "Noto Sans Arabic", sans-serif; margin-inline-start: 6pt; }
   header.bandeau .m { text-align: right; font-size: 8.3pt; color: #5D6878; line-height: 1.35; }
   .meta { display: grid; grid-template-columns: auto 1fr; gap: 1.5pt 10pt; font-size: 9pt; background: #F3F5F4; border-radius: 5pt; padding: 7pt 10pt; margin-bottom: 7pt; }
   .meta b { color: #13233F; }
@@ -32,7 +32,7 @@
   .encadre a { color: #C9D6EE; }
   .lien { font-family: Carlito, Calibri, sans-serif; color: #1E3560; }
   footer { position: absolute; bottom: 0; left: 0; right: 0; font-size: 7.8pt; color: #5D6878; display: flex; justify-content: space-between; border-top: 0.6pt solid #DCE2E6; padding-top: 3pt; }
-  .ar { font-family: "Noto Sans Arabic", sans-serif; direction: rtl; unicode-bidi: isolate; }
+  .ar { font-family: "IBM Plex Sans Arabic", "Noto Sans Arabic", sans-serif; direction: rtl; unicode-bidi: isolate; }
 </style>
 </head>
 <body>
@@ -86,6 +86,7 @@
     <tr><td>Questions hors sujet</td><td class="v">4/4 transférées, aucune invention</td></tr>
     <tr><td>Tests automatisés : moteur, API, garde-fous, échéances, TVA, sécurité de l'administration</td><td class="v">24/24</td></tr>
     <tr><td>Parité moteur serveur / moteur hors ligne (questions, échéances, TVA, fichiers .ics)</td><td class="v">101/101</td></tr>
+    <tr><td>Recette navigateur de bout en bout (desktop, mobile en arabe, hors ligne, administration)</td><td class="v">28/28</td></tr>
     <tr><td>Temps de recherche par question (hors rédaction par le LLM)</td><td class="v">&lt; 1 ms</td></tr>
     <tr><td>Base de fiches</td><td class="v">34 : 20 officielles, 13 à confirmer, 1 interne</td></tr>
   </table>
