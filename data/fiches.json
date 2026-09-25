@@ -1,0 +1,1938 @@
+{
+ "titre": "Mourchid Jibaya — fiches officielles",
+ "provenance": "Faits et textes issus de la recherche documentaire préparatoire (déclarée), convertis au format du hackathon ; questions types rédigées pendant le hackathon. Validation experte en cours.",
+ "fiches": [
+  {
+   "id": "mens_pp",
+   "domaine": "fiscalite",
+   "titre": {
+    "fr": "Déclaration mensuelle — personnes physiques",
+    "ar": "التصريح الشهري — الأشخاص الطبيعيون",
+    "en": "Monthly return — individuals"
+   },
+   "questions": {
+    "fr": [
+     "Quand déposer la déclaration mensuelle d'une personne physique ?",
+     "Date limite de la déclaration mensuelle pour un commerçant"
+    ],
+    "ar": [
+     "وقتاش آخر أجل للتصريح الشهري للشخص الطبيعي؟",
+     "التصريح الشهري متاعي كتاجر وقتاش؟"
+    ],
+    "en": [
+     "When is the monthly return due for an individual?"
+    ]
+   },
+   "mots_cles": [
+    "declaration mensuelle",
+    "mensuelle",
+    "personne physique",
+    "personnes physiques",
+    "regime reel",
+    "monthly return",
+    "monthly declaration",
+    "individual",
+    "التصريح الشهري",
+    "الشهري",
+    "شهري",
+    "الشهرية",
+    "شخص طبيعي",
+    "الاشخاص الطبيعيين",
+    "النظام الحقيقي",
+    "نصرح",
+    "وقتاش",
+    "اخر اجل",
+    "deadline",
+    "date limite"
+   ],
+   "reponse": {
+    "fr": "Les personnes physiques déposent leur déclaration mensuelle (TVA, retenues à la source et autres taxes) durant les quinze premiers jours du mois suivant. Si le dernier jour est un dimanche ou un jour férié, le dépôt reste possible le lendemain sans pénalité.",
+    "ar": "يودع الأشخاص الطبيعيون تصريحهم الشهري (الأداء على القيمة المضافة، الخصم من المورد وبقية المعاليم) خلال الخمسة عشر يوماً الأولى من الشهر الموالي. وإذا صادف آخر يوم يوم أحد أو عطلة رسمية، يبقى الإيداع ممكناً في اليوم الموالي دون خطايا.",
+    "en": "Individuals file their monthly return (VAT, withholding taxes and other levies) within the first fifteen days of the following month. If the last day is a Sunday or public holiday, filing the next day carries no penalty."
+   },
+   "source": {
+    "reference": "DGI · portail Jibaya — calendrier fiscal (déclaration mensuelle)",
+    "url": "https://jibaya.tn/agenda/",
+    "url_alt": ""
+   },
+   "statut": "source_officielle",
+   "verifie_le": "2026-09-24",
+   "validation_experte": null,
+   "note": "",
+   "action": "echeances"
+  },
+  {
+   "id": "mens_pm",
+   "domaine": "fiscalite",
+   "titre": {
+    "fr": "Déclaration mensuelle — sociétés",
+    "ar": "التصريح الشهري — الشركات",
+    "en": "Monthly return — companies"
+   },
+   "questions": {
+    "fr": [
+     "Quand déposer la déclaration mensuelle d'une SARL ?",
+     "Date limite de la déclaration mensuelle d'une société"
+    ],
+    "ar": [
+     "وقتاش آخر أجل للتصريح الشهري لشركتي؟",
+     "التصريح الشهري للشركات قداش في الشهر؟"
+    ],
+    "en": [
+     "When is the monthly return due for a company?"
+    ]
+   },
+   "mots_cles": [
+    "declaration mensuelle",
+    "mensuelle",
+    "personne morale",
+    "personnes morales",
+    "societe",
+    "sarl",
+    "suarl",
+    "company",
+    "companies",
+    "monthly",
+    "التصريح الشهري",
+    "الشهري",
+    "شهري",
+    "شخص معنوي",
+    "الاشخاص المعنويين",
+    "شركة",
+    "الشركات",
+    "شركتي",
+    "وقتاش",
+    "اخر اجل",
+    "deadline",
+    "date limite"
+   ],
+   "reponse": {
+    "fr": "Les personnes morales déposent leur déclaration mensuelle durant les vingt-huit premiers jours du mois suivant. Le calendrier mensuel publié par la DGI précise la date exacte, notamment pour les adhérents à la déclaration et au paiement à distance.",
+    "ar": "تودع الأشخاص المعنوية تصريحها الشهري خلال الثمانية والعشرين يوماً الأولى من الشهر الموالي. وتحدّد الرزنامة الشهرية للإدارة العامة للأداءات التاريخ بدقة، خاصة للمنخرطين في التصريح والدفع عن بعد.",
+    "en": "Legal entities file their monthly return within the first twenty-eight days of the following month. The tax authority's monthly calendar gives the exact date, especially for remote filing and payment users."
+   },
+   "source": {
+    "reference": "DGI · portail Jibaya — calendrier fiscal (déclaration mensuelle)",
+    "url": "https://jibaya.tn/agenda/",
+    "url_alt": ""
+   },
+   "statut": "source_officielle",
+   "verifie_le": "2026-09-24",
+   "validation_experte": null,
+   "note": "",
+   "action": "echeances"
+  },
+  {
+   "id": "is",
+   "domaine": "fiscalite",
+   "titre": {
+    "fr": "Déclaration annuelle de l'impôt sur les sociétés",
+    "ar": "التصريح السنوي بالضريبة على الشركات",
+    "en": "Annual corporate tax return"
+   },
+   "questions": {
+    "fr": [
+     "Quand déposer la déclaration de l'impôt sur les sociétés ?",
+     "Date de la déclaration annuelle IS"
+    ],
+    "ar": [
+     "وقتاش نصرح بالضريبة على الشركات؟"
+    ],
+    "en": [
+     "When is the corporate income tax return due?"
+    ]
+   },
+   "mots_cles": [
+    "impot sur les societes",
+    "declaration annuelle",
+    "25 mars",
+    "corporate tax",
+    "corporate income tax",
+    "الضريبة على الشركات",
+    "الضريبة على الشركات",
+    "التصريح السنوي",
+    "سنوي",
+    "السنوية",
+    "marsa"
+   ],
+   "reponse": {
+    "fr": "La déclaration annuelle de l'impôt sur les sociétés est déposée au plus tard le 25 mars de chaque année (Code de l'IRPP et de l'IS, art. 60).",
+    "ar": "يودَع التصريح السنوي بالضريبة على الشركات في أجل أقصاه 25 مارس من كل سنة (مجلة الضريبة على دخل الأشخاص الطبيعيين والضريبة على الشركات، الفصل 60).",
+    "en": "The annual corporate income tax return is due by 25 March each year (IRPP/IS Code, art. 60)."
+   },
+   "source": {
+    "reference": "Code de l'IRPP et de l'IS · art. 60-II",
+    "url": "https://jibaya.tn/wp-content/uploads/2025/07/code-IS-et-IRPP-francais-1.pdf",
+    "url_alt": ""
+   },
+   "statut": "a_confirmer",
+   "verifie_le": "2026-09-24",
+   "validation_experte": null,
+   "note": "Article 60-II cité d'après une version consolidée du code ; à relire dans le PDF officiel de la DGI (Code_IRPP_IS.pdf).",
+   "action": null
+  },
+  {
+   "id": "irpp",
+   "domaine": "fiscalite",
+   "titre": {
+    "fr": "Déclaration annuelle de l'impôt sur le revenu",
+    "ar": "التصريح السنوي بالضريبة على الدخل",
+    "en": "Annual income tax return"
+   },
+   "questions": {
+    "fr": [
+     "Quand déposer la déclaration annuelle de l'impôt sur le revenu ?",
+     "Commerçant : date de la déclaration annuelle IR ?"
+    ],
+    "ar": [
+     "وقتاش التصريح السنوي بالضريبة على الدخل؟"
+    ],
+    "en": [
+     "When is the annual income tax return due?"
+    ]
+   },
+   "mots_cles": [
+    "impot sur le revenu",
+    "irpp",
+    "declaration annuelle",
+    "annuelle",
+    "25 mai",
+    "artisan",
+    "artisans",
+    "forfaitaire",
+    "profession liberale",
+    "bnc",
+    "prestataire",
+    "income tax",
+    "annual return",
+    "الضريبة على الدخل",
+    "التصريح السنوي",
+    "سنوي",
+    "السنوية",
+    "حرفي",
+    "حرفيين",
+    "مهنة حرة",
+    "المهن غير التجارية",
+    "التقديري",
+    "دخل",
+    "commercant",
+    "commerçant",
+    "salarie",
+    "salaries",
+    "5 decembre",
+    "25 avril",
+    "تاجر",
+    "اجير",
+    "الاجراء",
+    "employee",
+    "trader"
+   ],
+   "reponse": {
+    "fr": "Déclaration annuelle de l'impôt sur le revenu (art. 60) : au plus tard le 25 avril pour les commerçants ; le 25 mai pour les industriels, prestataires de services et professions non commerciales ; le 25 juillet pour les artisans ; le 5 décembre pour les salariés et bénéficiaires de pensions ou rentes viagères.",
+    "ar": "التصريح السنوي بالضريبة على الدخل (الفصل 60): في أجل أقصاه 25 أفريل بالنسبة إلى التجار؛ و25 ماي بالنسبة إلى الصناعيين ومسدي الخدمات وأصحاب المهن غير التجارية؛ و25 جويلية بالنسبة إلى الحرفيين؛ و5 ديسمبر بالنسبة إلى الأجراء والمنتفعين بالجرايات أو الإيرادات العمرية.",
+    "en": "Annual income tax return (art. 60): by 25 April for traders; 25 May for manufacturers, service providers and non-commercial professions; 25 July for craftspeople; 5 December for employees and pension or annuity recipients."
+   },
+   "source": {
+    "reference": "Code de l'IRPP et de l'IS · art. 60-I",
+    "url": "https://jibaya.tn/wp-content/uploads/2025/07/code-IS-et-IRPP-francais-1.pdf",
+    "url_alt": ""
+   },
+   "statut": "a_confirmer",
+   "verifie_le": "2026-09-24",
+   "validation_experte": null,
+   "note": "Article 60-I cité d'après une version consolidée du code ; à relire dans le PDF officiel de la DGI (Code_IRPP_IS.pdf).",
+   "action": null
+  },
+  {
+   "id": "acomptes",
+   "domaine": "fiscalite",
+   "titre": {
+    "fr": "Acomptes provisionnels",
+    "ar": "الأقساط الاحتياطية",
+    "en": "Provisional instalments"
+   },
+   "questions": {
+    "fr": [
+     "Comment sont calculés les acomptes provisionnels ?",
+     "Quand payer les acomptes ?"
+    ],
+    "ar": [
+     "قداش الأقساط الاحتياطية؟",
+     "وقتاش نخلص الأقساط الاحتياطية؟"
+    ],
+    "en": [
+     "How are provisional instalments calculated?"
+    ]
+   },
+   "mots_cles": [
+    "acompte",
+    "acomptes",
+    "acomptes provisionnels",
+    "provisionnel",
+    "provisional",
+    "instalment",
+    "installment",
+    "advance payment",
+    "قسط",
+    "الاقساط",
+    "الاقساط الاحتياطية",
+    "احتياطي",
+    "تسبقة",
+    "قداش",
+    "combien"
+   ],
+   "reponse": {
+    "fr": "À partir de la deuxième année d'activité, trois acomptes provisionnels sont dus, chacun égal à 30 % de l'impôt de l'année précédente (art. 51). Ils sont déclarés et payés durant les 25 premiers jours (personnes physiques) ou les 28 premiers jours (personnes morales) des 6e, 9e et 12e mois suivant la clôture de l'exercice, soit juin, septembre et décembre pour une clôture au 31 décembre.",
+    "ar": "ابتداءً من السنة الثانية للنشاط تُستوجب ثلاثة أقساط احتياطية يساوي كل منها 30 % من ضريبة السنة السابقة (الفصل 51). وتُصرَّح وتُدفع خلال الخمسة والعشرين يوماً الأولى (الأشخاص الطبيعيون) أو الثمانية والعشرين يوماً الأولى (الأشخاص المعنويون) من الأشهر السادس والتاسع والثاني عشر الموالية لختم السنة، أي جوان وسبتمبر وديسمبر لختم في 31 ديسمبر.",
+    "en": "From the second year of activity, three provisional instalments are due, each equal to 30% of the previous year's tax (art. 51). They are filed and paid within the first 25 days (individuals) or 28 days (legal entities) of the 6th, 9th and 12th months after year-end, i.e. June, September and December for a 31 December closing."
+   },
+   "source": {
+    "reference": "Code de l'IRPP et de l'IS · art. 51",
+    "url": "https://jibaya.tn/wp-content/uploads/2025/07/code-IS-et-IRPP-francais-1.pdf",
+    "url_alt": ""
+   },
+   "statut": "a_confirmer",
+   "verifie_le": "2026-09-24",
+   "validation_experte": null,
+   "note": "Article 51 cité d'après une version consolidée du code ; à relire dans le PDF officiel de la DGI (Code_IRPP_IS.pdf).",
+   "action": "echeances"
+  },
+  {
+   "id": "fe_scope",
+   "domaine": "fiscalite",
+   "titre": {
+    "fr": "Qui doit utiliser la facture électronique ?",
+    "ar": "من يلزمه استعمال الفاتورة الإلكترونية؟",
+    "en": "Who must use e-invoicing?"
+   },
+   "questions": {
+    "fr": [
+     "Je suis avocat : la facture électronique est-elle obligatoire ?",
+     "Qui doit émettre des factures électroniques en 2026 ?"
+    ],
+    "ar": [
+     "أنا محامي، لازمني فاتورة إلكترونية؟",
+     "شكون لازمو يعمل فاتورة إلكترونية؟"
+    ],
+    "en": [
+     "Is e-invoicing mandatory for doctors?",
+     "Who must use electronic invoices?"
+    ]
+   },
+   "mots_cles": [
+    "facture electronique",
+    "facturation electronique",
+    "e-facture",
+    "einvoice",
+    "e-invoice",
+    "e-invoicing",
+    "electronic invoice",
+    "mandatory",
+    "doctor",
+    "doctors",
+    "lawyer",
+    "lawyers",
+    "el fatoora",
+    "elfatoora",
+    "ttn",
+    "avocat",
+    "medecin",
+    "prestataire",
+    "services",
+    "فاتورة الكترونية",
+    "الفاتورة الالكترونية",
+    "فوترة",
+    "فاتورة",
+    "فواتير",
+    "محامي",
+    "طبيب",
+    "خدمات",
+    "لازمني",
+    "يلزمني",
+    "مجبور",
+    "obligatoire",
+    "obligation",
+    "concerne"
+   ],
+   "reponse": {
+    "fr": "L'article 53 de la loi de finances 2026 (loi n° 2025-17 du 12 décembre 2025) étend la facturation électronique aux opérations de prestation de services à partir du 1er janvier 2026. La note commune n° 02/2026 de la DGI précise les modalités : activités concernées (activité de service déclarée, principale ou secondaire), documents tenant lieu de facture et mise en œuvre. Pour votre cas précis, consultez la note ou demandez à un agent.",
+    "ar": "وسّع الفصل 53 من قانون المالية لسنة 2026 (القانون عدد 17 لسنة 2025 المؤرخ في 12 ديسمبر 2025) مجال الفوترة الإلكترونية ليشمل عمليات إسداء الخدمات ابتداءً من 1 جانفي 2026. وتوضّح المذكرة العامة عدد 02 لسنة 2026 للإدارة العامة للأداءات طرق التطبيق: الأنشطة المعنية (نشاط خدمات مصرّح به أصلياً أو ثانوياً)، والوثائق التي تقوم مقام الفاتورة، وكيفية التنفيذ. ولحالتك بالتحديد راجع المذكرة أو اطلب عوناً.",
+    "en": "Article 53 of the 2026 Finance Law (Law No. 2025-17 of 12 December 2025) extends e-invoicing to service transactions from 1 January 2026. The tax authority's common note No. 02/2026 sets out the details: activities concerned (declared service activity, main or secondary), documents that count as invoices, and implementation. For your specific case, check the note or ask an agent."
+   },
+   "source": {
+    "reference": "Loi n° 2025-17 du 12/12/2025 (LF 2026, JORT n° 148) · art. 53 — Note commune DGI n° 02/2026",
+    "url": "https://jibaya.tn/docs/loi-des-finances-2026-disponible-en-langue-arabe-uniquement/",
+    "url_alt": "https://jibaya.tn/docs/note-commune-n02-2026/"
+   },
+   "statut": "source_officielle",
+   "verifie_le": "2026-09-24",
+   "validation_experte": null,
+   "note": "Modalités d'application : note commune n° 02/2026 (NC_02_2026_facturation_electronique.pdf).",
+   "action": null
+  },
+  {
+   "id": "fe_how",
+   "domaine": "fiscalite",
+   "titre": {
+    "fr": "Comment émettre des factures électroniques ?",
+    "ar": "كيف أصدر فواتير إلكترونية؟",
+    "en": "How to issue e-invoices?"
+   },
+   "questions": {
+    "fr": [
+     "Comment émettre une facture électronique ?",
+     "Comment s'inscrire à El Fatoora ?",
+     "Comment obtenir le certificat de signature électronique ?"
+    ],
+    "ar": [
+     "كيفاش نعمل فاتورة إلكترونية؟",
+     "كيفاش نتسجل في الفاتورة الالكترونية؟"
+    ],
+    "en": [
+     "How do I register on El Fatoora?"
+    ]
+   },
+   "mots_cles": [
+    "comment",
+    "adherer",
+    "inscription",
+    "s inscrire",
+    "certificat",
+    "signature electronique",
+    "teif",
+    "how to",
+    "register",
+    "sign up",
+    "certificate",
+    "كيفاش",
+    "كيف",
+    "التسجيل",
+    "نسجل",
+    "الانخراط",
+    "شهادة",
+    "الامضاء الالكتروني",
+    "التوقيع الالكتروني",
+    "el fatoora",
+    "ttn",
+    "facture electronique",
+    "فاتورة الكترونية",
+    "digigo",
+    "how",
+    "how do i"
+   ],
+   "reponse": {
+    "fr": "Pour émettre des factures électroniques, il faut : 1) un certificat de signature électronique délivré par l'Agence nationale de certification électronique ; 2) l'adhésion à la plateforme El Fatoora de Tunisie TradeNet (TTN) ; 3) des factures au format TEIF, produites par un logiciel compatible ou saisies sur la plateforme.",
+    "ar": "لإصدار الفواتير الإلكترونية يلزم: 1) شهادة إمضاء إلكتروني تسلّمها الوكالة الوطنية للمصادقة الإلكترونية؛ 2) الانخراط في منصة «الفاتورة» لشركة تونس للتجارة الإلكترونية (TTN)؛ 3) فواتير بصيغة TEIF تُنتَج ببرمجية متوافقة أو تُدرج مباشرة في المنصة.",
+    "en": "To issue e-invoices you need: 1) an electronic signature certificate from the National Agency for Electronic Certification; 2) registration on the El Fatoora platform of Tunisie TradeNet (TTN); 3) invoices in TEIF format, produced by compatible software or entered on the platform."
+   },
+   "source": {
+    "reference": "Note commune DGI n° 02/2026 — Tunisie TradeNet (El Fatoora)",
+    "url": "https://jibaya.tn/docs/note-commune-n02-2026/",
+    "url_alt": ""
+   },
+   "statut": "a_confirmer",
+   "verifie_le": "2026-09-24",
+   "validation_experte": null,
+   "note": "Exigences techniques (certificat, format TEIF, adhésion) à relire dans le guide officiel TTN : https://www.tradenet.com.tn/upload/ElFatoora/Elfatoora_User_Guide.pdf",
+   "action": null
+  },
+  {
+   "id": "tva",
+   "domaine": "fiscalite",
+   "titre": {
+    "fr": "Taux de TVA",
+    "ar": "نسب الأداء على القيمة المضافة",
+    "en": "VAT rates"
+   },
+   "questions": {
+    "fr": [
+     "Quels sont les taux de TVA ?",
+     "Quel taux de TVA appliquer ?"
+    ],
+    "ar": [
+     "قداش نسبة الأداء على القيمة المضافة؟"
+    ],
+    "en": [
+     "What are the VAT rates?"
+    ]
+   },
+   "mots_cles": [
+    "tva",
+    "taux",
+    "taux de tva",
+    "vat",
+    "vat rate",
+    "rate",
+    "الاداء على القيمة المضافة",
+    "نسبة",
+    "النسبة",
+    "نسب",
+    "قداش",
+    "19",
+    "13",
+    "7"
+   ],
+   "reponse": {
+    "fr": "Le Code de la TVA (art. 7) prévoit un taux général de 19 % et des taux réduits de 13 % et 7 % pour les opérations énumérées par la loi. La loi de finances 2025 a révisé les taux applicables à certaines opérations (note commune n° 07/2025). Pour le taux de votre produit ou service, je vous oriente vers un agent.",
+    "ar": "تنص مجلة الأداء على القيمة المضافة (الفصل 7) على نسبة عامة بـ19 % ونسبتين مخفّضتين بـ13 % و7 % للعمليات التي يعدّدها القانون. وقد راجع قانون المالية لسنة 2025 النسب المنطبقة على بعض العمليات (المذكرة العامة عدد 07 لسنة 2025). ولمعرفة نسبة منتوجك أو خدمتك أحيلك على عون.",
+    "en": "The VAT Code (art. 7) sets a standard 19% rate and reduced 13% and 7% rates for transactions listed in the law. The 2025 Finance Law revised the rates for some transactions (common note No. 07/2025). For your product or service, I'll refer you to an agent."
+   },
+   "source": {
+    "reference": "Code de la TVA · art. 7 — révisé par la LF 2025 (Note commune n° 07/2025)",
+    "url": "https://jibaya.tn/wp-content/uploads/2024/02/Code-de-la-taxe-sur-la-valeur-ajoutee-2023_compressed.pdf",
+    "url_alt": ""
+   },
+   "statut": "source_officielle",
+   "verifie_le": "2026-09-24",
+   "validation_experte": null,
+   "note": "",
+   "action": null
+  },
+  {
+   "id": "report",
+   "domaine": "fiscalite",
+   "titre": {
+    "fr": "Échéance un dimanche ou un jour férié",
+    "ar": "أجل يصادف يوم أحد أو عطلة رسمية",
+    "en": "Deadline on a Sunday or public holiday"
+   },
+   "questions": {
+    "fr": [
+     "L'échéance tombe un dimanche, que faire ?",
+     "Et si la date limite est un jour férié ?"
+    ],
+    "ar": [
+     "إذا آخر أجل جا نهار أحد؟",
+     "آخر أجل في يوم عطلة شنوة نعمل؟"
+    ],
+    "en": [
+     "What if the deadline falls on a holiday?"
+    ]
+   },
+   "mots_cles": [
+    "week-end",
+    "weekend",
+    "dimanche",
+    "samedi",
+    "jour ferie",
+    "ferie",
+    "report",
+    "reporte",
+    "holiday",
+    "sunday",
+    "saturday",
+    "عطلة",
+    "الاحد",
+    "السبت",
+    "يوم عطلة",
+    "تاجيل",
+    "يتاجل",
+    "يؤجل"
+   ],
+   "reponse": {
+    "fr": "Si le dernier délai de dépôt d'une déclaration coïncide avec un jour férié ou un dimanche, la déclaration peut être déposée le lendemain sans pénalité (DGI).",
+    "ar": "إذا صادف آخر أجل لإيداع تصريح يوم عطلة رسمية أو يوم أحد، يمكن إيداعه في اليوم الموالي دون خطايا (الإدارة العامة للأداءات).",
+    "en": "If the filing deadline falls on a public holiday or a Sunday, the return can be filed the next day without penalty (tax authority)."
+   },
+   "source": {
+    "reference": "DGI · portail Jibaya (agenda fiscal)",
+    "url": "https://jibaya.tn/agenda/",
+    "url_alt": ""
+   },
+   "statut": "source_officielle",
+   "verifie_le": "2026-09-24",
+   "validation_experte": null,
+   "note": "",
+   "action": null
+  },
+  {
+   "id": "penal",
+   "domaine": "fiscalite",
+   "titre": {
+    "fr": "Pénalités de retard",
+    "ar": "خطايا التأخير",
+    "en": "Late-filing penalties"
+   },
+   "questions": {
+    "fr": [
+     "J'ai déposé en retard, que risque-je ?",
+     "Quelle est la pénalité de retard ?"
+    ],
+    "ar": [
+     "فاتني الأجل، شنوة الخطية؟",
+     "قداش خطية التأخير؟"
+    ],
+    "en": [
+     "What is the late payment penalty?"
+    ]
+   },
+   "mots_cles": [
+    "penalite",
+    "penalites",
+    "retard",
+    "en retard",
+    "amende",
+    "late",
+    "penalty",
+    "fine",
+    "خطية",
+    "خطايا",
+    "تاخير",
+    "متاخر",
+    "فات الاجل",
+    "فاتني",
+    "عقوبة",
+    "retard de paiement"
+   ],
+   "reponse": {
+    "fr": "Un paiement hors délai entraîne une pénalité de retard (CDPF, art. 81). Lorsque vous régularisez spontanément, avant toute intervention de l'administration, elle est de 0,5 % de l'impôt par mois ou fraction de mois de retard ; elle est plus élevée après intervention de l'administration. Mieux vaut donc régulariser vite. Pour votre montant exact, un agent peut vous aider.",
+    "ar": "يترتب عن الدفع خارج الأجل خطية تأخير (مجلة الحقوق والإجراءات الجبائية، الفصل 81). وعند التسوية التلقائية قبل أي تدخل من الإدارة تكون 0,5 % من مبلغ الأداء عن كل شهر أو جزء من شهر تأخير، وترتفع بعد تدخل الإدارة. لذا فالأفضل التسوية بسرعة. ولاحتساب مبلغك بدقة يمكن لعون مساعدتك.",
+    "en": "Late payment triggers a late penalty (CDPF, art. 81). If you regularise voluntarily, before any action by the administration, it is 0.5% of the tax per month or part month of delay; it is higher after the administration intervenes. So it is best to regularise quickly. An agent can compute your exact amount."
+   },
+   "source": {
+    "reference": "Code des droits et procédures fiscaux · art. 81",
+    "url": "https://jibaya.tn/wp-content/uploads/2025/02/cdpf-2025.pdf",
+    "url_alt": ""
+   },
+   "statut": "a_confirmer",
+   "verifie_le": "2026-09-24",
+   "validation_experte": null,
+   "note": "Article 81 cité d'après une version consolidée ; à relire dans le PDF officiel CDPF 2025.",
+   "action": "agent"
+  },
+  {
+   "id": "jibayti",
+   "domaine": "fiscalite",
+   "titre": {
+    "fr": "Déclarer et payer en ligne (Jibayti)",
+    "ar": "التصريح والدفع عن بعد (جبايتي)",
+    "en": "File and pay online (Jibayti)"
+   },
+   "questions": {
+    "fr": [
+     "Comment déclarer et payer en ligne ?",
+     "Comment utiliser Jibayti ?"
+    ],
+    "ar": [
+     "كيفاش نصرح ونخلص عن بعد؟"
+    ],
+    "en": [
+     "How do I file and pay online?"
+    ]
+   },
+   "mots_cles": [
+    "jibayti",
+    "jibaya",
+    "teledeclaration",
+    "en ligne",
+    "internet",
+    "telepaiement",
+    "online",
+    "e-filing",
+    "file online",
+    "pay online",
+    "جبايتي",
+    "عن بعد",
+    "التصريح عن بعد",
+    "الدفع عن بعد",
+    "انترنات",
+    "اونلاين",
+    "بالانترنات",
+    "منصة"
+   ],
+   "reponse": {
+    "fr": "La DGI propose la déclaration et le paiement à distance via ses services en ligne (plateforme Jibayti). Ce système est obligatoire pour certaines catégories d'entreprises et ouvert aux autres contribuables qui y adhèrent. L'assistant peut vous guider étape par étape.",
+    "ar": "توفّر الإدارة العامة للأداءات التصريح والدفع عن بعد عبر خدماتها على الخط (منصة جبايتي). وهذه المنظومة إجبارية لبعض أصناف المؤسسات ومفتوحة لبقية المطالَبين بالأداء المنخرطين فيها. ويمكن للمساعد مرافقتك خطوة بخطوة.",
+    "en": "The tax authority offers remote filing and payment through its online services (Jibayti platform). It is mandatory for some categories of companies and open to other taxpayers who sign up. The assistant can guide you step by step."
+   },
+   "source": {
+    "reference": "DGI · portail Jibaya (services en ligne)",
+    "url": "https://jibaya.tn/documentation/",
+    "url_alt": ""
+   },
+   "statut": "a_confirmer",
+   "verifie_le": "2026-09-24",
+   "validation_experte": null,
+   "note": "Catégories soumises à l'obligation de télédéclaration à citer avec leur texte.",
+   "action": null
+  },
+  {
+   "id": "ras",
+   "domaine": "fiscalite",
+   "titre": {
+    "fr": "Retenue à la source",
+    "ar": "الخصم من المورد",
+    "en": "Withholding tax"
+   },
+   "questions": {
+    "fr": [
+     "Qu'est-ce que la retenue à la source ?",
+     "Quand appliquer une retenue à la source ?"
+    ],
+    "ar": [
+     "شنوة الخصم من المورد؟"
+    ],
+    "en": [
+     "What is withholding tax?"
+    ]
+   },
+   "mots_cles": [
+    "retenue a la source",
+    "retenue",
+    "ras",
+    "certificat de retenue",
+    "withholding",
+    "withholding tax",
+    "الخصم من المورد",
+    "خصم",
+    "الخصم",
+    "شهادة خصم"
+   ],
+   "reponse": {
+    "fr": "Les montants retenus à la source sont reversés au Trésor dans la déclaration mensuelle du débiteur, et un certificat de retenue est remis au bénéficiaire. Le bénéficiaire impute ensuite ces retenues sur son impôt annuel.",
+    "ar": "تُدفع المبالغ المخصومة من المورد إلى الخزينة ضمن التصريح الشهري للمدين بها، وتُسلَّم شهادة خصم إلى المنتفع. ثم يطرح المنتفع هذه المبالغ من ضريبته السنوية.",
+    "en": "Amounts withheld at source are paid to the Treasury in the payer's monthly return, and a withholding certificate is given to the recipient. The recipient then offsets them against their annual tax."
+   },
+   "source": {
+    "reference": "Code de l'IRPP et de l'IS · retenues à la source",
+    "url": "https://jibaya.tn/wp-content/uploads/2025/07/code-IS-et-IRPP-francais-1.pdf",
+    "url_alt": ""
+   },
+   "statut": "a_confirmer",
+   "verifie_le": "2026-09-24",
+   "validation_experte": null,
+   "note": "Article précis à citer.",
+   "action": null
+  },
+  {
+   "id": "employeur",
+   "domaine": "fiscalite",
+   "titre": {
+    "fr": "Déclaration de l'employeur",
+    "ar": "تصريح المؤجر",
+    "en": "Employer return"
+   },
+   "questions": {
+    "fr": [
+     "Quand déposer la déclaration de l'employeur ?"
+    ],
+    "ar": [
+     "وقتاش تصريح المؤجر؟"
+    ],
+    "en": [
+     "When is the employer's return due?"
+    ]
+   },
+   "mots_cles": [
+    "declaration de l employeur",
+    "employeur",
+    "salaries",
+    "salaires",
+    "employer",
+    "employer return",
+    "payroll",
+    "تصريح المؤجر",
+    "المؤجر",
+    "الاجراء",
+    "الاجور",
+    "خلاص العمال",
+    "عمال"
+   ],
+   "reponse": {
+    "fr": "La déclaration annuelle de l'employeur (salaires, pensions, honoraires, commissions et autres sommes soumises à retenue à la source) est déposée au plus tard le 28 février de chaque année (Code de l'IRPP et de l'IS, art. 55).",
+    "ar": "يودَع تصريح المؤجر السنوي (الأجور والجرايات والأتعاب والعمولات وبقية المبالغ الخاضعة للخصم من المورد) في أجل أقصاه 28 فيفري من كل سنة (الفصل 55 من مجلة الضريبة على الدخل والضريبة على الشركات).",
+    "en": "The annual employer return (salaries, pensions, fees, commissions and other amounts subject to withholding) is due by 28 February each year (IRPP/IS Code, art. 55)."
+   },
+   "source": {
+    "reference": "Code de l'IRPP et de l'IS · art. 55",
+    "url": "https://jibaya.tn/wp-content/uploads/2025/07/code-IS-et-IRPP-francais-1.pdf",
+    "url_alt": ""
+   },
+   "statut": "a_confirmer",
+   "verifie_le": "2026-09-24",
+   "validation_experte": null,
+   "note": "Article 55 cité d'après une version consolidée du code ; à relire dans le PDF officiel de la DGI (Code_IRPP_IS.pdf).",
+   "action": null
+  },
+  {
+   "id": "creation",
+   "domaine": "fiscalite",
+   "titre": {
+    "fr": "Démarrer une activité",
+    "ar": "بعث نشاط",
+    "en": "Starting a business"
+   },
+   "questions": {
+    "fr": [
+     "Je veux créer ma société, que faire ?",
+     "Comment démarrer une activité ?"
+    ],
+    "ar": [
+     "نحب نحل شركة، شنوة نعمل؟"
+    ],
+    "en": [
+     "How do I start a business?"
+    ]
+   },
+   "mots_cles": [
+    "creer",
+    "creation",
+    "nouvelle activite",
+    "demarrer",
+    "matricule fiscal",
+    "identifiant fiscal",
+    "start a business",
+    "register a business",
+    "tax id",
+    "بعث مشروع",
+    "مشروع",
+    "نبدا",
+    "نحل",
+    "المعرف الجبائي",
+    "الرقم الجبائي",
+    "الباتيندة",
+    "باتيندة",
+    "patente",
+    "rne",
+    "registre national des entreprises",
+    "immatriculation",
+    "السجل الوطني للمؤسسات",
+    "creer ma societe",
+    "creer une societe",
+    "creer une entreprise",
+    "ouvrir une societe",
+    "create a company",
+    "start a company",
+    "نحل شركة",
+    "نبعث شركة",
+    "بعث شركة",
+    "تكوين شركة",
+    "تأسيس شركة"
+   ],
+   "reponse": {
+    "fr": "Pour démarrer une activité commerciale ou créer une société, il faut s'immatriculer au Registre national des entreprises (RNE, loi n° 2018-52, art. 7). L'identifiant fiscal attribué par l'administration fiscale sert d'identifiant unique de l'entreprise (art. 14). L'assistant peut ensuite vous indiquer vos premières obligations fiscales.",
+    "ar": "لبدء نشاط تجاري أو تأسيس شركة يجب التسجيل بالسجل الوطني للمؤسسات (القانون عدد 52 لسنة 2018، الفصل 7). ويُعتمد المعرّف الجبائي الذي تسنده الإدارة الجبائية معرّفاً وحيداً للمؤسسة (الفصل 14). ثم يمكن للمساعد أن يبيّن لك واجباتك الجبائية الأولى.",
+    "en": "To start a commercial activity or set up a company, you must register with the National Business Register (RNE, Law No. 2018-52, art. 7). The tax ID assigned by the tax administration serves as the business's unique identifier (art. 14). The assistant can then list your first tax obligations."
+   },
+   "source": {
+    "reference": "Loi n° 2018-52 relative au RNE · art. 7 et 14",
+    "url": "https://natlex.ilo.org/dyn/natlex2/natlex2/files/download/112207/TUN-112207.pdf",
+    "url_alt": "http://www.legislation.tn/detailtexte/Loi-num-2018-52-du-29-10-2018-jort-2018-089__2018089000521"
+   },
+   "statut": "a_confirmer",
+   "verifie_le": "2026-09-24",
+   "validation_experte": null,
+   "note": "Étapes fiscales de la déclaration d'existence à citer avec leur article.",
+   "action": null
+  },
+  {
+   "id": "pieces",
+   "domaine": "fiscalite",
+   "titre": {
+    "fr": "Vérifier ma déclaration avant dépôt",
+    "ar": "فحص تصريحي قبل الإيداع",
+    "en": "Check my return before filing"
+   },
+   "questions": {
+    "fr": [
+     "Comment vérifier ma déclaration avant de la déposer ?"
+    ],
+    "ar": [
+     "كيفاش نثبت في التصريح متاعي قبل ما نودعو؟"
+    ],
+    "en": [
+     "How can I check my return before filing?"
+    ]
+   },
+   "mots_cles": [
+    "verifier",
+    "verifier ma declaration",
+    "controle",
+    "erreur",
+    "coherence",
+    "check",
+    "verify",
+    "mistake",
+    "نثبت",
+    "نتثبت",
+    "ثبتلي",
+    "غلطة",
+    "خطا",
+    "مراجعة",
+    "فحص"
+   ],
+   "reponse": {
+    "fr": "Avant de déposer, utilisez l'onglet « Vérifier ma déclaration » : il recalcule la TVA attendue à partir de votre chiffre d'affaires et du taux choisi, la compare à la TVA déclarée et vérifie la date limite (dimanches et jours fériés compris). Les montants saisis restent sur votre appareil ; rien n'est transmis à l'administration.",
+    "ar": "قبل الإيداع، استعمل تبويب «التثبّت من تصريحي»: يعيد احتساب الأداء على القيمة المضافة انطلاقاً من رقم معاملاتك والنسبة المختارة، ويقارنه بالمبلغ المصرّح به، ويتثبّت من آخر أجل (مع احتساب أيام الأحد والعطل). المبالغ المُدخلة تبقى على جهازك ولا يُحال شيء على الإدارة.",
+    "en": "Before filing, use the “Check my return” tab: it recomputes the expected VAT from your turnover and the chosen rate, compares it with the VAT declared and checks the deadline (Sundays and public holidays included). The amounts you enter stay on your device; nothing is sent to the tax office."
+   },
+   "source": {
+    "reference": "Mourchid Jibaya · module de pré-contrôle",
+    "url": "",
+    "url_alt": ""
+   },
+   "statut": "interne",
+   "verifie_le": "2026-09-24",
+   "validation_experte": null,
+   "note": "",
+   "action": "verification"
+  },
+  {
+   "id": "rne_qui",
+   "domaine": "rne",
+   "titre": {
+    "fr": "Qui doit s'immatriculer au RNE ?",
+    "ar": "من يلزمه التسجيل بالسجل الوطني للمؤسسات؟",
+    "en": "Who must register with the RNE?"
+   },
+   "questions": {
+    "fr": [
+     "Qui doit s'immatriculer au RNE ?"
+    ],
+    "ar": [
+     "لازمني نسجل في السجل الوطني للمؤسسات؟",
+     "شكون لازمو يتسجل في الريجيستر؟"
+    ],
+    "en": [
+     "Who must register with the RNE?"
+    ]
+   },
+   "mots_cles": [
+    "rne",
+    "registre national des entreprises",
+    "immatriculation",
+    "s immatriculer",
+    "inscription",
+    "qui doit",
+    "obligatoire",
+    "register",
+    "registration",
+    "national business register",
+    "السجل الوطني للمؤسسات",
+    "السجل الوطني",
+    "التسجيل",
+    "الترسيم",
+    "نترسم",
+    "لازمني نسجل",
+    "شكون يلزمو",
+    "مطالب بالتسجيل"
+   ],
+   "reponse": {
+    "fr": "Doivent s'immatriculer au Registre national des entreprises (RNE) notamment : toute personne physique, tunisienne ou étrangère, ayant la qualité de commerçant ; les sociétés ayant leur siège en Tunisie ; les sociétés étrangères et les professionnels exploitant une agence en Tunisie ; ainsi que d'autres entités prévues par la loi, comme les associations.",
+    "ar": "يلزم التسجيل بالسجل الوطني للمؤسسات خاصة: كل شخص طبيعي، تونسياً كان أو أجنبياً، له صفة التاجر؛ والشركات التي يوجد مقرها بتونس؛ والشركات الأجنبية والمهنيون الذين يستغلون وكالة بتونس؛ إضافة إلى ذوات أخرى نصّ عليها القانون مثل الجمعيات.",
+    "en": "The following must register with the National Business Register (RNE): any individual, Tunisian or foreign, who is a trader; companies headquartered in Tunisia; foreign companies and professionals operating a branch in Tunisia; and other entities listed in the law, such as associations."
+   },
+   "source": {
+    "reference": "Loi n° 2018-52 du 29/10/2018 relative au RNE · art. 7",
+    "url": "https://natlex.ilo.org/dyn/natlex2/natlex2/files/download/112207/TUN-112207.pdf",
+    "url_alt": "http://www.legislation.tn/detailtexte/Loi-num-2018-52-du-29-10-2018-jort-2018-089__2018089000521"
+   },
+   "statut": "source_officielle",
+   "verifie_le": "2026-09-24",
+   "validation_experte": null,
+   "note": "",
+   "action": null
+  },
+  {
+   "id": "rne_modif",
+   "domaine": "rne",
+   "titre": {
+    "fr": "Délai pour déclarer une modification au RNE",
+    "ar": "أجل التصريح بتغيير لدى السجل الوطني للمؤسسات",
+    "en": "Deadline to report a change to the RNE"
+   },
+   "questions": {
+    "fr": [
+     "J'ai changé de gérant, quel délai pour le RNE ?",
+     "Délai pour déclarer une modification au registre"
+    ],
+    "ar": [
+     "بدّلت المسيّر، قدّاش عندي وقت باش نصرّح؟"
+    ],
+    "en": [
+     "How long do I have to report a change to the RNE?"
+    ]
+   },
+   "mots_cles": [
+    "modification",
+    "modifier",
+    "changement",
+    "changer",
+    "transfert de siege",
+    "changement de gerant",
+    "nouveau gerant",
+    "augmentation de capital",
+    "change",
+    "update",
+    "تغيير",
+    "تحيين",
+    "تبديل",
+    "بدلت",
+    "نقلة المقر",
+    "تغيير المقر",
+    "تغيير المسير",
+    "الترفيع في راس المال",
+    "rne",
+    "السجل الوطني",
+    "المسير",
+    "بدلت المسير",
+    "الوكيل",
+    "gerant",
+    "dirigeant",
+    "siege",
+    "capital"
+   ],
+   "reponse": {
+    "fr": "Toute modification des informations inscrites au RNE (siège, dirigeants, capital, activité…) doit être déclarée dans un délai d'un mois à compter de la date de la modification.",
+    "ar": "يجب التصريح بكل تغيير في البيانات المرسّمة بالسجل الوطني للمؤسسات (المقر، المسيّرون، رأس المال، النشاط…) في أجل شهر من تاريخ التغيير.",
+    "en": "Any change to the information recorded in the RNE (registered office, managers, capital, activity…) must be declared within one month of the change."
+   },
+   "source": {
+    "reference": "Loi n° 2018-52 relative au RNE · art. 26",
+    "url": "https://natlex.ilo.org/dyn/natlex2/natlex2/files/download/112207/TUN-112207.pdf",
+    "url_alt": "http://www.legislation.tn/detailtexte/Loi-num-2018-52-du-29-10-2018-jort-2018-089__2018089000521"
+   },
+   "statut": "source_officielle",
+   "verifie_le": "2026-09-24",
+   "validation_experte": null,
+   "note": "",
+   "action": null
+  },
+  {
+   "id": "rne_ef",
+   "domaine": "rne",
+   "titre": {
+    "fr": "Dépôt des états financiers au RNE",
+    "ar": "إيداع القوائم المالية بالسجل الوطني للمؤسسات",
+    "en": "Filing financial statements with the RNE"
+   },
+   "questions": {
+    "fr": [
+     "Quand déposer les états financiers au RNE ?",
+     "Registre national des entreprises : dépôt du bilan"
+    ],
+    "ar": [
+     "وقتاش نودع القوائم المالية في السجل الوطني؟"
+    ],
+    "en": [
+     "When must financial statements be filed with the RNE?"
+    ]
+   },
+   "mots_cles": [
+    "etats financiers",
+    "bilan",
+    "depot des etats financiers",
+    "comptes annuels",
+    "rapport du commissaire aux comptes",
+    "financial statements",
+    "annual accounts",
+    "القوائم المالية",
+    "الموازنة",
+    "القوايم المالية",
+    "ايداع القوائم",
+    "تقرير مراقب الحسابات",
+    "rne",
+    "السجل الوطني"
+   ],
+   "reponse": {
+    "fr": "Les entreprises concernées déposent leurs états financiers au RNE au plus tard dans le septième mois suivant la clôture de l'exercice (loi n° 2018-52, art. 32), soit fin juillet pour une clôture au 31 décembre.",
+    "ar": "تودع المؤسسات المعنية قوائمها المالية بالسجل الوطني للمؤسسات في أجل أقصاه الشهر السابع الموالي لختم السنة المحاسبية (القانون عدد 52 لسنة 2018، الفصل 32)، أي موفى جويلية بالنسبة إلى ختم في 31 ديسمبر.",
+    "en": "Companies concerned file their financial statements with the RNE no later than the seventh month after year-end (Law No. 2018-52, art. 32), i.e. end of July for a 31 December closing."
+   },
+   "source": {
+    "reference": "Loi n° 2018-52 relative au RNE · art. 32",
+    "url": "https://natlex.ilo.org/dyn/natlex2/natlex2/files/download/112207/TUN-112207.pdf",
+    "url_alt": "http://www.legislation.tn/detailtexte/Loi-num-2018-52-du-29-10-2018-jort-2018-089__2018089000521"
+   },
+   "statut": "source_officielle",
+   "verifie_le": "2026-09-24",
+   "validation_experte": null,
+   "note": "",
+   "action": null
+  },
+  {
+   "id": "rne_be",
+   "domaine": "rne",
+   "titre": {
+    "fr": "Déclarer le bénéficiaire effectif",
+    "ar": "التصريح بالمستفيد الحقيقي",
+    "en": "Declaring the beneficial owner"
+   },
+   "questions": {
+    "fr": [
+     "C'est quoi le bénéficiaire effectif ?",
+     "Comment déclarer le bénéficiaire effectif ?"
+    ],
+    "ar": [
+     "المستفيد الحقيقي شنوة؟"
+    ],
+    "en": [
+     "What is a beneficial owner?"
+    ]
+   },
+   "mots_cles": [
+    "beneficiaire effectif",
+    "beneficiaires effectifs",
+    "beneficial owner",
+    "beneficial ownership",
+    "ubo",
+    "المستفيد الحقيقي",
+    "المستفيدين الحقيقيين",
+    "المنتفع الحقيقي",
+    "مولى الشركة الحقيقي"
+   ],
+   "reponse": {
+    "fr": "Est bénéficiaire effectif la personne physique qui détient, directement ou indirectement, au moins 20 % du capital ou des droits de vote ; à défaut, celle qui exerce le contrôle par d'autres moyens ; à défaut, le principal dirigeant (décret n° 2019-54, art. 2). La liste des bénéficiaires effectifs est jointe à la demande d'immatriculation (loi n° 2018-52, art. 23) et toute modification doit être déclarée dans un délai d'un mois (art. 26). Une fausse déclaration est punie de 5 ans d'emprisonnement et de 50 000 DT d'amende (art. 55).",
+    "ar": "المستفيد الحقيقي هو الشخص الطبيعي الذي يملك بصفة مباشرة أو غير مباشرة 20 % على الأقل من رأس المال أو من حقوق التصويت؛ وإلا فالذي يمارس الرقابة بوسائل أخرى؛ وإلا فالمسيّر الرئيسي (الأمر الحكومي عدد 54 لسنة 2019، الفصل 2). وتُرفَق قائمة المستفيدين الحقيقيين بمطلب التسجيل (القانون عدد 52 لسنة 2018، الفصل 23)، ويجب التصريح بكل تغيير في أجل شهر (الفصل 26). ويُعاقَب التصريح الكاذب بالسجن 5 سنوات وبخطية 50 ألف دينار (الفصل 55).",
+    "en": "The beneficial owner is the individual who directly or indirectly holds at least 20% of the capital or voting rights; failing that, whoever exercises control by other means; failing that, the principal manager (Decree No. 2019-54, art. 2). The list of beneficial owners is attached to the registration application (Law No. 2018-52, art. 23) and any change must be declared within one month (art. 26). A false declaration is punishable by 5 years in prison and a TND 50,000 fine (art. 55)."
+   },
+   "source": {
+    "reference": "Décret gouvernemental n° 2019-54 · art. 2 — Loi n° 2018-52 · art. 23, 26 et 55",
+    "url": "https://www.cmf.tn/sites/default/files/pdfs/reglementation/textes-reference/dec2019_54_130622_fr.pdf",
+    "url_alt": ""
+   },
+   "statut": "source_officielle",
+   "verifie_le": "2026-09-24",
+   "validation_experte": null,
+   "note": "",
+   "action": null
+  },
+  {
+   "id": "rne_sanc",
+   "domaine": "rne",
+   "titre": {
+    "fr": "Sanctions en cas de défaut d'immatriculation au RNE",
+    "ar": "العقوبات عند عدم التسجيل بالسجل الوطني",
+    "en": "Penalties for not registering with the RNE"
+   },
+   "questions": {
+    "fr": [
+     "Quelle amende si pas inscrit au RNE ?"
+    ],
+    "ar": [
+     "شنوة الخطية إذا ما تسجلتش في السجل الوطني؟"
+    ],
+    "en": [
+     "What is the penalty for not registering with the RNE?"
+    ]
+   },
+   "mots_cles": [
+    "sanction",
+    "sanctions",
+    "amende",
+    "non immatricule",
+    "pas inscrit",
+    "defaut d immatriculation",
+    "penalty",
+    "fine",
+    "not registered",
+    "عقوبة",
+    "عقوبات",
+    "خطية",
+    "غرامة",
+    "ما سجلتش",
+    "غير مسجل",
+    "rne",
+    "السجل الوطني"
+   ],
+   "reponse": {
+    "fr": "Le défaut d'immatriculation au RNE est puni d'une amende de 1 000 à 5 000 dinars (loi n° 2018-52, art. 53) ; la même fourchette s'applique en cas d'omission des inscriptions ou mises à jour obligatoires (art. 54).",
+    "ar": "يُعاقَب عدم التسجيل بالسجل الوطني للمؤسسات بخطية من ألف إلى خمسة آلاف دينار (القانون عدد 52 لسنة 2018، الفصل 53)، وتنطبق نفس الخطية عند إغفال الترسيمات أو التحيينات الوجوبية (الفصل 54).",
+    "en": "Failing to register with the RNE is punished by a fine of TND 1,000 to 5,000 (Law No. 2018-52, art. 53); the same range applies when mandatory entries or updates are omitted (art. 54)."
+   },
+   "source": {
+    "reference": "Loi n° 2018-52 relative au RNE · art. 53 et 54",
+    "url": "https://natlex.ilo.org/dyn/natlex2/natlex2/files/download/112207/TUN-112207.pdf",
+    "url_alt": "http://www.legislation.tn/detailtexte/Loi-num-2018-52-du-29-10-2018-jort-2018-089__2018089000521"
+   },
+   "statut": "source_officielle",
+   "verifie_le": "2026-09-24",
+   "validation_experte": null,
+   "note": "",
+   "action": null
+  },
+  {
+   "id": "rne_ligne",
+   "domaine": "rne",
+   "titre": {
+    "fr": "Faire ses démarches RNE en ligne",
+    "ar": "القيام بإجراءات السجل الوطني عن بعد",
+    "en": "RNE procedures online"
+   },
+   "questions": {
+    "fr": [
+     "Comment faire mes démarches RNE en ligne ?"
+    ],
+    "ar": [
+     "كيفاش نعمل إجراءات السجل الوطني عن بعد؟"
+    ],
+    "en": [
+     "How to file RNE online?"
+    ]
+   },
+   "mots_cles": [
+    "en ligne",
+    "portail",
+    "site",
+    "internet",
+    "a distance",
+    "online",
+    "website",
+    "portal",
+    "عن بعد",
+    "بالانترنات",
+    "اونلاين",
+    "الموقع",
+    "البوابة",
+    "rne",
+    "السجل الوطني",
+    "registre national des entreprises",
+    "مضمون",
+    "2026",
+    "guichet",
+    "papier",
+    "الشباك",
+    "ورقي"
+   ],
+   "reponse": {
+    "fr": "Les démarches du Registre national des entreprises (immatriculation, mises à jour, dépôt des états financiers, extraits) se font sur sa plateforme électronique, registre-entreprises.tn. Les modalités d'identification et de signature électroniques à utiliser sont précisées par le RNE sur ce site.",
+    "ar": "تتم إجراءات السجل الوطني للمؤسسات (التسجيل، التحيين، إيداع القوائم المالية، المضامين) عبر منصته الإلكترونية registre-entreprises.tn، ويحدّد السجل على هذا الموقع وسائل التعريف والإمضاء الإلكتروني الواجب استعمالها.",
+    "en": "National Business Register procedures (registration, updates, financial statements, extracts) are done on its e-platform, registre-entreprises.tn. The RNE specifies there which electronic identification and signature tools to use."
+   },
+   "source": {
+    "reference": "Registre national des entreprises · plateforme électronique",
+    "url": "https://www.registre-entreprises.tn/",
+    "url_alt": "https://natlex.ilo.org/dyn/natlex2/natlex2/files/download/112207/TUN-112207.pdf"
+   },
+   "statut": "a_confirmer",
+   "verifie_le": "2026-09-24",
+   "validation_experte": null,
+   "note": "Modalités de la dématérialisation (outils d'identification, calendrier) à relire sur registre-entreprises.tn.",
+   "action": null
+  },
+  {
+   "id": "rne_id",
+   "domaine": "rne",
+   "titre": {
+    "fr": "Identifiant unique et matricule fiscal",
+    "ar": "المعرّف الوحيد والمعرّف الجبائي",
+    "en": "Unique identifier and tax ID"
+   },
+   "questions": {
+    "fr": [
+     "Quel est l'identifiant unique de l'entreprise ?",
+     "Matricule fiscal et RNE"
+    ],
+    "ar": [
+     "شنوة المعرف الوحيد للمؤسسة؟"
+    ],
+    "en": [
+     "What is the company's unique identifier?"
+    ]
+   },
+   "mots_cles": [
+    "identifiant unique",
+    "matricule fiscal",
+    "identifiant fiscal",
+    "numero rne",
+    "tax id",
+    "unique identifier",
+    "المعرف الوحيد",
+    "المعرف الجبائي",
+    "الرقم الجبائي",
+    "المعرف",
+    "rne"
+   ],
+   "reponse": {
+    "fr": "L'identifiant fiscal fourni par l'administration fiscale est considéré comme l'identifiant unique de l'entreprise au RNE (loi n° 2018-52, art. 14). Il figure sur ses documents et relie ses dossiers auprès des administrations.",
+    "ar": "يُعتبر المعرّف الجبائي الذي تسنده الإدارة الجبائية المعرّفَ الوحيد للمؤسسة بالسجل الوطني للمؤسسات (القانون عدد 52 لسنة 2018، الفصل 14). ويُذكر في وثائقها ويربط ملفاتها لدى الإدارات.",
+    "en": "The tax ID issued by the tax administration is the business's unique identifier in the RNE (Law No. 2018-52, art. 14). It appears on its documents and links its files across administrations."
+   },
+   "source": {
+    "reference": "Loi n° 2018-52 relative au RNE · art. 14",
+    "url": "https://natlex.ilo.org/dyn/natlex2/natlex2/files/download/112207/TUN-112207.pdf",
+    "url_alt": "http://www.legislation.tn/detailtexte/Loi-num-2018-52-du-29-10-2018-jort-2018-089__2018089000521"
+   },
+   "statut": "source_officielle",
+   "verifie_le": "2026-09-24",
+   "validation_experte": null,
+   "note": "",
+   "action": null
+  },
+  {
+   "id": "mid_quoi",
+   "domaine": "identite",
+   "titre": {
+    "fr": "Qu'est-ce que le Mobile ID (e-Houwiya) ?",
+    "ar": "ما هي الهوية الرقمية (ء-هوية / Mobile ID)؟",
+    "en": "What is Mobile ID (e-Houwiya)?"
+   },
+   "questions": {
+    "fr": [
+     "C'est quoi le Mobile ID ?",
+     "Qu'est-ce que e-Houwiya ?"
+    ],
+    "ar": [
+     "شنوة هي ء-هوية؟",
+     "شنوة هي e-houwiya"
+    ],
+    "en": [
+     "What is Mobile ID?"
+    ]
+   },
+   "mots_cles": [
+    "mobile id",
+    "mobileid",
+    "e-houwiya",
+    "ehouwiya",
+    "houwiya",
+    "identite numerique",
+    "identite digitale",
+    "digital id",
+    "digital identity",
+    "c est quoi",
+    "what is",
+    "الهوية الرقمية",
+    "هوية رقمية",
+    "ء-هوية",
+    "الهويه",
+    "شنوة",
+    "شنية",
+    "ما هي"
+   ],
+   "reponse": {
+    "fr": "Le Mobile ID (e-Houwiya) est le service d'identité numérique sur mobile de TunTrust. Il permet d'accéder de façon sécurisée aux portails publics, de signer électroniquement avec valeur légale et d'accomplir des démarches administratives sans se déplacer.",
+    "ar": "الهوية الرقمية على الهاتف (ء-هوية / Mobile ID) خدمة هوية رقمية تقدّمها TunTrust. تمكّن من النفاذ الآمن إلى البوابات العمومية، والإمضاء الإلكتروني ذي القيمة القانونية، وإنجاز الإجراءات الإدارية دون تنقّل.",
+    "en": "Mobile ID (e-Houwiya) is TunTrust's mobile digital identity service. It gives secure access to public portals, legally valid e-signatures and administrative procedures without travelling."
+   },
+   "source": {
+    "reference": "TunTrust (Agence nationale de certification électronique) · Mobile ID",
+    "url": "https://tuntrust.digitalbundle.tn/fr/produits/mobile-Id",
+    "url_alt": ""
+   },
+   "statut": "source_officielle",
+   "verifie_le": "2026-09-24",
+   "validation_experte": null,
+   "note": "",
+   "action": null
+  },
+  {
+   "id": "mid_comment",
+   "domaine": "identite",
+   "titre": {
+    "fr": "Comment obtenir le Mobile ID ?",
+    "ar": "كيف أتحصّل على الهوية الرقمية؟",
+    "en": "How to get Mobile ID?"
+   },
+   "questions": {
+    "fr": [
+     "Comment obtenir le Mobile ID ?"
+    ],
+    "ar": [
+     "كيفاش نعمل الهوية الرقمية؟",
+     "كيفاش نتحصل على ء-هوية؟"
+    ],
+    "en": [
+     "How do I get Mobile ID?"
+    ]
+   },
+   "mots_cles": [
+    "obtenir",
+    "avoir",
+    "activer",
+    "inscription",
+    "s inscrire",
+    "demande",
+    "conditions",
+    "get",
+    "apply",
+    "how to get",
+    "كيفاش",
+    "كيف",
+    "نعمل",
+    "نتحصل",
+    "نفعل",
+    "التسجيل",
+    "الشروط",
+    "mobile id",
+    "e-houwiya",
+    "houwiya",
+    "identite numerique",
+    "الهوية الرقمية",
+    "هوية رقمية"
+   ],
+   "reponse": {
+    "fr": "Conditions : avoir 18 ans ou plus et une carte d'identité nationale ; le service est ouvert aux Tunisiens résidant en Tunisie ou à l'étranger. Étapes : 1) remplir le formulaire en ligne sur mobile-id.tn ; 2) valider votre identité auprès de votre opérateur mobile ; 3) recevoir votre identifiant et votre code PIN. Le service est gratuit.",
+    "ar": "الشروط: أن يكون عمرك 18 سنة فما فوق وبحوزتك بطاقة تعريف وطنية، والخدمة مفتوحة للتونسيين المقيمين بتونس أو بالخارج. المراحل: 1) ملء الاستمارة على الخط في mobile-id.tn؛ 2) التثبت من هويتك لدى مشغّل الهاتف الجوال؛ 3) تلقّي معرّفك ورمزك السري. والخدمة مجانية.",
+    "en": "Requirements: be 18 or older with a national ID card; the service is open to Tunisians living in Tunisia or abroad. Steps: 1) fill in the online form at mobile-id.tn; 2) verify your identity with your mobile operator; 3) receive your identifier and PIN. The service is free."
+   },
+   "source": {
+    "reference": "TunTrust · Mobile ID — procédure",
+    "url": "https://tuntrust.digitalbundle.tn/fr/produits/mobile-Id",
+    "url_alt": ""
+   },
+   "statut": "source_officielle",
+   "verifie_le": "2026-09-24",
+   "validation_experte": null,
+   "note": "",
+   "action": null
+  },
+  {
+   "id": "mid_usage",
+   "domaine": "identite",
+   "titre": {
+    "fr": "À quoi sert le Mobile ID ?",
+    "ar": "فيمَ تُستعمل الهوية الرقمية؟",
+    "en": "What can Mobile ID be used for?"
+   },
+   "questions": {
+    "fr": [
+     "À quoi sert le Mobile ID ?"
+    ],
+    "ar": [
+     "شنوة فايدة الهوية الرقمية؟"
+    ],
+    "en": [
+     "What is Mobile ID used for?"
+    ]
+   },
+   "mots_cles": [
+    "a quoi sert",
+    "utiliser",
+    "utilisation",
+    "services",
+    "use",
+    "what for",
+    "فاش تنفع",
+    "شنوة ننجم نعمل",
+    "استعمال",
+    "خدمات",
+    "mobile id",
+    "houwiya",
+    "الهوية الرقمية",
+    "signer",
+    "signature",
+    "portail",
+    "الامضاء",
+    "rne"
+   ],
+   "reponse": {
+    "fr": "Le Mobile ID sert à vous authentifier sur les portails publics, à signer électroniquement des documents avec valeur légale et à accomplir des démarches à distance. Pour savoir si un service fiscal ou le RNE l'accepte, consultez la page du service concerné.",
+    "ar": "تُستعمل الهوية الرقمية لإثبات هويتك على البوابات العمومية، وإمضاء الوثائق إلكترونياً بقيمة قانونية، وإنجاز الإجراءات عن بعد. ولمعرفة إن كانت خدمة جبائية أو السجل الوطني للمؤسسات تقبلها، راجع صفحة الخدمة المعنية.",
+    "en": "Mobile ID is used to authenticate on public portals, sign documents electronically with legal value and complete procedures remotely. To know whether a tax service or the RNE accepts it, check that service's page."
+   },
+   "source": {
+    "reference": "TunTrust (Agence nationale de certification électronique) · Mobile ID — usages",
+    "url": "https://tuntrust.digitalbundle.tn/fr/produits/mobile-Id",
+    "url_alt": ""
+   },
+   "statut": "source_officielle",
+   "verifie_le": "2026-09-24",
+   "validation_experte": null,
+   "note": "",
+   "action": null
+  },
+  {
+   "id": "digigo_quoi",
+   "domaine": "identite",
+   "titre": {
+    "fr": "Qu'est-ce que DigiGO ?",
+    "ar": "ما هو DigiGO؟",
+    "en": "What is DigiGO?"
+   },
+   "questions": {
+    "fr": [
+     "Qu'est-ce que DigiGO ?"
+    ],
+    "ar": [
+     "ديجيغو شنوة؟"
+    ],
+    "en": [
+     "What is DigiGO?"
+    ]
+   },
+   "mots_cles": [
+    "digigo",
+    "digi go",
+    "signature electronique",
+    "signature a distance",
+    "e-signature",
+    "electronic signature",
+    "certificat",
+    "ديجيغو",
+    "ديجي غو",
+    "ديجيقو",
+    "الامضاء الالكتروني",
+    "التوقيع الالكتروني",
+    "الامضاء عن بعد",
+    "شهادة الامضاء"
+   ],
+   "reponse": {
+    "fr": "DigiGO est l'identifiant électronique sur mobile de TunTrust (Agence nationale de certification électronique). Il permet de s'authentifier et d'apposer une signature électronique qualifiée depuis son téléphone, pour accomplir des démarches administratives en ligne.",
+    "ar": "DigiGO هو المعرّف الإلكتروني على الهاتف الذي تقدّمه TunTrust (الوكالة الوطنية للمصادقة الإلكترونية). يمكّن من إثبات الهوية ووضع إمضاء إلكتروني مؤهَّل انطلاقاً من الهاتف لإنجاز الإجراءات الإدارية على الخط.",
+    "en": "DigiGO is TunTrust's mobile electronic identifier (National Agency for Electronic Certification). It lets you authenticate and apply a qualified electronic signature from your phone to complete administrative procedures online."
+   },
+   "source": {
+    "reference": "TunTrust (Agence nationale de certification électronique) · DigiGO",
+    "url": "https://tuntrust.digitalbundle.tn/fr/solutions/digigo",
+    "url_alt": ""
+   },
+   "statut": "source_officielle",
+   "verifie_le": "2026-09-24",
+   "validation_experte": null,
+   "note": "",
+   "action": null
+  },
+  {
+   "id": "digigo_comment",
+   "domaine": "identite",
+   "titre": {
+    "fr": "Comment obtenir DigiGO ?",
+    "ar": "كيف أتحصّل على DigiGO؟",
+    "en": "How to get DigiGO?"
+   },
+   "questions": {
+    "fr": [
+     "Comment obtenir DigiGO ?"
+    ],
+    "ar": [
+     "كيفاش نتحصل على ديجيغو؟"
+    ],
+    "en": [
+     "How do I get DigiGO?"
+    ]
+   },
+   "mots_cles": [
+    "obtenir",
+    "avoir",
+    "inscription",
+    "demande",
+    "comment",
+    "delai",
+    "get",
+    "apply",
+    "how",
+    "كيفاش",
+    "كيف",
+    "نتحصل",
+    "نعمل",
+    "التسجيل",
+    "قداش ياخو",
+    "وقت",
+    "digigo",
+    "digi go",
+    "ديجيغو",
+    "ديجيقو",
+    "signature electronique",
+    "الامضاء الالكتروني"
+   ],
+   "reponse": {
+    "fr": "1) Remplissez le formulaire d'inscription DigiGO en ligne ; 2) validez votre identité par SMS ou par une conversation vidéo ; 3) recevez votre identifiant par e-mail et votre code PIN secret par SMS. Le délai annoncé est de 3 heures à 1 jour.",
+    "ar": "1) املأ استمارة التسجيل في DigiGO على الخط؛ 2) ثبّت هويتك عبر إرسالية قصيرة أو محادثة فيديو؛ 3) تتلقى معرّفك عبر البريد الإلكتروني ورمزك السري عبر إرسالية قصيرة. والأجل المعلن من 3 ساعات إلى يوم واحد.",
+    "en": "1) Fill in the DigiGO registration form online; 2) verify your identity by SMS or video call; 3) receive your identifier by email and your secret PIN by SMS. The stated turnaround is 3 hours to 1 day."
+   },
+   "source": {
+    "reference": "TunTrust (Agence nationale de certification électronique) · DigiGO",
+    "url": "https://tuntrust.digitalbundle.tn/fr/solutions/digigo",
+    "url_alt": ""
+   },
+   "statut": "a_confirmer",
+   "verifie_le": "2026-09-24",
+   "validation_experte": null,
+   "note": "Étapes d'obtention à relire sur la page officielle TunTrust DigiGO.",
+   "action": null
+  },
+  {
+   "id": "id_diff",
+   "domaine": "identite",
+   "titre": {
+    "fr": "Mobile ID ou DigiGO : quelle différence ?",
+    "ar": "ما الفرق بين الهوية الرقمية وDigiGO؟",
+    "en": "Mobile ID or DigiGO: what's the difference?"
+   },
+   "questions": {
+    "fr": [
+     "Quelle différence entre Mobile ID et DigiGO ?"
+    ],
+    "ar": [
+     "شنوة الفرق بين الهوية الرقمية وديجيغو؟"
+    ],
+    "en": [
+     "What is the difference between Mobile ID and DigiGO?"
+    ]
+   },
+   "mots_cles": [
+    "difference",
+    "differences",
+    "comparer",
+    "lequel",
+    "difference between",
+    "which one",
+    "الفرق",
+    "فرق",
+    "اشنوة الفرق",
+    "شنوة الفرق",
+    "mobile id",
+    "digigo",
+    "houwiya",
+    "ديجيغو",
+    "الهوية الرقمية"
+   ],
+   "reponse": {
+    "fr": "Les deux reposent sur un certificat électronique délivré par l'autorité de certification nationale. Le Mobile ID (e-Houwiya) est l'identité numérique liée à votre téléphone, pour les citoyens. DigiGO est une signature électronique à distance, ouverte aussi aux entreprises. Le service en ligne que vous utilisez indique lequel il accepte.",
+    "ar": "يعتمد كلاهما على شهادة إلكترونية تسلّمها سلطة المصادقة الوطنية. الهوية الرقمية (ء-هوية) مرتبطة بهاتفك وموجّهة للمواطنين. أما DigiGO فهو إمضاء إلكتروني عن بعد مفتوح أيضاً للمؤسسات. والخدمة التي تستعملها على الخط تبيّن أيّهما تقبل.",
+    "en": "Both rely on an electronic certificate from the national certification authority. Mobile ID (e-Houwiya) is the phone-based digital identity for citizens. DigiGO is a remote e-signature also open to companies. The online service you use states which one it accepts."
+   },
+   "source": {
+    "reference": "TunTrust · ANCE",
+    "url": "https://tuntrust.digitalbundle.tn/fr/Solutions/mobile-id",
+    "url_alt": ""
+   },
+   "statut": "a_confirmer",
+   "verifie_le": "2026-09-24",
+   "validation_experte": null,
+   "note": "Répartition des usages à relire sur les pages officielles TunTrust et ANCE.",
+   "action": null
+  },
+  {
+   "id": "irpp_bareme",
+   "domaine": "fiscalite",
+   "titre": {
+    "fr": "Barème de l'impôt sur le revenu",
+    "ar": "جدول الضريبة على الدخل",
+    "en": "Income tax brackets"
+   },
+   "questions": {
+    "fr": [
+     "Quel est le barème de l'impôt sur le revenu ?",
+     "Combien d'impôt sur mon salaire ?"
+    ],
+    "ar": [
+     "قداش الضريبة على الدخل، الشرائح؟",
+     "جدول الضريبة على الدخل"
+    ],
+    "en": [
+     "What are the income tax brackets?"
+    ]
+   },
+   "mots_cles": [
+    "bareme",
+    "tranche",
+    "tranches",
+    "taux d imposition",
+    "combien d impot",
+    "salaire",
+    "brackets",
+    "tax rate",
+    "income tax rate",
+    "how much tax",
+    "جدول",
+    "الشرائح",
+    "شريحة",
+    "نسبة الضريبة",
+    "قداش نخلص",
+    "الشهرية",
+    "الخلاص",
+    "الاجر",
+    "irpp",
+    "impot sur le revenu",
+    "الضريبة على الدخل"
+   ],
+   "reponse": {
+    "fr": "Barème annuel de l'IRPP depuis la loi de finances 2025 : 0 % jusqu'à 5 000 DT ; 15 % de 5 000 à 10 000 ; 25 % de 10 000 à 20 000 ; 30 % de 20 000 à 30 000 ; 33 % de 30 000 à 40 000 ; 36 % de 40 000 à 50 000 ; 38 % de 50 000 à 70 000 ; 40 % au-delà de 70 000 DT. Chaque taux s'applique à la seule part du revenu comprise dans sa tranche.",
+    "ar": "جدول الضريبة على دخل الأشخاص الطبيعيين منذ قانون المالية لسنة 2025: 0 % إلى حدود 5000 د؛ 15 % من 5000 إلى 10000؛ 25 % من 10000 إلى 20000؛ 30 % من 20000 إلى 30000؛ 33 % من 30000 إلى 40000؛ 36 % من 40000 إلى 50000؛ 38 % من 50000 إلى 70000؛ 40 % ما فوق 70000 د. وتنطبق كل نسبة على الجزء من الدخل الواقع في شريحتها فقط.",
+    "en": "Annual income tax brackets since the 2025 Finance Law: 0% up to TND 5,000; 15% from 5,000 to 10,000; 25% from 10,000 to 20,000; 30% from 20,000 to 30,000; 33% from 30,000 to 40,000; 36% from 40,000 to 50,000; 38% from 50,000 to 70,000; 40% above 70,000. Each rate applies only to the part of income within its bracket."
+   },
+   "source": {
+    "reference": "Loi n° 2024-48 (LF 2025) · art. 36 — Note commune DGI n° 03/2025",
+    "url": "https://jibaya.tn/wp-content/uploads/2025/01/Note-Commune-03-1.pdf",
+    "url_alt": ""
+   },
+   "statut": "source_officielle",
+   "verifie_le": "2026-09-24",
+   "validation_experte": null,
+   "note": "",
+   "action": null
+  },
+  {
+   "id": "tcl",
+   "domaine": "fiscalite",
+   "titre": {
+    "fr": "Taxe sur les établissements (TCL)",
+    "ar": "المعلوم على المؤسسات ذات الصبغة الصناعية أو التجارية أو المهنية",
+    "en": "Local business tax (TCL)"
+   },
+   "questions": {
+    "fr": [
+     "Quel est le taux de la TCL ?",
+     "Taxe sur les établissements"
+    ],
+    "ar": [
+     "قداش المعلوم على المؤسسات؟"
+    ],
+    "en": [
+     "What is the local business tax rate?"
+    ]
+   },
+   "mots_cles": [
+    "tcl",
+    "taxe sur les etablissements",
+    "taxe locale",
+    "fiscalite locale",
+    "municipalite",
+    "local tax",
+    "municipal tax",
+    "المعلوم على المؤسسات",
+    "الجباية المحلية",
+    "البلدية",
+    "معلوم البلدية",
+    "tcl"
+   ],
+   "reponse": {
+    "fr": "La taxe sur les établissements à caractère industriel, commercial ou professionnel (TCL) est de 0,2 % du chiffre d'affaires brut local et de 0,1 % du chiffre d'affaires à l'export. Elle concerne notamment les personnes physiques imposables au titre des bénéfices industriels et commerciaux et les sociétés soumises à l'impôt sur les sociétés. Un minimum s'applique aux établissements sans chiffre d'affaires.",
+    "ar": "المعلوم على المؤسسات ذات الصبغة الصناعية أو التجارية أو المهنية هو 0,2 % من رقم المعاملات الخام المحلي و0,1 % من رقم المعاملات المتأتي من التصدير. ويشمل خاصة الأشخاص الطبيعيين الخاضعين للضريبة بعنوان الأرباح الصناعية والتجارية والشركات الخاضعة للضريبة على الشركات. ويُطبَّق حد أدنى على المؤسسات التي ليس لها رقم معاملات.",
+    "en": "The tax on industrial, commercial or professional establishments (TCL) is 0.2% of gross local turnover and 0.1% of export turnover. It applies notably to individuals taxed on industrial and commercial profits and to companies subject to corporate tax. A minimum applies to establishments with no turnover."
+   },
+   "source": {
+    "reference": "Code de la fiscalité locale (DGI, édition 2025) · art. 38",
+    "url": "https://jibaya.tn/wp-content/uploads/2025/11/Code_FISCALITE-LOCALE-2025.pdf",
+    "url_alt": ""
+   },
+   "statut": "source_officielle",
+   "verifie_le": "2026-09-24",
+   "validation_experte": null,
+   "note": "",
+   "action": null
+  },
+  {
+   "id": "contact_dgi",
+   "domaine": "fiscalite",
+   "titre": {
+    "fr": "Contacter l'administration fiscale",
+    "ar": "الاتصال بالإدارة الجبائية",
+    "en": "Contacting the tax administration"
+   },
+   "questions": {
+    "fr": [
+     "Comment contacter l'administration fiscale ?",
+     "Numéro de téléphone des impôts"
+    ],
+    "ar": [
+     "رقم الهاتف متاع الأداءات"
+    ],
+    "en": [
+     "How can I contact the tax office?"
+    ]
+   },
+   "mots_cles": [
+    "contact",
+    "contacter",
+    "telephone",
+    "numero",
+    "appeler",
+    "joindre",
+    "call",
+    "phone",
+    "hotline",
+    "نتصل",
+    "الاتصال",
+    "رقم الهاتف",
+    "نومرو",
+    "تلفون",
+    "نكلم"
+   ],
+   "reponse": {
+    "fr": "Le Centre d'information fiscale à distance de la DGI répond au 81 100 400 aux questions générales sur la fiscalité et le recouvrement, et aide à la déclaration et au paiement en ligne. Pour votre dossier personnel, adressez-vous à votre bureau de contrôle des impôts, ou cliquez sur « Parler à un agent ».",
+    "ar": "يجيب مركز الإرشاد الجبائي عن بعد التابع للإدارة العامة للأداءات على الرقم 400 100 81 عن الأسئلة العامة المتعلقة بالجباية والاستخلاص، ويساعد على التصريح والدفع عن بعد. أما لملفك الشخصي فتوجّه إلى مكتب مراقبة الأداءات الذي تتبعه، أو اضغط على «التحدث مع عون».",
+    "en": "The tax authority's remote tax information centre answers general tax and collection questions on 81 100 400 and helps with online filing and payment. For your personal file, contact your tax office or click “Talk to an agent”."
+   },
+   "source": {
+    "reference": "DGI · Centre d'information fiscale à distance (CIFD)",
+    "url": "https://jibaya.tn/centre-dinformation-fiscale-a-distance-c-i-f-d/",
+    "url_alt": ""
+   },
+   "statut": "source_officielle",
+   "verifie_le": "2026-09-24",
+   "validation_experte": null,
+   "note": "",
+   "action": null
+  },
+  {
+   "id": "amnistie_2026",
+   "domaine": "fiscalite",
+   "titre": {
+    "fr": "Amnistie fiscale 2026 (art. 69 LF 2026)",
+    "ar": "العفو الجبائي 2026 (الفصل 69 من قانون المالية 2026)",
+    "en": "2026 tax amnesty (art. 69, 2026 Finance Law)"
+   },
+   "questions": {
+    "fr": [
+     "Je veux profiter de l'amnistie fiscale, jusqu'à quand ?",
+     "Amnistie fiscale 2026 : conditions"
+    ],
+    "ar": [
+     "نحب نعمل تسوية للديون الجبائية، العفو الجبائي وقتاش يوفى؟",
+     "العفو الجبائي 2026"
+    ],
+    "en": [
+     "Is there a tax amnesty in 2026?"
+    ]
+   },
+   "mots_cles": [
+    "amnistie",
+    "amnistie fiscale",
+    "regularisation",
+    "regulariser ma situation",
+    "dettes fiscales",
+    "dette fiscale",
+    "abandon des penalites",
+    "article 69",
+    "art 69",
+    "tax amnesty",
+    "amnesty",
+    "tax debts",
+    "penalty waiver",
+    "عفو",
+    "العفو الجبائي",
+    "عفو جبائي",
+    "تسوية",
+    "تسوية الوضعية",
+    "الديون الجبائية",
+    "ديون جبائية",
+    "الفصل 69",
+    "التخلي عن الخطايا",
+    "طرح الخطايا",
+    "تصاريح متأخرة",
+    "declarations en retard"
+   ],
+   "reponse": {
+    "fr": "L'article 69 de la loi de finances 2026, commenté par la note commune n° 04/2026, prévoit une régularisation allégée des situations fiscales. Pour les déclarations dont l'échéance est antérieure au 31 octobre 2025 (non prescrites), y compris les déclarations rectificatives et les actes soumis à l'enregistrement : les pénalités (art. 81, 82 et 85 du CDPF) sont abandonnées si la déclaration est déposée et le principal payé en totalité au plus tard le 30 septembre 2026. Le volet relatif aux dettes déjà prises en charge par les recettes des finances comportait des échéances au 30 juin 2026 : vérifiez votre cas auprès de votre recette. Texte à consulter : note commune n° 04/2026 (en arabe).",
+    "ar": "ينص الفصل 69 من قانون المالية لسنة 2026، الذي شرحته المذكرة العامة عدد 04 لسنة 2026، على تيسير تسوية الوضعية الجبائية للمطالبين بالأداء. بالنسبة إلى التصاريح التي حلّ أجلها قبل 31 أكتوبر 2025 ولم يشملها التقادم، بما فيها التصاريح التصحيحية والعقود والكتابات الخاضعة لمعاليم التسجيل: يقع التخلي عن الخطايا (الفصول 81 و82 و85 من مجلة الحقوق والإجراءات الجبائية) شرط إيداع التصريح ودفع أصل الأداء كاملاً في أجل أقصاه 30 سبتمبر 2026. أما الجزء المتعلق بالديون المثقلة بقباضات المالية فقد كانت آجاله إلى 30 جوان 2026، فتثبّت من وضعيتك لدى قباضتك. النص المرجعي: المذكرة العامة عدد 04 لسنة 2026.",
+    "en": "Article 69 of the 2026 Finance Law, explained in common note No. 04/2026, eases the regularisation of tax situations. For returns due before 31 October 2025 that are not time-barred (including corrective returns and deeds subject to registration duties), penalties (arts. 81, 82 and 85 of the Tax Procedures Code) are waived if the return is filed and the full principal paid by 30 September 2026 at the latest. The part covering debts already recorded at the tax collection offices had deadlines of 30 June 2026: check your case with your recette des finances. Reference text: common note No. 04/2026 (Arabic only)."
+   },
+   "source": {
+    "reference": "Loi n° 2025-17 (LF 2026) · art. 69 — Note commune DGI n° 04/2026",
+    "url": "https://jibaya.tn/docs/note-commune-n04-2026/",
+    "url_alt": "https://jibaya.tn/ar/blog/art-69-lf-2026/"
+   },
+   "statut": "a_confirmer",
+   "verifie_le": "2026-09-24",
+   "validation_experte": null,
+   "note": "Note commune 04/2026 publiée en arabe (pages jibaya.tn consultées) ; détail des conditions à valider par l'expert sur le texte intégral.",
+   "action": null
+  },
+  {
+   "id": "forfait",
+   "domaine": "fiscalite",
+   "titre": {
+    "fr": "Impôt selon le régime forfaitaire",
+    "ar": "الضريبة حسب النظام التقديري",
+    "en": "Flat-rate (forfait) regime tax"
+   },
+   "questions": {
+    "fr": [
+     "Combien paie un commerçant au régime forfaitaire ?"
+    ],
+    "ar": [
+     "قداش الضريبة في النظام التقديري؟"
+    ],
+    "en": [
+     "How much is the flat-rate tax?"
+    ]
+   },
+   "mots_cles": [
+    "forfait",
+    "forfaitaire",
+    "regime forfaitaire",
+    "impot forfaitaire",
+    "forfaitaire combien",
+    "petit commercant",
+    "flat rate",
+    "flat-rate",
+    "forfait regime",
+    "النظام التقديري",
+    "تقديري",
+    "الضريبة التقديرية",
+    "الأداء التقديري",
+    "صغار الحرفيين",
+    "النظام التقديري قداش",
+    "حانوت صغير",
+    "flat-rate tax",
+    "flat rate tax",
+    "flat-rate regime",
+    "flat rate regime"
+   ],
+   "reponse": {
+    "fr": "Depuis 2023 (art. 55 de la LF 2023, note commune n° 08/2023), l'impôt annuel des personnes au régime forfaitaire est : 400 DT dans les communes (limites en vigueur avant 2015) et 200 DT hors communes lorsque le chiffre d'affaires annuel ne dépasse pas 10 000 DT ; 3 % du chiffre d'affaires lorsqu'il est compris entre 10 000 et 100 000 DT. Les conditions d'accès au régime sont fixées par l'article 44 bis du Code de l'IRPP et de l'IS.",
+    "ar": "منذ سنة 2023 (الفصل 55 من قانون المالية لسنة 2023، المذكرة العامة عدد 08 لسنة 2023)، الضريبة السنوية للخاضعين للنظام التقديري هي: 400 د داخل المناطق البلدية (حسب حدودها قبل 2015) و200 د خارجها إذا لم يتجاوز رقم المعاملات السنوي 10000 د؛ و3 % من رقم المعاملات إذا كان بين 10000 و100000 د. وشروط الانتفاع بالنظام مضبوطة بالفصل 44 مكرر من مجلة الضريبة على دخل الأشخاص الطبيعيين والضريبة على الشركات.",
+    "en": "Since 2023 (art. 55 of the 2023 Finance Law, common note No. 08/2023), the annual tax under the flat-rate regime is: TND 400 in municipal areas (pre-2015 boundaries) and TND 200 elsewhere when annual turnover does not exceed TND 10,000; 3% of turnover when it is between TND 10,000 and 100,000. Eligibility conditions are set by article 44 bis of the Income Tax and Corporate Tax Code."
+   },
+   "source": {
+    "reference": "Décret-loi n° 2022-79 (LF 2023) · art. 55 — Note commune DGI n° 08/2023 ; Code IRPP/IS art. 44 bis",
+    "url": "https://jibaya.tn/wp-content/uploads/2024/02/Note-Commune-N%C2%B008-1.pdf",
+    "url_alt": "https://jibaya.tn/docs/note-commune-numero-27-regimes-fiscal-et-comptable-des-personnes-soumises-a-limpot-sur-le-revenu-selon-le-regime-forfaitaire/"
+   },
+   "statut": "source_officielle",
+   "verifie_le": "2026-09-24",
+   "validation_experte": null,
+   "note": "Tarif lu dans la note commune 08/2023 ; vérifier l'absence de modification par les lois de finances ultérieures.",
+   "action": null
+  },
+  {
+   "id": "forfait_reel",
+   "domaine": "fiscalite",
+   "titre": {
+    "fr": "Passage du forfait au régime réel : déclarations trimestrielles",
+    "ar": "المرور من النظام التقديري إلى النظام الحقيقي: التصاريح الثلاثية",
+    "en": "Moving from flat-rate to real regime: quarterly returns"
+   },
+   "questions": {
+    "fr": [
+     "Je suis passé au régime réel, déclaration trimestrielle possible ?"
+    ],
+    "ar": [
+     "خرجت من التقديري، نجم نصرح كل ثلاثة أشهر؟"
+    ],
+    "en": [
+     "Can I file quarterly after leaving the flat-rate regime?"
+    ]
+   },
+   "mots_cles": [
+    "regime reel",
+    "declasse",
+    "declassement",
+    "trimestrielle",
+    "declaration trimestrielle",
+    "passer au reel",
+    "sortir du forfait",
+    "quarterly",
+    "quarterly return",
+    "real regime",
+    "النظام الحقيقي",
+    "ثلاثية",
+    "تصريح ثلاثي",
+    "التصريح الثلاثي",
+    "نخرج من التقديري",
+    "كل ثلاثة أشهر",
+    "chaque trimestre",
+    "ثلاثة أشهر",
+    "trimestre"
+   ],
+   "reponse": {
+    "fr": "Depuis 2023 (art. 57 de la LF 2023, note commune n° 08/2023), les personnes sorties du régime forfaitaire vers le régime réel (par option ou déclassement) et dont le chiffre d'affaires annuel ne dépasse pas 150 000 DT peuvent déposer chaque trimestre, au lieu de chaque mois, leurs déclarations des retenues à la source, taxes et droits. Elles doivent remplir les conditions d'origine du forfait prévues à l'article 44 bis du Code de l'IRPP et de l'IS.",
+    "ar": "منذ 2023 (الفصل 57 من قانون المالية لسنة 2023، المذكرة العامة عدد 08 لسنة 2023)، يمكن للأشخاص الذين مرّوا من النظام التقديري إلى النظام الحقيقي (باختيار أو بإقصاء) والذين لا يتجاوز رقم معاملاتهم السنوي 150000 د إيداع تصاريحهم المتعلقة بالخصم من المورد والمعاليم والأداءات كل ثلاثة أشهر عوضاً عن كل شهر، شرط استيفاء الشروط الأصلية للنظام التقديري المنصوص عليها بالفصل 44 مكرر.",
+    "en": "Since 2023 (art. 57 of the 2023 Finance Law, common note No. 08/2023), people who moved from the flat-rate regime to the real regime (by choice or reclassification) and whose annual turnover does not exceed TND 150,000 may file their withholding tax, duties and taxes returns quarterly instead of monthly, provided they meet the original flat-rate conditions of article 44 bis of the Income Tax and Corporate Tax Code."
+   },
+   "source": {
+    "reference": "Décret-loi n° 2022-79 (LF 2023) · art. 57 — Note commune DGI n° 08/2023",
+    "url": "https://jibaya.tn/wp-content/uploads/2024/02/Note-Commune-N%C2%B008-1.pdf",
+    "url_alt": ""
+   },
+   "statut": "source_officielle",
+   "verifie_le": "2026-09-24",
+   "validation_experte": null,
+   "note": "",
+   "action": null
+  }
+ ]
+}

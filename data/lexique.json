@@ -1,0 +1,225 @@
+{
+ "_note": "Concepts reliant les formulations AR / darija / FR / EN. Clé = concept ; valeurs = formes équivalentes (modifiable sans code).",
+ "tva": [
+  "tva",
+  "taxe sur la valeur ajoutee",
+  "vat",
+  "value added tax",
+  "الاداء على القيمه المضافه",
+  "الاداء علي القيمه المضافه",
+  "الاداء على القيمة المضافة"
+ ],
+ "ir": [
+  "impot sur le revenu",
+  "irpp",
+  "income tax",
+  "الضريبه على الدخل",
+  "الاداء على الدخل",
+  "ضريبه الدخل"
+ ],
+ "is": [
+  "impot sur les societes",
+  "corporate tax",
+  "corporate income tax",
+  "الضريبه على الشركات"
+ ],
+ "rne": [
+  "rne",
+  "registre national des entreprises",
+  "registre de commerce",
+  "registre du commerce",
+  "business register",
+  "السجل الوطني للمؤسسات",
+  "السجل الوطني",
+  "السجل التجاري",
+  "الريجيستر"
+ ],
+ "mobileid": [
+  "mobile id",
+  "mobileid",
+  "e houwiya",
+  "ehouwiya",
+  "houwiya",
+  "identite numerique",
+  "digital identity",
+  "ء هويه",
+  "الهويه الرقميه",
+  "الهويه الرقمي"
+ ],
+ "digigo": [
+  "digigo",
+  "digi go",
+  "ديجيغو",
+  "ديجي غو",
+  "ديجيقو",
+  "signature a distance",
+  "remote signature",
+  "الامضاء عن بعد"
+ ],
+ "factelec": [
+  "facture electronique",
+  "factures electroniques",
+  "facturation electronique",
+  "el fatoora",
+  "elfatoora",
+  "fatoora",
+  "e invoice",
+  "e invoicing",
+  "electronic invoice",
+  "الفاتوره الالكترونيه",
+  "فاتوره الكترونيه",
+  "الفوتره الالكترونيه"
+ ],
+ "penalite": [
+  "penalite",
+  "penalites",
+  "amende",
+  "amendes",
+  "majoration",
+  "fine",
+  "penalty",
+  "خطيه",
+  "خطايا",
+  "غرامه"
+ ],
+ "retard": [
+  "retard",
+  "en retard",
+  "tardif",
+  "hors delai",
+  "late",
+  "delay",
+  "تاخير",
+  "متاخر",
+  "فاتني",
+  "فات الاجل"
+ ],
+ "mensuelle": [
+  "declaration mensuelle",
+  "monthly return",
+  "monthly declaration",
+  "التصريح الشهري",
+  "الدكلاراسيون الشهريه",
+  "التصريح متاع الشهر"
+ ],
+ "acomptes": [
+  "acompte",
+  "acomptes",
+  "acomptes provisionnels",
+  "provisional instalment",
+  "provisional installment",
+  "الاقساط الاحتياطيه",
+  "قسط احتياطي",
+  "الاكونت"
+ ],
+ "ubo": [
+  "beneficiaire effectif",
+  "beneficial owner",
+  "ubo",
+  "المستفيد الحقيقي",
+  "المنتفع الحقيقي"
+ ],
+ "etatsfin": [
+  "etats financiers",
+  "bilan",
+  "comptes annuels",
+  "financial statements",
+  "القوائم الماليه",
+  "الموازنه",
+  "البيلان"
+ ],
+ "enligne": [
+  "jibayti",
+  "jibayati",
+  "en ligne",
+  "online",
+  "teledeclaration",
+  "e filing",
+  "جبايتي",
+  "عن بعد"
+ ],
+ "societe": [
+  "societe",
+  "sarl",
+  "suarl",
+  "entreprise",
+  "company",
+  "شركه",
+  "شركتي",
+  "الشركات"
+ ],
+ "pphys": [
+  "personne physique",
+  "individuel",
+  "individual",
+  "commercant",
+  "شخص طبيعي",
+  "تاجر"
+ ],
+ "forfait": [
+  "forfait",
+  "forfaitaire",
+  "regime forfaitaire",
+  "flat rate",
+  "flat-rate",
+  "النظام التقديري",
+  "التقديري"
+ ],
+ "amnistie": [
+  "amnistie",
+  "amnesty",
+  "regularisation",
+  "العفو الجبائي",
+  "عفو جبائي",
+  "تسويه"
+ ],
+ "bareme": [
+  "bareme",
+  "tranche",
+  "tranches",
+  "brackets",
+  "جدول",
+  "الشرائح",
+  "شريحه"
+ ],
+ "retenue": [
+  "retenue a la source",
+  "withholding",
+  "الخصم من المورد"
+ ],
+ "employeur": [
+  "employeur",
+  "employer",
+  "المؤجر",
+  "الاجراء"
+ ],
+ "dimanche": [
+  "dimanche",
+  "jour ferie",
+  "ferie",
+  "holiday",
+  "sunday",
+  "يوم عطله",
+  "عطله",
+  "نهار احد",
+  "يوم احد"
+ ],
+ "contact": [
+  "contacter l administration",
+  "contacter les impots",
+  "numero de telephone des impots",
+  "centre d information fiscale",
+  "contact the tax office",
+  "رقم الهاتف متاع الاداءات",
+  "رقم الهاتف",
+  "مركز الارشاد الجبائي"
+ ],
+ "creation": [
+  "creer ma societe",
+  "creer une entreprise",
+  "demarrer une activite",
+  "start a business",
+  "نحل شركه",
+  "بعث مشروع"
+ ]
+}

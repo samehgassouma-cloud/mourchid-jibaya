@@ -30,7 +30,8 @@ class Resultat:
 
     @property
     def suffisant(self) -> bool:
-        return self.score >= SEUIL_SCORE and self.couverture >= SEUIL_COUVERTURE
+        # au moins deux termes de la question retrouvés : un mot isolé (« téléphone ») ne suffit pas
+        return self.score >= SEUIL_SCORE and self.couverture >= SEUIL_COUVERTURE and len(self.mots_trouves) >= 2
 
 
 class Index:
