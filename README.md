@@ -4,7 +4,7 @@ Assistant fiscal IA 24h/24, en arabe, darija, français et anglais, qui répond 
 
 - Hackathon national IA & Finances publiques — 25-26 septembre 2026
 - Défi principal : **T9** (chatbot / agent virtuel IA 24h/24) · défi complémentaire : **T4** (facilitation pour les contribuables)
-- Équipe : Sameh Gassouma · Cyrine Gassouma
+- Équipe : Sameh Gassouma · Cyrine Gassouma (ingénieure en informatique, profil technique)
 
 ## Travaux préparatoires (déclaration, art. 6.1 du cahier des charges)
 
