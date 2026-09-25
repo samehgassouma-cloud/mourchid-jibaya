@@ -19,6 +19,7 @@ from mourchid.echeances import PROFILS
 from mourchid.verification import verifier
 
 RACINE = Path(__file__).resolve().parent
+SERVICES = ("fisc", "controle", "recouvrement", "rne", "identite")
 WEB = RACINE / "web"
 
 
@@ -98,6 +99,19 @@ class Gestionnaire(BaseHTTPRequestHandler):
             if not f or f.get("statut") == "brouillon":
                 return self._json({"erreur": "introuvable"}, 404)
             return self._json(ASSISTANT.reponse_fiche(f, q.get("langue", "fr")))
+        if u.path == "/api/tableau":
+            # indicateurs agrégés pour l'administration (aucune donnée personnelle : uniquement des comptages)
+            st = ASSISTANT.journal.stats()
+            par = st["par_resultat"]
+            top = []
+            for x in st["fiches_les_plus_demandees"]:
+                f = ASSISTANT.base.get(x["fiche_id"])
+                if f:
+                    top.append({"id": f["id"], "titre": f["titre"], "n": x["n"]})
+            return self._json({"portee": "serveur", "questions": st["questions"] - par.get("conversation", 0),
+                               "reponses": par.get("reponse", 0), "inconnus": par.get("inconnu", 0), "refus": par.get("refus", 0),
+                               "tickets": st["tickets"], "tickets_par_service": st["tickets_par_service"],
+                               "par_langue": st["par_langue"], "top": top, "fiches": ASSISTANT.base.bilan()})
         if u.path == "/api/sources":
             vues = {}
             for f in ASSISTANT.base.publiques():
@@ -127,7 +141,8 @@ class Gestionnaire(BaseHTTPRequestHandler):
             question = (d.get("question") or "").strip()[:500]
             if not question:
                 return self._json({"erreur": "question vide"}, 400)
-            return self._json(ASSISTANT.journal.ticket(d.get("langue", "fr"), question, (d.get("contact") or "")[:120]))
+            service = d.get("service") if d.get("service") in SERVICES else "fisc"
+            return self._json(ASSISTANT.journal.ticket(d.get("langue", "fr"), question, (d.get("contact") or "")[:120], service))
         if u.path == "/api/verification":
             return self._json(verifier(d, ASSISTANT.calendrier))
         if u.path.startswith("/api/admin/"):

@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS questions (
   resultat TEXT, fiche_id TEXT, score REAL);
 CREATE TABLE IF NOT EXISTS tickets (
   id INTEGER PRIMARY KEY AUTOINCREMENT, horodatage TEXT, langue TEXT, question TEXT,
-  contact TEXT, statut TEXT DEFAULT 'ouvert', reponse TEXT, fiche_id TEXT);
+  contact TEXT, statut TEXT DEFAULT 'ouvert', reponse TEXT, fiche_id TEXT, service TEXT);
 """
 
 
@@ -23,6 +23,9 @@ class Journal:
         self.lock = threading.Lock()
         with self.lock:
             self.cx.executescript(SCHEMA)
+            colonnes = [r[1] for r in self.cx.execute("PRAGMA table_info(tickets)")]
+            if "service" not in colonnes:   # base créée par une version antérieure
+                self.cx.execute("ALTER TABLE tickets ADD COLUMN service TEXT")
 
     @staticmethod
     def _now():
@@ -34,10 +37,10 @@ class Journal:
                                 (self._now(), langue, question, resultat, fiche_id, score))
             return c.lastrowid
 
-    def ticket(self, langue, question, contact="") -> dict:
+    def ticket(self, langue, question, contact="", service="fisc") -> dict:
         with self.lock, self.cx:
-            c = self.cx.execute("INSERT INTO tickets(horodatage,langue,question,contact) VALUES(?,?,?,?)",
-                                (self._now(), langue, question, contact))
+            c = self.cx.execute("INSERT INTO tickets(horodatage,langue,question,contact,service) VALUES(?,?,?,?,?)",
+                                (self._now(), langue, question, contact, service))
         return {"id": f"MJ-{c.lastrowid:05d}", "numero": c.lastrowid}
 
     def tickets(self, statut: str | None = None) -> list[dict]:
@@ -59,5 +62,7 @@ class Journal:
             top = [dict(r) for r in self.cx.execute(
                 "SELECT fiche_id, COUNT(*) AS n FROM questions WHERE fiche_id IS NOT NULL GROUP BY fiche_id ORDER BY n DESC LIMIT 5")]
             ouverts = self.cx.execute("SELECT COUNT(*) FROM tickets WHERE statut='ouvert'").fetchone()[0]
+            tickets = self.cx.execute("SELECT COUNT(*) FROM tickets").fetchone()[0]
+            services = {r[0] or "fisc": r[1] for r in self.cx.execute("SELECT service, COUNT(*) FROM tickets GROUP BY service")}
         return {"questions": total, "par_resultat": par, "par_langue": langues, "fiches_les_plus_demandees": top,
-                "tickets_ouverts": ouverts}
+                "tickets_ouverts": ouverts, "tickets": tickets, "tickets_par_service": services}

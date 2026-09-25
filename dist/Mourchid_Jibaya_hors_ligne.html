@@ -47,6 +47,15 @@ input,select{width:100%;padding:10px;border:1px solid var(--ligne);border-radius
 .point{padding:10px 12px;border-radius:10px;margin-top:8px}
 .p-ok{background:#E3F2EA}.p-info{background:var(--menthe)}.p-alerte{background:#F7EBD2}.p-critique{background:#F6DEDC}
 .note{font-size:13px;color:var(--doux);margin-top:12px}
+.agent{margin-top:12px;border:1px solid var(--or);border-radius:12px;padding:14px;background:#FFFBF2}
+.agent h3{margin:0 0 6px;font-size:17px;color:var(--sombre)}
+textarea{width:100%;min-height:70px;padding:10px;border:1px solid var(--ligne);border-radius:10px;font:inherit}
+.chiffres{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0}
+.chiffres div{background:var(--menthe);border-radius:12px;padding:12px}.chiffres b{display:block;font-size:26px;color:var(--sombre)}
+.chiffres div.fort{background:var(--sombre);color:#E2EBE8}.chiffres div.fort b{color:var(--or)}
+.benef{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:10px}
+.benef div{border:1px solid var(--ligne);border-radius:12px;padding:12px;background:#fff}.benef h4{margin:0 0 4px;color:var(--sombre)}
+h3.sous{margin:18px 0 6px;color:var(--sombre);font-size:17px}
 footer{text-align:center;font-size:13px;color:var(--doux);padding:18px 16px 30px}
 @media (max-width:600px){.msg{max-width:96%}header .logo{font-size:18px}}
 </style>
@@ -63,6 +72,7 @@ footer{text-align:center;font-size:13px;color:var(--doux);padding:18px 16px 30px
   <button role="tab" data-onglet="chat" aria-selected="true"><span data-t="ongChat"></span><span class="etiquette">T9</span></button>
   <button role="tab" data-onglet="ech" aria-selected="false"><span data-t="ongEch"></span><span class="etiquette">T4</span></button>
   <button role="tab" data-onglet="verif" aria-selected="false"><span data-t="ongVerif"></span><span class="etiquette">T4</span></button>
+  <button role="tab" data-onglet="adm" aria-selected="false"><span data-t="ongAdm"></span></button>
   <button role="tab" data-onglet="src" aria-selected="false"><span data-t="ongSrc"></span></button>
 </nav>
 
@@ -71,6 +81,15 @@ footer{text-align:center;font-size:13px;color:var(--doux);padding:18px 16px 30px
     <div id="fil" aria-live="polite"></div>
     <div class="puces" id="exemples"></div>
     <form class="saisie" id="f-question"><input id="q" autocomplete="off" maxlength="500"><button class="bouton" data-t="envoyer"></button></form>
+    <p><button class="bouton second" id="b-agent" type="button" data-t="parler"></button></p>
+    <div class="agent" id="f-agent" hidden>
+      <h3 data-t="agentTitre"></h3>
+      <label for="a-service" data-t="agentService"></label><select id="a-service"></select>
+      <label for="a-question" data-t="agentQuestion"></label><textarea id="a-question" maxlength="500"></textarea>
+      <label for="a-contact" data-t="agentContact"></label><input id="a-contact" maxlength="120" autocomplete="off">
+      <p class="note" data-t="agentNote"></p>
+      <p><button class="bouton" id="b-envoyer-agent" type="button" data-t="agentEnvoyer"></button> <button class="bouton second" id="b-annuler-agent" type="button" data-t="annuler"></button></p>
+    </div>
     <p class="note" data-t="avert"></p>
   </section>
 
@@ -94,6 +113,18 @@ footer{text-align:center;font-size:13px;color:var(--doux);padding:18px 16px 30px
     <p><button class="bouton" id="b-verif" data-t="verifier"></button></p>
     <div id="res-verif"></div>
     <p class="note" data-t="noteVerif"></p>
+  </section>
+
+  <section id="p-adm" class="panneau" hidden>
+    <p data-t="introAdm"></p>
+    <h3 class="sous" data-t="admDirect"></h3>
+    <div class="chiffres" id="adm-chiffres"></div>
+    <label for="adm-min" data-t="admMinutes"></label><input id="adm-min" type="number" min="1" max="60" value="6" style="max-width:120px">
+    <div class="chiffres" id="adm-gain"></div>
+    <div id="adm-detail"></div>
+    <h3 class="sous" data-t="admPourquoi"></h3>
+    <div class="benef" id="adm-benef"></div>
+    <p class="note" id="adm-portee"></p>
   </section>
 
   <section id="p-src" class="panneau" hidden>
@@ -349,12 +380,35 @@ from as this that these those should must will
 
   // ---------------- « API » locale (mêmes routes que serveur.py) ----------------
   let numeroTicket = 0;
+  // indicateurs de la session (hors ligne : uniquement des comptages, rien n'est envoyé)
+  const S = { questions: 0, reponses: 0, inconnus: 0, refus: 0, tickets: 0, tickets_par_service: {}, par_langue: {}, fiches: {} };
   function api(url, corps) {
     const u = new URL(url, "http://local");
     const q = Object.fromEntries(u.searchParams);
     switch (u.pathname) {
-      case "/api/question": return repondre(corps.question, corps.langue);
-      case "/api/ticket": numeroTicket++; return { id: "MJ-L" + String(numeroTicket).padStart(4, "0"), numero: numeroTicket, local: true };
+      case "/api/question": {
+        const r = repondre(corps.question, corps.langue);
+        if (r.type !== "conversation" && r.type !== "vide") {
+          S.questions++; S.par_langue[r.langue] = (S.par_langue[r.langue] || 0) + 1;
+          if (r.type === "reponse") { S.reponses++; S.fiches[r.fiche_id] = (S.fiches[r.fiche_id] || 0) + 1; }
+          if (r.type === "inconnu") S.inconnus++;
+          if (r.type === "refus") S.refus++;
+        }
+        return r;
+      }
+      case "/api/ticket": {
+        numeroTicket++; S.tickets++;
+        const sv = corps.service || "fisc"; S.tickets_par_service[sv] = (S.tickets_par_service[sv] || 0) + 1;
+        return { id: "MJ-L" + String(numeroTicket).padStart(4, "0"), numero: numeroTicket, local: true };
+      }
+      case "/api/tableau": {
+        const top = Object.entries(S.fiches).sort((a, b) => b[1] - a[1]).slice(0, 5)
+          .map(([id, n]) => ({ id, titre: (fiches.find((f) => f.id === id) || {}).titre || {}, n }));
+        const bilan = { total: fiches.length, source_officielle: fiches.filter((f) => f.statut === "source_officielle").length,
+          a_confirmer: fiches.filter((f) => f.statut === "a_confirmer").length };
+        return { portee: "session", questions: S.questions, reponses: S.reponses, inconnus: S.inconnus, refus: S.refus, tickets: S.tickets,
+          tickets_par_service: S.tickets_par_service, par_langue: S.par_langue, top, fiches: bilan };
+      }
       case "/api/verification": return verifier(corps);
       case "/api/echeances": return { profils: PROFILS, echeances: echeances(q.profil || "pp", +q.jours || 120) };
       case "/api/fiche": { const f = fiches.find((x) => x.id === q.id); return f ? ficheReponse(f, q.langue || "fr") : { erreur: "introuvable" }; }
@@ -377,7 +431,7 @@ const T={
   envoyer:"إرسال",ph:"اكتب سؤالك بالعربية أو بالدارجة أو بالفرنسية…",avert:"نموذج أولي للهاكاثون: الأجوبة مستخرجة من نصوص رسمية، وبعض البطاقات في انتظار مصادقة الخبير. لا يعوّض رأياً رسمياً.",
   bienvenue:"مرحباً! أنا مرشد جباية. اطرح سؤالك الجبائي، وسأجيبك انطلاقاً من النصوص الرسمية مع ذكر المصدر.",
   source:"المصدر",officiel:"مصدر رسمي",confirmer:"للتأكيد",interne:"داخلي",verifie:"تاريخ التحقق",valide:"صادق عليه",voir:"انظر أيضاً",
-  agent:"إحالة السؤال على عون",ticket:"تمّت الإحالة. رقم الملف:",ticketLocal:"نسخة دون إنترنت: لا يمكن إرسال السؤال من هنا. يمكنك طرحه على مركز الإرشاد الجبائي عن بعد (81 100 400). مرجع السؤال:",vouliez:"هل تقصد:",profil:"وضعيتي",j:"يوم",auj:"اليوم",reporte:"مؤجَّل من",
+  agent:"إحالة السؤال على عون",ticket:"تمّت الإحالة. رقم الملف:",ticketLocal:"نسخة دون إنترنت: لا يمكن إرسال السؤال من هنا، فتوجّه به إلى الجهة المختارة. مرجع السؤال:",vouliez:"هل تقصد:",profil:"وضعيتي",j:"يوم",auj:"اليوم",reporte:"مؤجَّل من",
   noteEch:"إذا صادف آخر أجل يوم أحد أو عطلة رسمية، يمتدّ إلى أول يوم عمل. تواريخ الأعياد الدينية تقديرية.",
   introVerif:"أدخل مبالغ تصريحك الشهري: نعيد احتساب الأداء على القيمة المضافة ونتثبّت من الأجل. المبالغ لا تغادر جهازك ولا تُحال على الإدارة.",
   vProfil:"الوضعية",vPeriode:"الشهر المصرّح به",vCa:"رقم المعاملات دون احتساب الأداء (د)",vTaux:"نسبة الأداء على القيمة المضافة (%)",vTva:"الأداء المستوجب المصرّح به (د)",vDed:"الأداء القابل للطرح (د)",vDepot:"تاريخ الإيداع (اختياري)",
@@ -389,7 +443,7 @@ const T={
   envoyer:"Envoyer",ph:"Posez votre question en français, en arabe ou en darija…",avert:"Prototype de hackathon : les réponses sont tirées de textes officiels ; certaines fiches attendent la validation de l'expert. Ne remplace pas un avis officiel.",
   bienvenue:"Bonjour ! Je suis Mourchid Jibaya. Posez votre question fiscale : je réponds à partir des textes officiels et je cite la source.",
   source:"Source",officiel:"Source officielle",confirmer:"À confirmer",interne:"Interne",verifie:"Vérifié le",valide:"Validé par",voir:"Voir aussi",
-  agent:"Transmettre la question à un agent",ticket:"Question transmise. Numéro de dossier :",ticketLocal:"Version hors ligne : la question ne peut pas être envoyée d'ici. Vous pouvez la poser au Centre d'information fiscale à distance (81 100 400). Référence :",vouliez:"Vouliez-vous dire :",profil:"Mon profil",j:"j",auj:"aujourd'hui",reporte:"reporté du",
+  agent:"Transmettre la question à un agent",ticket:"Question transmise. Numéro de dossier :",ticketLocal:"Version hors ligne : la question ne peut pas être envoyée d'ici ; adressez-la au service choisi. Référence :",vouliez:"Vouliez-vous dire :",profil:"Mon profil",j:"j",auj:"aujourd'hui",reporte:"reporté du",
   noteEch:"Si le dernier jour tombe un dimanche ou un jour férié, le délai est prolongé au premier jour ouvrable. Les dates des fêtes religieuses sont estimées.",
   introVerif:"Saisissez les montants de votre déclaration mensuelle : nous recalculons la TVA et vérifions le délai. Les montants restent sur votre appareil ; rien n'est transmis à l'administration.",
   vProfil:"Profil",vPeriode:"Mois déclaré",vCa:"Chiffre d'affaires HT (DT)",vTaux:"Taux de TVA (%)",vTva:"TVA collectée déclarée (DT)",vDed:"TVA déductible (DT)",vDepot:"Date de dépôt (facultatif)",
@@ -401,7 +455,7 @@ const T={
   envoyer:"Send",ph:"Ask your question in English, French or Arabic…",avert:"Hackathon prototype: answers come from official texts; some entries await expert validation. Not official advice.",
   bienvenue:"Hello! I am Mourchid Jibaya. Ask your tax question: I answer from official texts and cite the source.",
   source:"Source",officiel:"Official source",confirmer:"To be confirmed",interne:"Internal",verifie:"Checked on",valide:"Validated by",voir:"See also",
-  agent:"Forward the question to an agent",ticket:"Question forwarded. Case number:",ticketLocal:"Offline version: the question cannot be sent from here. You can ask the remote tax information centre (81 100 400). Reference:",vouliez:"Did you mean:",profil:"My profile",j:"d",auj:"today",reporte:"moved from",
+  agent:"Forward the question to an agent",ticket:"Question forwarded. Case number:",ticketLocal:"Offline version: the question cannot be sent from here; please contact the chosen service. Reference:",vouliez:"Did you mean:",profil:"My profile",j:"d",auj:"today",reporte:"moved from",
   noteEch:"If the last day falls on a Sunday or public holiday, the deadline moves to the next working day. Religious holiday dates are estimated.",
   introVerif:"Enter your monthly return amounts: we recompute the VAT and check the deadline. The amounts stay on your device; nothing is sent to the tax office.",
   vProfil:"Profile",vPeriode:"Month declared",vCa:"Turnover excl. VAT (TND)",vTaux:"VAT rate (%)",vTva:"Output VAT declared (TND)",vDed:"Deductible VAT (TND)",vDepot:"Filing date (optional)",
@@ -409,7 +463,36 @@ const T={
   a_payer:"Net amount payable: {m} TND.",credit:"VAT credit carried forward: {m} TND.",date_limite:"Deadline: {d}",retard:"Filed {j} days late: late-payment penalties apply; an agent can help you compute them.",dans_les_delais:"Filed on time.",periode_invalide:"Invalid month.",
   noteVerif:"Demo data entered by hand. No access to any tax administration system.",introSrc:"Official texts the entries are based on:",pied:"Mourchid Jibaya · National Hackathon AI & Public Finance 2026",
   ex:["Is e-invoicing mandatory for doctors?","When is the monthly return due for a company?","Is there a tax amnesty in 2026?","What is Mobile ID?"]}};
+
+Object.assign(T.ar,{ongAdm:"استفادة الإدارة",parler:"التحدث مع عون",agentTitre:"إحالة سؤالي على عون مختص",agentService:"اختر الجهة المختصة",agentQuestion:"سؤالك",
+  agentContact:"هاتف أو بريد إلكتروني للرد عليك (اختياري)",agentNote:"لا تُستعمل بيانات الاتصال إلا للرد على سؤالك. لا تكتب معرّفك الجبائي ولا أرقام حساباتك.",agentEnvoyer:"إرسال إلى العون",annuler:"إلغاء",
+  services:{fisc:"الإرشاد الجبائي العام (مركز الإرشاد الجبائي عن بعد)",controle:"ملفي الجبائي (مكتب مراقبة الأداءات)",recouvrement:"الدفع والديون الجبائية (قباضة المالية)",rne:"السجل الوطني للمؤسسات",identite:"الهوية الرقمية (Mobile ID / DigiGO)"},
+  ticketSvc:"الجهة:",introAdm:"ما تجنيه الإدارة من المساعد: كل سؤال يُجاب عنه بمصدر رسمي هو سؤال لا يصل إلى الشباك، وكل سؤال بلا جواب يكشف نصاً يحتاج توضيحاً.",
+  admDirect:"مؤشرات مباشرة",admMinutes:"متوسط وقت العون للإجابة عن سؤال واحد (دقائق، فرضية قابلة للتعديل)",admPourquoi:"الفائدة للإدارة",
+  kQuestions:"أسئلة مطروحة",kReponses:"أجوبة موثّقة دون عون",kTaux:"نسبة الحلّ دون عون",kTickets:"أسئلة أُحيلت على الأعوان",kInconnus:"أسئلة دون مصدر (نصوص تحتاج توضيحاً)",kRefus:"طلبات تحايل مرفوضة",
+  kTemps:"وقت أعوان مُوفَّر (تقدير)",kMin:"دقيقة",kLangues:"اللغات",kTop:"المواضيع الأكثر طلباً",kServices:"الإحالات حسب الجهة",aucun:"لا شيء بعد: اطرح أسئلة في تبويب المساعد.",
+  porteeServeur:"أرقام كل المستعملين منذ تشغيل الخادم. عدّ فقط، دون أي معطى شخصي.",porteeSession:"نسخة دون إنترنت: الأرقام تخصّ هذه الجلسة فقط. عدّ فقط، دون أي معطى شخصي.",
+  benef:[["شبابيك أقل اكتظاظاً","الأسئلة المتكررة تُجاب آلياً بمرجعها، والأعوان يتفرّغون للملفات المعقدة وللمراقبة."],["جواب موحّد وموثّق","نفس الجواب ونفس المرجع لكل المطالبين بالأداء، في كل الولايات وبثلاث لغات."],["خريطة نقاط التعثّر","الأسئلة دون جواب تكشف النصوص التي تحتاج مذكرة توضيحية أو تبسيطاً."],["موارد في آجالها","الآجال والتثبّت المسبق يقلّصان التأخير والأخطاء، فتُستخلص الموارد في وقتها."]]});
+Object.assign(T.fr,{ongAdm:"Pour l'administration",parler:"Parler à un agent",agentTitre:"Transmettre ma question à un agent compétent",agentService:"Choisissez le service compétent",agentQuestion:"Votre question",
+  agentContact:"Téléphone ou e-mail pour vous répondre (facultatif)",agentNote:"Vos coordonnées servent uniquement à vous répondre. N'indiquez ni votre matricule fiscal ni vos numéros de compte.",agentEnvoyer:"Envoyer à l'agent",annuler:"Annuler",
+  services:{fisc:"Information fiscale générale (Centre d'information fiscale à distance)",controle:"Mon dossier fiscal (bureau de contrôle des impôts)",recouvrement:"Paiement et dettes fiscales (recette des finances)",rne:"Registre national des entreprises",identite:"Identité numérique (Mobile ID / DigiGO)"},
+  ticketSvc:"Service :",introAdm:"Ce que l'administration y gagne : chaque question résolue avec une source officielle est une question qui n'arrive pas au guichet, et chaque question sans réponse signale un texte à clarifier.",
+  admDirect:"Indicateurs en direct",admMinutes:"Temps moyen d'un agent pour répondre à une question (minutes, hypothèse modifiable)",admPourquoi:"Bénéfices pour l'administration",
+  kQuestions:"Questions posées",kReponses:"Réponses sourcées sans agent",kTaux:"Taux de résolution sans agent",kTickets:"Questions transmises aux agents",kInconnus:"Questions sans source (textes à clarifier)",kRefus:"Demandes de fraude refusées",
+  kTemps:"Temps d'agent économisé (estimation)",kMin:"min",kLangues:"Langues",kTop:"Sujets les plus demandés",kServices:"Transferts par service",aucun:"Rien pour l'instant : posez des questions dans l'onglet Assistant.",
+  porteeServeur:"Chiffres de tous les usagers depuis le démarrage du serveur. Comptages uniquement, aucune donnée personnelle.",porteeSession:"Version hors ligne : chiffres de cette session uniquement. Comptages seulement, aucune donnée personnelle.",
+  benef:[["Guichets désengorgés","Les questions répétitives reçoivent une réponse sourcée ; les agents se consacrent aux dossiers complexes et au contrôle."],["Réponse homogène et sourcée","La même réponse, avec la même référence, pour tous les contribuables, dans toutes les régions et en trois langues."],["Carte des points de blocage","Les questions sans réponse révèlent les textes qui appellent une note commune ou une simplification."],["Recettes à temps","Échéances et vérification avant dépôt réduisent retards et erreurs : les recettes rentrent à temps."]]});
+Object.assign(T.en,{ongAdm:"For the administration",parler:"Talk to an agent",agentTitre:"Forward my question to the right agent",agentService:"Choose the competent service",agentQuestion:"Your question",
+  agentContact:"Phone or e-mail to reply to you (optional)",agentNote:"Your contact details are only used to answer you. Do not enter your tax ID or account numbers.",agentEnvoyer:"Send to the agent",annuler:"Cancel",
+  services:{fisc:"General tax information (remote tax information centre)",controle:"My tax file (tax audit office)",recouvrement:"Payment and tax debts (tax collection office)",rne:"National business register",identite:"Digital identity (Mobile ID / DigiGO)"},
+  ticketSvc:"Service:",introAdm:"What the administration gains: every question solved with an official source is one that never reaches the counter, and every unanswered question flags a text to clarify.",
+  admDirect:"Live indicators",admMinutes:"Average agent time to answer one question (minutes, adjustable assumption)",admPourquoi:"Benefits for the administration",
+  kQuestions:"Questions asked",kReponses:"Sourced answers without an agent",kTaux:"Resolution rate without an agent",kTickets:"Questions forwarded to agents",kInconnus:"Questions without a source (texts to clarify)",kRefus:"Fraud requests refused",
+  kTemps:"Agent time saved (estimate)",kMin:"min",kLangues:"Languages",kTop:"Most requested topics",kServices:"Forwards by service",aucun:"Nothing yet: ask questions in the Assistant tab.",
+  porteeServeur:"Figures for all users since the server started. Counts only, no personal data.",porteeSession:"Offline version: figures for this session only. Counts only, no personal data.",
+  benef:[["Less crowded counters","Repetitive questions get a sourced answer; agents focus on complex files and audits."],["Consistent, sourced answers","The same answer and reference for every taxpayer, in every region and in three languages."],["Map of friction points","Unanswered questions reveal texts that need a clarifying note or simplification."],["Revenue on time","Deadlines and pre-filing checks reduce delays and errors, so revenue comes in on time."]]});
 let L=localStorageGet()||"ar";
+let derniere="";
 function localStorageGet(){try{return localStorage.getItem("mj-langue")}catch(e){return null}}
 function localStorageSet(v){try{localStorage.setItem("mj-langue",v)}catch(e){}}
 const $=id=>document.getElementById(id);
@@ -424,6 +507,8 @@ function appliquer(l){
   document.querySelectorAll(".langues button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.l===l));
   $("q").placeholder=S.ph;
   const vp=$("v-profil").options;vp[0].text=S.pp;vp[1].text=S.pm;
+  $("a-service").innerHTML=Object.entries(S.services).map(([k,v])=>`<option value="${k}">${esc(v)}</option>`).join("");
+  if(!$("p-adm").hidden)chargerAdm();
   $("exemples").innerHTML=S.ex.map(x=>`<button class="puce">${esc(x)}</button>`).join("");
   let b=$("bienvenue");if(!b){b=bulle("bot","");b.id="bienvenue"}b.textContent=S.bienvenue;b.dir=l==="ar"?"rtl":"ltr";
   chargerEcheances();
@@ -432,7 +517,7 @@ function bulle(cl,html){const d=document.createElement("div");d.className="msg "
 async function api(url,corps){return MJ.api(url,corps||{});const r=await fetch(url,corps?{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(corps)}:{});return r.json()}
 
 async function poser(q){
-  q=q.trim();if(!q)return;bulle("moi",esc(q));$("q").value="";
+  q=q.trim();if(!q)return;derniere=q;bulle("moi",esc(q));$("q").value="";
   const r=await api("/api/question",{question:q});const S=T[r.langue]||T[L];let h="";
   if(r.type==="reponse"){
     const b=r.statut==="source_officielle"?["b-officiel",S.officiel]:r.statut==="interne"?["b-interne",S.interne]:["b-confirmer",S.confirmer];
@@ -467,6 +552,26 @@ async function verifierDecl(){
     tva_declaree:$("v-tva").value,tva_deductible:$("v-ded").value,date_depot:$("v-depot").value});
   $("res-verif").innerHTML=r.points.map(p=>`<div class="point p-${p.niveau}">${esc(fmt(S[p.code]||p.code,{a:p.attendue,d:p.declaree??p.date,e:p.ecart,m:p.montant,j:p.jours}))}</div>`).join("");
 }
+function ouvrirAgent(q){$("f-agent").hidden=false;$("a-question").value=q||derniere;$("a-question").focus();$("f-agent").scrollIntoView({behavior:"smooth",block:"center"})}
+async function envoyerAgent(){
+  const q=$("a-question").value.trim();if(!q){$("a-question").focus();return}
+  const sv=$("a-service").value;const r=await api("/api/ticket",{question:q,langue:L,service:sv,contact:$("a-contact").value});
+  $("f-agent").hidden=true;$("a-contact").value="";
+  bulle("bot",esc((r.local?T[L].ticketLocal:T[L].ticket)+" "+r.id+" · "+T[L].ticketSvc+" "+T[L].services[sv]));
+}
+async function chargerAdm(){
+  const S=T[L];const r=await api("/api/tableau");const min=Math.max(1,+$("adm-min").value||6);
+  const taux=r.questions?Math.round(r.reponses/r.questions*100):0;
+  $("adm-chiffres").innerHTML=[[S.kQuestions,r.questions],[S.kReponses,r.reponses,1],[S.kTaux,taux+" %",1],[S.kTickets,r.tickets],[S.kInconnus,r.inconnus],[S.kRefus,r.refus]]
+    .map(([k,v,f])=>`<div class="${f?"fort":""}">${esc(k)}<b>${esc(v)}</b></div>`).join("");
+  const m=r.reponses*min;$("adm-gain").innerHTML=`<div class="fort">${esc(S.kTemps)}<b>${m>=60?Math.floor(m/60)+" h "+(m%60)+" "+S.kMin:m+" "+S.kMin}</b></div>`;
+  const lang=Object.entries(r.par_langue||{}).map(([k,v])=>`${{ar:"العربية",fr:"Français",en:"English"}[k]||k} : ${v}`).join(" · ");
+  const top=(r.top||[]).map(x=>`<li>${esc(x.titre[L]||x.titre.fr)} (${x.n})</li>`).join("");
+  const sv=Object.entries(r.tickets_par_service||{}).map(([k,v])=>`<li>${esc(S.services[k]||k)} : ${v}</li>`).join("");
+  $("adm-detail").innerHTML=r.questions?`<p><b>${S.kLangues} :</b> ${lang}</p><p><b>${S.kTop} :</b></p><ol>${top}</ol>${sv?`<p><b>${S.kServices} :</b></p><ul>${sv}</ul>`:""}`:`<p class="note">${S.aucun}</p>`;
+  $("adm-benef").innerHTML=S.benef.map(([t,x])=>`<div><h4>${esc(t)}</h4>${esc(x)}</div>`).join("");
+  $("adm-portee").textContent=r.portee==="session"?S.porteeSession:S.porteeServeur;
+}
 async function chargerSources(){
   const r=await api("/api/sources");
   $("liste-src").innerHTML=r.sources.map(s=>`<li>${esc(s.reference)}${s.url?`<span class="url">${esc(s.url)}</span>`:""}</li>`).join("");
@@ -475,14 +580,18 @@ document.addEventListener("click",e=>{
   const t=e.target.closest("button");if(!t)return;
   if(t.dataset.l)appliquer(t.dataset.l);
   else if(t.dataset.onglet){document.querySelectorAll("nav button").forEach(b=>b.setAttribute("aria-selected",b===t));
-    ["chat","ech","verif","src"].forEach(o=>$("p-"+o).hidden=o!==t.dataset.onglet);if(t.dataset.onglet==="src")chargerSources()}
+    ["chat","ech","verif","adm","src"].forEach(o=>$("p-"+o).hidden=o!==t.dataset.onglet);if(t.dataset.onglet==="src")chargerSources();if(t.dataset.onglet==="adm")chargerAdm()}
   else if(t.dataset.fiche)ouvrirFiche(t.dataset.fiche);
-  else if(t.dataset.agent!==undefined){api("/api/ticket",{question:t.dataset.agent,langue:L}).then(r=>{t.disabled=true;bulle("bot",esc((r.local?T[L].ticketLocal:T[L].ticket)+" "+r.id))})}
+  else if(t.dataset.agent!==undefined)ouvrirAgent(t.dataset.agent);
+  else if(t.id==="b-agent")ouvrirAgent("");
+  else if(t.id==="b-envoyer-agent")envoyerAgent();
+  else if(t.id==="b-annuler-agent")$("f-agent").hidden=true;
   else if(t.classList.contains("puce")&&t.parentElement.id==="exemples")poser(t.textContent);
   else if(t.id==="b-verif")verifierDecl();
 });
 $("f-question").addEventListener("submit",e=>{e.preventDefault();poser($("q").value)});
 $("profil").addEventListener("change",chargerEcheances);
+$("adm-min").addEventListener("input",chargerAdm);
 const m=new Date();m.setMonth(m.getMonth()-1);$("v-periode").value=m.toISOString().slice(0,7);
 appliquer(L);
 </script>

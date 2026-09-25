@@ -19,6 +19,11 @@ convertie au nouveau format ; les questions types, le lexique et la validation e
 2. Windows : double-cliquer sur `lancer_windows.bat` · macOS / Linux : `./lancer_mac_linux.sh` (ou `python3 serveur.py`).
 3. Le navigateur s'ouvre sur **http://localhost:8000**. Administration : **http://localhost:8000/admin** (code `2026`, modifiable dans `config.env`).
 
+## Parcours usager et administration
+
+- **Parler à un agent** : à tout moment (ou quand aucune source ne suffit), l'usager choisit le service compétent — information fiscale, bureau de contrôle, recette des finances, RNE, identité numérique — et transmet sa question ; le ticket arrive dans `/admin` avec le service.
+- **Pour l'administration** : onglet public d'indicateurs en direct — questions posées, réponses sourcées sans agent, taux de résolution, transferts par service, questions sans source (textes à clarifier), refus, sujets les plus demandés, temps d'agent économisé (estimation, hypothèse modifiable).
+
 ## Version hors ligne (téléphone, sans Internet)
 
 `dist/Mourchid_Jibaya_hors_ligne.html` s'ouvre d'un clic dans n'importe quel navigateur, y compris sur téléphone et sans connexion.
@@ -52,7 +57,7 @@ question ─► garde-fous (fraude → refus)
 | `mourchid/base.py` + `data/fiches.json` | fiches officielles, sauvegardes horodatées, validation experte |
 | `mourchid/journal.py` | journal SQLite des questions et tickets |
 | `mourchid/modele.py` | reformulation optionnelle (API Claude ou Ollama local), désactivée par défaut |
-| `serveur.py` | serveur web et API REST |
+| `serveur.py` | serveur web et API REST (dont `/api/tableau` : indicateurs agrégés pour l'administration, sans donnée personnelle) |
 | `web/index.html`, `web/admin.html` | interface usager trilingue et page d'administration |
 | `web/moteur.js`, `outils/construire_hors_ligne.py` | moteur JavaScript et construction de la version hors ligne |
 | `outils/verifier_parite.py` | contrôle que les moteurs Python et JavaScript donnent les mêmes réponses |

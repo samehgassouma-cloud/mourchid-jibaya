@@ -49,7 +49,7 @@ table{width:100%;border-collapse:collapse}td,th{border-bottom:1px solid var(--li
 
   <section class="panneau" id="o-tickets" hidden>
     <p class="petit">Chaque question restée sans réponse arrive ici. Répondez une fois : la réponse devient une fiche que le bot réutilise immédiatement.</p>
-    <table><thead><tr><th>N°</th><th>Question</th><th>Date</th><th></th></tr></thead><tbody id="t-tickets"></tbody></table>
+    <table><thead><tr><th>N°</th><th>Service</th><th>Question</th><th>Date</th><th></th></tr></thead><tbody id="t-tickets"></tbody></table>
   </section>
 
   <section class="panneau" id="o-editer" hidden>
@@ -105,8 +105,9 @@ function afficherFiches(){
 }
 async function tickets(){
   const r=await api("/api/admin/tickets?statut=ouvert");
-  $("t-tickets").innerHTML=r.tickets.map(t=>`<tr><td>MJ-${String(t.id).padStart(5,"0")}</td><td ${t.langue==="ar"?'class="rtl"':""}>${esc(t.question)}</td><td class="petit">${esc(t.horodatage)}</td>
-   <td><button class="b or" data-repondre="${t.id}" data-q="${esc(t.question)}">Répondre → nouvelle fiche</button></td></tr>`).join("")||`<tr><td colspan="4" class="petit">Aucune question en attente.</td></tr>`;
+  const SV={fisc:"Information fiscale",controle:"Contrôle des impôts",recouvrement:"Recette des finances",rne:"RNE",identite:"Identité numérique"};
+  $("t-tickets").innerHTML=r.tickets.map(t=>`<tr><td>MJ-${String(t.id).padStart(5,"0")}</td><td class="petit">${esc(SV[t.service]||t.service||"")}${t.contact?`<br>${esc(t.contact)}`:""}</td><td ${t.langue==="ar"?'class="rtl"':""}>${esc(t.question)}</td><td class="petit">${esc(t.horodatage)}</td>
+   <td><button class="b or" data-repondre="${t.id}" data-q="${esc(t.question)}">Répondre → nouvelle fiche</button></td></tr>`).join("")||`<tr><td colspan="5" class="petit">Aucune question en attente.</td></tr>`;
 }
 function remplir(x){
   $("e-id").value=x.id||"";$("e-domaine").value=x.domaine||"fiscalite";$("e-statut").value=x.statut||"a_confirmer";

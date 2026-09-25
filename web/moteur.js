@@ -243,12 +243,35 @@ from as this that these those should must will
 
   // ---------------- « API » locale (mêmes routes que serveur.py) ----------------
   let numeroTicket = 0;
+  // indicateurs de la session (hors ligne : uniquement des comptages, rien n'est envoyé)
+  const S = { questions: 0, reponses: 0, inconnus: 0, refus: 0, tickets: 0, tickets_par_service: {}, par_langue: {}, fiches: {} };
   function api(url, corps) {
     const u = new URL(url, "http://local");
     const q = Object.fromEntries(u.searchParams);
     switch (u.pathname) {
-      case "/api/question": return repondre(corps.question, corps.langue);
-      case "/api/ticket": numeroTicket++; return { id: "MJ-L" + String(numeroTicket).padStart(4, "0"), numero: numeroTicket, local: true };
+      case "/api/question": {
+        const r = repondre(corps.question, corps.langue);
+        if (r.type !== "conversation" && r.type !== "vide") {
+          S.questions++; S.par_langue[r.langue] = (S.par_langue[r.langue] || 0) + 1;
+          if (r.type === "reponse") { S.reponses++; S.fiches[r.fiche_id] = (S.fiches[r.fiche_id] || 0) + 1; }
+          if (r.type === "inconnu") S.inconnus++;
+          if (r.type === "refus") S.refus++;
+        }
+        return r;
+      }
+      case "/api/ticket": {
+        numeroTicket++; S.tickets++;
+        const sv = corps.service || "fisc"; S.tickets_par_service[sv] = (S.tickets_par_service[sv] || 0) + 1;
+        return { id: "MJ-L" + String(numeroTicket).padStart(4, "0"), numero: numeroTicket, local: true };
+      }
+      case "/api/tableau": {
+        const top = Object.entries(S.fiches).sort((a, b) => b[1] - a[1]).slice(0, 5)
+          .map(([id, n]) => ({ id, titre: (fiches.find((f) => f.id === id) || {}).titre || {}, n }));
+        const bilan = { total: fiches.length, source_officielle: fiches.filter((f) => f.statut === "source_officielle").length,
+          a_confirmer: fiches.filter((f) => f.statut === "a_confirmer").length };
+        return { portee: "session", questions: S.questions, reponses: S.reponses, inconnus: S.inconnus, refus: S.refus, tickets: S.tickets,
+          tickets_par_service: S.tickets_par_service, par_langue: S.par_langue, top, fiches: bilan };
+      }
       case "/api/verification": return verifier(corps);
       case "/api/echeances": return { profils: PROFILS, echeances: echeances(q.profil || "pp", +q.jours || 120) };
       case "/api/fiche": { const f = fiches.find((x) => x.id === q.id); return f ? ficheReponse(f, q.langue || "fr") : { erreur: "introuvable" }; }
