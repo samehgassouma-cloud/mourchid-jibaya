@@ -1,6 +1,7 @@
 """Journal SQLite : questions posées, tickets transmis aux agents, file d'apprentissage."""
 from __future__ import annotations
 
+import json
 import sqlite3
 import threading
 from datetime import datetime
@@ -12,7 +13,7 @@ CREATE TABLE IF NOT EXISTS questions (
   resultat TEXT, fiche_id TEXT, score REAL);
 CREATE TABLE IF NOT EXISTS tickets (
   id INTEGER PRIMARY KEY AUTOINCREMENT, horodatage TEXT, langue TEXT, question TEXT,
-  contact TEXT, statut TEXT DEFAULT 'ouvert', reponse TEXT, fiche_id TEXT, service TEXT);
+  contact TEXT, statut TEXT DEFAULT 'ouvert', reponse TEXT, fiche_id TEXT, service TEXT, contexte TEXT);
 """
 
 
@@ -24,8 +25,9 @@ class Journal:
         with self.lock:
             self.cx.executescript(SCHEMA)
             colonnes = [r[1] for r in self.cx.execute("PRAGMA table_info(tickets)")]
-            if "service" not in colonnes:   # base créée par une version antérieure
-                self.cx.execute("ALTER TABLE tickets ADD COLUMN service TEXT")
+            for col in ("service", "contexte"):   # base créée par une version antérieure
+                if col not in colonnes:
+                    self.cx.execute(f"ALTER TABLE tickets ADD COLUMN {col} TEXT")
 
     @staticmethod
     def _now():
@@ -37,18 +39,25 @@ class Journal:
                                 (self._now(), langue, question, resultat, fiche_id, score))
             return c.lastrowid
 
-    def ticket(self, langue, question, contact="", service="fisc") -> dict:
+    def ticket(self, langue, question, contact="", service="fisc", contexte: dict | None = None) -> dict:
+        """Crée la carte de transfert reçue par l'agent et la renvoie."""
+        h = self._now()
         with self.lock, self.cx:
-            c = self.cx.execute("INSERT INTO tickets(horodatage,langue,question,contact,service) VALUES(?,?,?,?,?)",
-                                (self._now(), langue, question, contact, service))
-        return {"id": f"MJ-{c.lastrowid:05d}", "numero": c.lastrowid}
+            c = self.cx.execute("INSERT INTO tickets(horodatage,langue,question,contact,service,contexte) VALUES(?,?,?,?,?,?)",
+                                (h, langue, question, contact, service, json.dumps(contexte or {}, ensure_ascii=False)))
+        return {"id": f"MJ-{c.lastrowid:05d}", "numero": c.lastrowid, "horodatage": h, "langue": langue, "question": question,
+                "contact": contact, "service": service, "statut": "ouvert", "contexte": contexte or {}}
 
     def tickets(self, statut: str | None = None) -> list[dict]:
         sql, args = "SELECT * FROM tickets", ()
         if statut:
             sql, args = sql + " WHERE statut=?", (statut,)
         with self.lock:
-            return [dict(r) for r in self.cx.execute(sql + " ORDER BY id DESC", args)]
+            lignes = [dict(r) for r in self.cx.execute(sql + " ORDER BY id DESC", args)]
+        for t in lignes:
+            t["id_dossier"] = f"MJ-{t['id']:05d}"
+            t["contexte"] = json.loads(t.get("contexte") or "{}")
+        return lignes
 
     def fermer_ticket(self, numero: int, reponse: str, fiche_id: str | None):
         with self.lock, self.cx:

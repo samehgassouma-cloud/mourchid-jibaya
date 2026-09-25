@@ -86,3 +86,16 @@ class Assistant:
                 "source": f.get("source", {}), "statut": f.get("statut"), "verifie_le": f.get("verifie_le"),
                 "validation_experte": f.get("validation_experte"), "action": f.get("action"),
                 "score": score, "couverture": couverture, "voir_aussi": voir_aussi or []}
+
+    def contexte_transfert(self, question: str, langue: str) -> dict:
+        """Ce que le bot a tenté avant le transfert : résultat et fiches les plus proches (pour l'agent)."""
+        rs = self.index.chercher(question)
+        if demande_frauduleuse(question):
+            resultat = "refus"
+        elif rs and rs[0].suffisant:
+            resultat = "reponse_donnee"
+        else:
+            resultat = "sans_source"
+        return {"resultat": resultat, "langue_detectee": detect_lang(question),
+                "fiches_proches": [{"id": r.fiche["id"], "titre": r.fiche["titre"], "score": r.score,
+                                    "couverture": r.couverture, "source": r.fiche.get("source", {}).get("reference", "")} for r in rs]}

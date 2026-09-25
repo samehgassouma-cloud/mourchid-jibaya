@@ -22,7 +22,8 @@ table{width:100%;border-collapse:collapse}td,th{border-bottom:1px solid var(--li
 .st{font-size:12px;font-weight:700;border-radius:10px;padding:1px 8px;white-space:nowrap}
 .st-source_officielle{background:#D9EFE3;color:#2E7D5B}.st-a_confirmer{background:#F7EBD2;color:#8A6417}.st-interne{background:#E6E9EA}.st-brouillon{background:#F6DEDC;color:#B3261E}
 .grille{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}
-.rtl{direction:rtl}.petit{font-size:12.5px;color:var(--doux)}
+.rtl{direction:rtl}
+.carte{border:1px solid var(--or);border-radius:12px;padding:12px;margin:10px 0;background:#FFFBF2}.carte .ent{display:flex;justify-content:space-between;margin-bottom:6px}.carte th{width:150px}.petit{font-size:12.5px;color:var(--doux)}
 </style>
 </head>
 <body>
@@ -49,7 +50,7 @@ table{width:100%;border-collapse:collapse}td,th{border-bottom:1px solid var(--li
 
   <section class="panneau" id="o-tickets" hidden>
     <p class="petit">Chaque question restée sans réponse arrive ici. Répondez une fois : la réponse devient une fiche que le bot réutilise immédiatement.</p>
-    <table><thead><tr><th>N°</th><th>Service</th><th>Question</th><th>Date</th><th></th></tr></thead><tbody id="t-tickets"></tbody></table>
+    <div id="t-tickets"></div>
   </section>
 
   <section class="panneau" id="o-editer" hidden>
@@ -105,9 +106,17 @@ function afficherFiches(){
 }
 async function tickets(){
   const r=await api("/api/admin/tickets?statut=ouvert");
-  const SV={fisc:"Information fiscale",controle:"Contrôle des impôts",recouvrement:"Recette des finances",rne:"RNE",identite:"Identité numérique"};
-  $("t-tickets").innerHTML=r.tickets.map(t=>`<tr><td>MJ-${String(t.id).padStart(5,"0")}</td><td class="petit">${esc(SV[t.service]||t.service||"")}${t.contact?`<br>${esc(t.contact)}`:""}</td><td ${t.langue==="ar"?'class="rtl"':""}>${esc(t.question)}</td><td class="petit">${esc(t.horodatage)}</td>
-   <td><button class="b or" data-repondre="${t.id}" data-q="${esc(t.question)}">Répondre → nouvelle fiche</button></td></tr>`).join("")||`<tr><td colspan="5" class="petit">Aucune question en attente.</td></tr>`;
+  const SV={fisc:"Information fiscale générale",controle:"Mon dossier fiscal (bureau de contrôle)",recouvrement:"Paiement et dettes (recette des finances)",rne:"Registre national des entreprises",identite:"Identité numérique"};
+  const RES={sans_source:"Pas de source officielle suffisante : aucune réponse donnée",reponse_donnee:"Réponse sourcée donnée ; l'usager demande malgré tout un agent",refus:"Demande de fraude refusée"};
+  const LG={ar:"arabe",fr:"français",en:"anglais"};
+  $("t-tickets").innerHTML=r.tickets.map(t=>{const x=t.contexte||{};
+    const proches=(x.fiches_proches||[]).map(f=>`<li>${esc(f.titre?.fr)} — <span class="petit">${esc(f.source)} · score ${f.score} · couverture ${Math.round(f.couverture*100)} %</span></li>`).join("");
+    return `<div class="carte"><div class="ent"><b>${esc(t.id_dossier)}</b><span class="st st-a_confirmer">ouvert</span></div>
+    <table><tr><th>Service</th><td>${esc(SV[t.service]||t.service||"")}</td></tr><tr><th>Date</th><td>${esc(String(t.horodatage).replace("T"," "))}</td></tr>
+    <tr><th>Langue</th><td>${esc(LG[t.langue]||t.langue)}</td></tr><tr><th>Question</th><td dir="auto"><b>${esc(t.question)}</b></td></tr>
+    <tr><th>Contact</th><td>${esc(t.contact)||"—"}</td></tr><tr><th>Tentative du bot</th><td>${esc(RES[x.resultat]||"—")}</td></tr>
+    <tr><th>Fiches proches</th><td>${proches?`<ol>${proches}</ol>`:"aucune"}</td></tr></table>
+    <p><button class="b or" data-repondre="${t.id}" data-q="${esc(t.question)}">Répondre → nouvelle fiche</button></p></div>`}).join("")||`<p class="petit">Aucune question en attente.</p>`;
 }
 function remplir(x){
   $("e-id").value=x.id||"";$("e-domaine").value=x.domaine||"fiscalite";$("e-statut").value=x.statut||"a_confirmer";

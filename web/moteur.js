@@ -244,7 +244,7 @@ from as this that these those should must will
   // ---------------- « API » locale (mêmes routes que serveur.py) ----------------
   let numeroTicket = 0;
   // indicateurs de la session (hors ligne : uniquement des comptages, rien n'est envoyé)
-  const S = { questions: 0, reponses: 0, inconnus: 0, refus: 0, tickets: 0, tickets_par_service: {}, par_langue: {}, fiches: {} };
+  const S = { questions: 0, reponses: 0, inconnus: 0, refus: 0, tickets: 0, tickets_par_service: {}, par_langue: {}, fiches: {}, cartes: [] };
   function api(url, corps) {
     const u = new URL(url, "http://local");
     const q = Object.fromEntries(u.searchParams);
@@ -262,7 +262,17 @@ from as this that these those should must will
       case "/api/ticket": {
         numeroTicket++; S.tickets++;
         const sv = corps.service || "fisc"; S.tickets_par_service[sv] = (S.tickets_par_service[sv] || 0) + 1;
-        return { id: "MJ-L" + String(numeroTicket).padStart(4, "0"), numero: numeroTicket, local: true };
+        const question = String(corps.question || "").trim().slice(0, 500);
+        const langue = detectLang(question);   // langue de la question (et non de l'interface)
+        const rs = chercher(question);
+        const carte = { id: "MJ-L" + String(numeroTicket).padStart(4, "0"), numero: numeroTicket, local: true,
+          horodatage: (() => { const n = new Date(); return new Date(n.getTime() - n.getTimezoneOffset() * 60000).toISOString().slice(0, 19); })(), langue, question, contact: String(corps.contact || "").slice(0, 120),
+          service: sv, statut: "ouvert",
+          contexte: { resultat: frauduleuse(question) ? "refus" : rs.length && suffisant(rs[0]) ? "reponse_donnee" : "sans_source",
+            langue_detectee: detectLang(question),
+            fiches_proches: rs.map((r) => ({ id: r.fiche.id, titre: r.fiche.titre, score: r.score, couverture: r.couverture, source: (r.fiche.source || {}).reference || "" })) } };
+        S.cartes.unshift(carte);
+        return carte;
       }
       case "/api/tableau": {
         const top = Object.entries(S.fiches).sort((a, b) => b[1] - a[1]).slice(0, 5)
@@ -270,7 +280,7 @@ from as this that these those should must will
         const bilan = { total: fiches.length, source_officielle: fiches.filter((f) => f.statut === "source_officielle").length,
           a_confirmer: fiches.filter((f) => f.statut === "a_confirmer").length };
         return { portee: "session", questions: S.questions, reponses: S.reponses, inconnus: S.inconnus, refus: S.refus, tickets: S.tickets,
-          tickets_par_service: S.tickets_par_service, par_langue: S.par_langue, top, fiches: bilan };
+          tickets_par_service: S.tickets_par_service, par_langue: S.par_langue, top, fiches: bilan, cartes: S.cartes };
       }
       case "/api/verification": return verifier(corps);
       case "/api/echeances": return { profils: PROFILS, echeances: echeances(q.profil || "pp", +q.jours || 120) };

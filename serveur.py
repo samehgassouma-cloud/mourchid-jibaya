@@ -16,6 +16,7 @@ from urllib.parse import parse_qs, urlparse
 from mourchid import __version__
 from mourchid.assistant import Assistant
 from mourchid.echeances import PROFILS
+from mourchid.langue import detect_lang
 from mourchid.verification import verifier
 
 RACINE = Path(__file__).resolve().parent
@@ -142,7 +143,10 @@ class Gestionnaire(BaseHTTPRequestHandler):
             if not question:
                 return self._json({"erreur": "question vide"}, 400)
             service = d.get("service") if d.get("service") in SERVICES else "fisc"
-            return self._json(ASSISTANT.journal.ticket(d.get("langue", "fr"), question, (d.get("contact") or "")[:120], service))
+            langue = detect_lang(question)   # langue de la question (et non de l'interface)
+            carte = ASSISTANT.journal.ticket(langue, question, (d.get("contact") or "")[:120], service,
+                                             ASSISTANT.contexte_transfert(question, langue))
+            return self._json(carte)
         if u.path == "/api/verification":
             return self._json(verifier(d, ASSISTANT.calendrier))
         if u.path.startswith("/api/admin/"):
