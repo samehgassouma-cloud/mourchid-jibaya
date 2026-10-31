@@ -9,6 +9,8 @@ pinned: false
 short_description: Assistant fiscal IA 24h/24 (AR, darija, FR, EN), sourcé
 ---
 
+🇹🇳 النسخة العربية: [README.ar.md](README.ar.md)
+
 # Mourchid Jibaya · مرشد جباية
 
 **Assistant fiscal IA 24h/24, en arabe, darija, français et anglais, qui répond uniquement à partir des textes officiels et cite chaque référence.** Sans source suffisante, il ne devine pas : il transmet la question à l'agent du service compétent, avec tout le contexte.
@@ -132,3 +134,10 @@ Intégration continue : `.github/workflows/ci.yml` rejoue tests, évaluation, pa
 ## Recommandations pour une mise en production
 
 Cellule DGI de validation des fiches ; hébergement en Tunisie avec modèle local (souveraineté, loi organique n° 2004-63, déclaration INPDP) ; pilote de 3 mois dans un centre des impôts avec groupe témoin ; intégration Jibayti / El Fatoora et canaux WhatsApp et voix.
+
+## Équipe
+
+- **Sameh Gassouma** (سماح قسومة, GitHub [@samehgassouma-cloud](https://github.com/samehgassouma-cloud)) — porteuse de l'idée et cheffe d'équipe : elle a rassemblé tout le contenu fiscal, construit l'interface HTML et les composants de l'application, et défini son objectif.
+- **Cyrine Gassouma** (سيرين قسومة, GitHub [@CyrineGASSOUMA](https://github.com/CyrineGASSOUMA)) — ingénieure logiciel.
+
+Dépôt d'origine : https://github.com/CyrineGASSOUMA/mourchid-jibaya
